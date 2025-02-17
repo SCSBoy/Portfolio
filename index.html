@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Portfolio EKLU</title>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+        <!-- Lien vers le fichier CSS personnalisé -->
+        <link rel="stylesheet" href="index.css">
+    
+    </head>
+
+
+<body>
+    <nav class="nav fixed-top">
+        <div class="nav-links">
+            <a href="#home">Accueil</a>
+            <a href="#realization-rec">Réalisations Récentes</a>
+            <a href="#experience">Expérience</a>
+            <a href="#competences">Compétences</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <header id="home" class="header-content">
+        <div class="profile-section" data-aos="fade-up">
+            <div class="profile-image">
+                <img src="./images/Photo Professionnelle.jpg" alt="Photo de profil">
+            </div>
+            <div class="profile-info">
+                <h1>EKLU Charly Yayra</h1>
+                <p>Étudiant en Informatique</p>
+                <p>Passionné par la Robotique et le Développement en Général</p>
+                <a href="path/to/your/cv.pdf" class="cv-button" download>
+                    <i class="bi bi-download me-2"></i>Télécharger CV
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section id="realization-rec" class="py-5">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Réalisations Récentes</h2>
+    
+            <!-- Carrousel des réalisations -->
+            <div id="carouselRealizations" class="carousel slide" data-bs-ride="carousel">
+                <!-- Indicateurs de navigation -->
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselRealizations" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselRealizations" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselRealizations" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+    
+                <!-- Contenu du carrousel -->
+                <div class="carousel-inner">
+                    <!-- Premier élément du carrousel -->
+                    <div class="carousel-item active" id="realization-1">
+                        <img class="d-block w-100" src="./images/Gestion de Rapprochementjpg.jpg" alt="Projet Clinique BIASA">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Système de Gestion ORABANK</h5>
+                            <p>Développement d'une application de gestion bancaire moderne.</p>
+                            <ul>
+                                <li>Tableau de bord administratif</li>
+                                <li>Gestion des transactions</li>
+                                <li>Rapports en temps réel</li>
+                            </ul>
+                            <p><strong>Technologies utilisées:</strong> Spring Boot, Angular, PostgreSQL</p>
+                        </div>
+                    </div>
+    
+                    <!-- Deuxième élément du carrousel -->
+                    <div class="carousel-item" id="realization-2">
+                        <img class="d-block w-100" src="./images/My-Gym.jpg" alt="Projet ORABANK">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Abonnement Salle de Sport</h5>
+                            <p>Développement d'une application de gestion de salle gym.</p>
+                            <ul>
+                                <li>Tableau de bord administratif</li>
+                                <li>Gestion des clients</li>
+                                <li>Rapports en temps réel</li>
+                            </ul>
+                            <p><strong>Technologies utilisées:</strong> Spring Boot, Angular, MySQL</p>
+                        </div>
+                    </div>
+    
+                    <!-- Troisième élément du carrousel -->
+                    <div class="carousel-item" id="realization-3">
+                        <img class="d-block w-100" src="./images/QUIZ_APP_BIG.jpg" alt="Projet Third">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Application Mobile de Quizz</h5>
+                            <p>Développement d'une application mobile pour un jeu de question-réponse.</p>
+                            <ul>
+                                <li>Compatibilité iOS et Android</li>
+                            </ul>
+                            <p><strong>Technologie utilisée:</strong>Flutter</p>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Contrôles de navigation -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselRealizations" style="position: absolute; top: 50%;" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselRealizations" style="position: absolute; top: 50%;" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    
+
+    <section id="experience" class="py-5">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Expérience Professionnelle</h2>
+            <div class="info-card" data-aos="fade-up">
+                <div class="col-md-6">
+                    <div class="experience-card">
+                        <h4>CLINIQUE BIASA | LOMÉ</h4>
+                        <p>Stage en Programmation logiciel</p>
+                        <p class="text-muted">juillet 2023 - Août 2023</p>
+                        <a href="./documents/ATTESTATION STAGE_CLINIQUE BIASA.pdf" class="btn btn-primary" download>
+                            <i class="fas fa-download"></i> Attestation de Stage
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="experience-card">
+                        <h4>ORABANK-TOGO | LOMÉ</h4>
+                        <p>Stage en Programmation logiciel</p>
+                        <p class="text-muted">juillet 2024 - Août 2024</p>
+                        <a href="./documents/ATTESTATION STAGE_ORABANK-TOGO.pdf" class="btn btn-primary" download>
+                            <i class="fas fa-download"></i> Attestation de Stage
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <!-- Nouvelle section Technologies -->
+     <section class="technologies" id="competences">
+        <div class="container">
+            <h2 class="section-title">Langages & Frameworks</h2>
+            <div class="skills-grid">
+                <!-- HTML/CSS -->
+                <div class="skill-circle html-css">
+                    <img class="skill-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NTAgNTEyIj48cGF0aCBmaWxsPSIjRTQ0RDI2IiBkPSJNNDEuNCAxMTEuN0wwLjcgMTUuOWgyOTcuOWwtNDAuNyA0NjcuNEwxNDcuMyA1MTJsLTEwNi0yOC44eiIvPjxwYXRoIGZpbGw9IiNFNDREMjYiIGQ9Ik0yMjUgNDMyLjFsOTEuOS0yNS41IDIxLjYtMjQxLjVIMjI1eiIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0yMjUgMjY1LjRoNDUuNGwtNC4yIDQ2LjVMMjI1IDMyNS41di0zMi4xaC01Mi44bC0yLjQtMjcuMmg1NS4ydi0zMi4xaC04NC45bC0wLjctNy44IDEuMi0xMi45IDMuNC0zOC4xaDgxdi0zMi4xaC0xMTkuNGwwLjctNy44IDEuMi0xMi45IDMuNC0zOC4xSDE0MXoiLz48L3N2Zz4=" alt="HTML/CSS icon">
+                    <svg width="150" height="150" class="circle-progress">
+                        <circle class="circle-bg" cx="75" cy="75" r="70"></circle>
+                        <circle class="circle-progress-path" cx="75" cy="75" r="70"></circle>
+                    </svg>
+                    <div class="skill-info">
+                        <div class="skill-name">HTML/CSS</div>
+                        <div class="skill-percentage">90%</div>
+                    </div>
+                </div>
+
+                <!-- JavaScript -->
+                <div class="skill-circle javascript">
+                    <img class="skill-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48cGF0aCBmaWxsPSIjRjdERjFFIiBkPSJNMCAwaDQ0OHY1MTJIMEwwIDB6Ii8+PHBhdGggZD0iTTMyMCAzOTJjMTIuOCAyMi4zIDI5LjUgMzcuOCA1OC43IDM3LjggMjQuNiAwIDQwLjMtMTIuMyA0MC4zLTI5LjIgMC0yMC4zLTE2LjEtMjcuNS00My4xLTM5LjRsLTE0LjgtNi4zYy00Mi43LTE4LjItNzEuMS00MS02My40LTg5LjIgNi40LTM5LjcgNDcuOC03MC4xIDk3LjItNzAuMSA0Mi4yIDAgNzIuNSAxNC43IDk0LjQgNTMuM2wtNTEuNyAzMy4xYy0xMS40LTIwLjYtMjMuNy0yOC43LTQyLjctMjguNy0xOS41IDAtMzEuOSAxMi4zLTMxLjkgMjguNyAwIDIwLjEgMTIuNCAyOC4zIDQxLjEgNDAuOGwxNC44IDYuM2M1MC4zIDIxLjcgNzguNyA0My44IDcwLjggOTMuNS04LjQgNTIuNi02NS40IDgxLjUtMTM3LjEgODEuNS00NS45IDAtODUuNi0yMi45LTEwMi4xLTUyLjlMMzIwIDM5MnptLTIyNS44IDZjOS4zIDE3LjIgMTcuOCAzMy44IDM4LjEgMzMuOCAxOS41IDAgMzEuNy03LjYgMzEuNy0zNy4yVjIzNWg1OS4ydjE2MC4zYzAgNjEuMy0zNS45IDg5LjItODguNCw4OS4yLTQ3LjQgMC03NC45LTI0LjUtODguOS01NEw5NC4yIDM5OHoiLz48L3N2Zz4=" alt="JavaScript icon">
+                    <svg width="150" height="150" class="circle-progress">
+                        <circle class="circle-bg" cx="75" cy="75" r="70"></circle>
+                        <circle class="circle-progress-path" cx="75" cy="75" r="70"></circle>
+                    </svg>
+                    <div class="skill-info">
+                        <div class="skill-name">JavaScript</div>
+                        <div class="skill-percentage">85%</div>
+                    </div>
+                </div>
+
+                <!-- Python -->
+                <div class="skill-circle python">
+                    <img class="skill-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48cGF0aCBmaWxsPSIjMzc3NkFCIiBkPSJNNDM5LjggMjAwLjVjLTcuNy0zMC45LTIyLjMtNTQuMi01My40LTU0LjItMzAuOSAwLTQ1LjcgMjMuMy01My40IDU0LjItMi43IDExLjItNC4yIDIzLjItNC4yIDM1LjVzMS41IDI0LjMgNC4yIDM1LjVDMzQwLjggMzAyLjQgMzU1LjQgMzI1LjcgMzg2LjQgMzI1LjdzNDUuNy0yMy4zIDUzLjQtNTQuMmMyLjctMTEuMiA0LjItMjMuMiA0LjItMzUuNXMtMS41LTI0LjMtNC4yLTM1LjV6TTIyNCAyODYuNWMxMS4yIDAgMjAtOS4xIDIwLTIwLjNzLTguOS0yMC4zLTIwLTIwLjMtMjAgOS4xLTIwIDIwLjMgOC45IDIwLjMgMjAgMjAuM3pNMjI0IDM4Ni42Yy0xMS4yIDAtMjAgOS4xLTIwIDIwLjNzOC45IDIwLjMgMjAgMjAuMyAyMC05LjEgMjAtMjAuMy04LjktMjAuMy0yMC0yMC4zeiIvPjwvc3ZnPg==" alt="Python icon">
+                    <svg width="150" height="150" class="circle-progress">
+                        <circle class="circle-bg" cx="75" cy="75" r="70"></circle>
+                        <circle class="circle-progress-path" cx="75" cy="75" r="70"></circle>
+                    </svg>
+                    <div class="skill-info">
+                        <div class="skill-name">Python</div>
+                        <div class="skill-percentage">80%</div>
+                    </div>
+                </div>
+
+                <!-- Java -->
+                <div class="skill-circle java">
+                    <img class="skill-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMDA3Mzk2IiBkPSJNMjU1LjkgMjc0LjVjLTE2LjctMTYuNy00My44LTE2LjctNjAuNSAwTDQyLjMgNDI3LjZjLTE2LjcgMTYuNy0xNi43IDQzLjggMCA2MC41IDE2LjcgMTYuNyA0My44IDE2LjcgNjAuNSAwTDI1NS45IDMzNWMxNi43LTE2LjcgMTYuNy00My44IDAtNjAuNXoiLz48cGF0aCBmaWxsPSIjMDA3Mzk2IiBkPSJNMjU2IDIzLjljLTEzMi4xIDAtMjQwIDEwNy45LTI0MCAyNDBzMTA3LjkgMjQwIDI0MCAyNDBjNDQuMiAwIDg1LjctMTIuMiAxMjEuMi0zMy4zbC01NC4zLTU0LjNjLTI0LjYgMTIuNi01Mi40IDE5LjctODEuOSAxOS43LTEwMC44IDAtMTgyLjctODEuOS0xODIuNy0xODIuN1MxNTUuMiA3My4zIDI1NiA3My4zczE4Mi43IDgxLjkgMTgyLjcgMTgyLjdjMCAyOS41LTcuMSA1Ny4zLTE5LjcgODEuOWw1NC4zIDU0LjNDNDgzLjggMzQxLjcgNDk2IDMwMC4yIDQ5NiAyNTZjMC0xMzIuMS0xMDcuOS0yNDAtMjQwLTI0MHoiLz48L3N2Zz4=" alt="Java icon">
+                    <svg width="150" height="150" class="circle-progress">
+                        <circle class="circle-bg" cx="75" cy="75" r="70"></circle>
+                        <circle class="circle-progress-path" cx="75" cy="75" r="70"></circle>
+                    </svg>
+                    <div class="skill-info">
+                        <div class="skill-name">Java</div>
+                        <div class="skill-percentage">60%</div>
+                    </div>
+                </div>
+        <!-- Angular -->
+        <div class="skill-circle angular">
+            <img class="skill-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48cGF0aCBmaWxsPSIjREQwMDMxIiBkPSJNMjE1LjYgOTkuNWwyLjQtNC42aDEyLjhsMi40IDQuNiA5LjggMTguOSA5LjggMTguOUgyMzJoLTE5LjhsOS44LTE4LjkgOS44LTE4Ljl6TTAgMGg0NDh2NTEySDB6Ii8+PC9zdmc+" alt="Angular icon">
+            <svg width="150" height="150" class="circle-progress">
+                <circle class="circle-bg" cx="75" cy="75" r="70"></circle>
+                <circle class="circle-progress-path" cx="75" cy="75" r="70" style="stroke-dasharray: 440; stroke-dashoffset: 154"></circle>
+            </svg>
+            <div class="skill-info">
+                <div class="skill-name">Angular</div>
+                <div class="skill-percentage">65%</div>
+            </div>
+        </div>
+
+        <!-- Spring Boot -->
+        <div class="skill-circle spring">
+            <img class="skill-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48cGF0aCBmaWxsPSIjNkRCMzNGIiBkPSJNMjI0IDk2YzM5LjggMCA3MiAzMi4yIDcyIDcycy0zMi4yIDcyLTcyIDcyLTcyLTMyLjItNzItNzIgMzIuMi03MiA3Mi03MnptMCA0OGMtMTMuMiAwLTI0IDEwLjgtMjQgMjRzMTAuOCAyNCAyNCAyNCAyNC0xMC44IDI0LTI0LTEwLjgtMjQtMjQtMjR6Ii8+PC9zdmc+" alt="Spring Boot icon">
+            <svg width="150" height="150" class="circle-progress">
+                <circle class="circle-bg" cx="75" cy="75" r="70"></circle>
+                <circle class="circle-progress-path" cx="75" cy="75" r="70" style="stroke-dasharray: 440; stroke-dashoffset: 176"></circle>
+            </svg>
+            <div class="skill-info">
+                <div class="skill-name">Spring Boot</div>
+                <div class="skill-percentage">60%</div>
+            </div>
+        </div>
+    </div>
+</div>
+    </section>
+
+    <!-- Nouvelle section Réalisations -->
+<section id="realizations" class="py-5">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">Réalisations</h2>
+
+        <!-- Menu de filtrage -->
+        <div class="filter-menu" data-aos="fade-up">
+            <button class="filter-btn active" data-filter="all">Tout</button>
+            <button class="filter-btn" data-filter="web">Application Web</button>
+            <button class="filter-btn" data-filter="mobile">Application Mobile</button>
+            <!-- <button class="filter-btn" data-filter="desktop">Application Desktop</button> -->
+        </div>
+
+        <!-- Contenu des réalisations -->
+        <div class="realization-cards">
+            <!-- Réalisation 1 - Application Web -->
+            <div class="realization-card web" data-aos="fade-up">
+                <div class="realization-image">
+                    <img src="./images/Gestion de Rapprochementjpg.jpg" alt="Application Web">
+                </div>
+                <div class="realization-content">
+                    <h3>ORABANK-TOGO</h3>
+                    <p>Développement d'une application de Rapprochement Bancaire</p>
+                    <ul>
+                        <li>Définition des tables de rapprochements</li>
+                        <li>Rapprochement Rapide et Résultat Téléchargeable</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Réalisation 2 - Application Web -->
+            <div class="realization-card web" data-aos="fade-up">
+                <div class="realization-image">
+                    <img src="./images/My-Gym.jpg" alt="Application Web">
+                </div>
+                <div class="realization-content">
+                    <h3>Site d'Abonnement Gym</h3>
+                    <p>Développement d'application web pour la gestion des Abonnements aux cours de Gym</p>
+                    <ul>
+                        <li>Développement d'une application web</li>
+                        <li>Travail avec les technologies Angular et SpringBoot</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Réalisation 3 - Application Mobile -->
+            <div class="realization-card mobile" data-aos="fade-up">
+                <div class="realization-image">
+                    <img src="./images/QUIZ_APP.jpg" alt="Application Mobile">
+                </div>
+                <div class="realization-content">
+                    <h3>Application Mobile de Quizz</h3>
+                    <p>Développement d'une application mobile de question-réponse</p>
+                    <ul>
+                        <li>Application iOS et Android</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Réalisation 4 - Application Desktop -->
+            <!-- <div class="realization-card desktop" data-aos="fade-up">
+                <div class="realization-image">
+                    <img src="image_mobile_project2.jpg" alt="Application Desktop">
+                </div>
+                <div class="realization-content">
+                    <h3>Application Mobile ABC</h3>
+                    <p>Création d'une application mobile pour la réservation de billets</p>
+                    <ul>
+                        <li>Technologies React Native et Expo</li>
+                        <li>Déploiement sur Google Play et App Store</li>
+                    </ul>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</section>
+
+
+    <!-- Nouvelle section Langues -->
+    <section class="languages-section">
+        <div class="container">
+            <h2 class="section-title">Langues</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="language-card">
+                        <div class="language-header">
+                            <div class="language-icon fr-icon">FR</div>
+                            <h4 class="language-name">Français</h4>
+                        </div>
+                        <div class="skill-chart">
+                            <div class="circle circle-bg"></div>
+                            <div class="circle circle-progress fr"></div>
+                            <div class="percentage">90%</div>
+                        </div>
+                        <div class="language-details">
+                            <span class="proficiency fr">Niveau Avancé-C2</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="language-card">
+                        <div class="language-header">
+                            <div class="language-icon en-icon">EN</div>
+                            <h4 class="language-name">Anglais</h4>
+                        </div>
+                        <div class="skill-chart">
+                            <div class="circle circle-bg"></div>
+                            <div class="circle circle-progress en"></div>
+                            <div class="percentage">75%</div>
+                        </div>
+                        <div class="language-details">
+                            <span class="proficiency en">Niveau Intermédiaire-B1</span>
+                            <!-- <button class="download-certificate" onclick="window.open('chemin_vers_attestation_anglais.pdf')">
+                                <i class="fas fa-file-download"></i>
+                                <span class="tooltip">Télécharger l'attestation</span>
+                            </button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nouvelle section Certifications -->
+    <!-- Nouvelle section Certifications -->
+    <section id="certificates" class="py-5">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Certifications</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="certificate-card" data-aos="fade-left" data-aos-delay="100">
+                        <h4>Certificat d'excellence</h4>
+                        <p>FIRST GLOBAL CHALLENGE 2024</p>
+                        <a href="./documents/FGC_CERTIFICATE_2024.pdf" class="btn btn-primary" download>
+                            <i class="fas fa-download"></i> Télécharger Certificat
+                        </a>
+                    </div>
+                    <div class="certificate-card" data-aos="fade-left" data-aos-delay="100">
+                        <h4>Certificat de participation actif à CEPA</h4>
+                        <p>NATIONAL CHALLENGE, ENGLISH QUIZ COMPETITION-SECOND EDITION (2023)</p>
+                        <a href="./documents/CEPA_CERTIFICATE_2023.pdf" class="btn btn-primary" download>
+                            <i class="fas fa-download"></i> Télécharger Certificat
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="certificate-card" data-aos="fade-left">
+                        <h4>CCNA-1_V.7</h4>
+                        <p>CCNAv7: Introduction to Networks</p>
+                        <!-- Icone de téléchargement pour CCNA-1_V.7 -->
+                        <a href="./documents/NetAcad Learning Transcript.pdf" class="btn btn-primary" download>
+                            <i class="fas fa-download"></i> Télécharger Certificat
+                        </a>
+                    </div>
+                    <div class="certificate-card" data-aos="fade-left" data-aos-delay="100">
+                        <h4>CCNA-2_V.7</h4>
+                        <p>CCNAv7: Switching, Routing, and Wireless Essentials</p>
+                        <!-- Icone de téléchargement pour CCNA-2_V.7 -->
+                        <a href="./documents/NetAcad Learning Transcript.pdf" class="btn btn-primary" download>
+                            <i class="fas fa-download"></i> Télécharger Certificat
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title text-white" data-aos="fade-up">Contact</h2>
+            
+            <div class="contact-container">
+                <div class="contact-details" data-aos="fade-right">
+                    <!-- Téléphone -->
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="bi bi-telephone"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Téléphone</h4>
+                            <p><a href="https://wa.me/message/34RVE7ZIDNIYA1" class="text-white text-decoration-none">+228 90 51 56 63</a></p>
+                        </div>
+                    </div>
+    
+                    <!-- Email -->
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="bi bi-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Email</h4>
+                            <p><a href="mailto:charlyeklu27@gmail.com" class="text-white text-decoration-none">charlyeklu27@gmail.com</a></p>
+                        </div>
+                    </div>
+    
+                    <!-- Adresse -->
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="bi bi-geo-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Adresse</h4>
+                            <p><a href= "https://maps.app.goo.gl/C7EtCd8ZsH3mpQEv5" class="text-white text-decoration-none">Ségbé, Lomé-Togo</a></p>
+                        </div>
+                    </div>
+    
+                    <!-- GitHub -->
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="bi bi-github"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>GitHub</h4>
+                            <p><a href="https://github.com/SCSBoy" class="text-white text-decoration-none">github.com/SCSBoy</a></p>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Carte -->
+                <div class="map-container" data-aos="fade-left">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7933.021018384221!2d1.1177129999999966!3d6.196172!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sfr!2stg!4v1739730940883!5m2!1sfr!2stg" 
+                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                    <div class="map-overlay"></div>
+                </div>
+            </div>
+    
+            <!-- Bouton pour ouvrir dans Google Maps -->
+            <div class="text-center mt-4" data-aos="fade-up">
+                <a href="https://maps.app.goo.gl/C7EtCd8ZsH3mpQEv5" 
+                   target="_blank" 
+                   class="btn btn-light">
+                    <i class="bi bi-map me-2"></i>
+                    Ouvrir dans Google Maps
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
