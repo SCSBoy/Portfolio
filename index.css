@@ -1217,6 +1217,7 @@ html {
         flex-direction: column;
         text-align: center;
         gap: 2rem;
+        width: 100%;
     }
 
     .profile-image {
