@@ -111,3 +111,12 @@
     justify-content: center;
   }
 }
+@media (max-width: 600px) {
+  .footer__socials {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .footer__social-link {
+    justify-content: center !important;
+  }
+}

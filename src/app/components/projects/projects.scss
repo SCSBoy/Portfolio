@@ -141,3 +141,16 @@ mat-chip {
   .projects__pyramid-container { order: -1; }
   .pyramid-canvas { height: 320px; }
 }
+
+@media (max-width: 600px) {
+  .project-details__actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+  .project-details__actions > * { 
+    width: 100%; 
+    text-align: center; 
+    justify-content: center; 
+  }
+}

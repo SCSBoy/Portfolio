@@ -139,6 +139,7 @@
 
 .timeline-node {
   width: 340px; /* Matches NODE_W in TS */
+  box-sizing: border-box;
   flex-shrink: 0;
   padding: 0 1rem;
   display: flex;
@@ -318,4 +319,6 @@
 
 @media (max-width: 600px) {
   .timeline-node { width: 280px; }
+  .timeline-container { padding: 0; gap: 0; }
+  .nav-btn { display: none; }
 }

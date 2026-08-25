@@ -7,6 +7,10 @@
   grid-template-columns: 1.1fr 0.9fr;
   gap: 3rem;
   align-items: start;
+
+  > * {
+    min-width: 0;
+  }
 }
 
 .about__text {
@@ -280,6 +284,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .about__highlights { grid-template-columns: 1fr; }
+  .about__title-group { text-align: center; }
 }
