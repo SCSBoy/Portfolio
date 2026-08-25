@@ -1,0 +1,17 @@
+<div class="preloader" #preloader>
+  <svg viewBox="0 0 300 150">
+    <path class="circuit-path" #circuitPath d="M 0,75 L 50,75 L 75,25 L 125,125 L 175,25 L 200,75 L 250,75 L 300,75" />
+  </svg>
+</div>
+
+
+<app-header />
+
+<main>
+  <router-outlet />
+</main>
+
+<app-footer />
+
+<!-- Overlay for GSAP page transitions -->
+<div class="page-transition-overlay"></div>

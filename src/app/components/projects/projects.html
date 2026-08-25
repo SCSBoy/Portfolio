@@ -1,0 +1,62 @@
+<section id="projets" class="section projects">
+  <p class="section-eyebrow" appReveal="bottom">Portfolio</p>
+  <h2 class="section-title" appReveal="bottom" [revealDelay]="80">{{ i18n.t('projects.title') }}</h2>
+
+  <div class="projects__layout">
+    <!-- Left Column: Active Project Details -->
+    <div class="projects__details" appReveal="left">
+      @if (activeProject(); as project) {
+        <div class="project-details">
+          <h3 class="project-details__title">{{ project.title }}</h3>
+          <p class="project-details__meta">{{ project.role[i18n.currentLang()] }} • {{ project.duration[i18n.currentLang()] }}</p>
+
+          <div class="project-details__desc">
+            <p>{{ project.summary[i18n.currentLang()] }}...</p>
+          </div>
+
+          <div class="project-details__tags">
+            <mat-chip-set [attr.aria-label]="i18n.t('common.tech_used')">
+              @for (tag of project.tags; track $index) {
+                <mat-chip disabled>{{ tag }}</mat-chip>
+              }
+            </mat-chip-set>
+          </div>
+
+          <div class="project-details__actions">
+            @if (project.demoUrl) {
+              <a mat-button [href]="project.demoUrl">
+                <mat-icon>open_in_new</mat-icon> {{ i18n.t('projects.btn_demo') }}
+              </a>
+            }
+            @if (project.codeUrl) {
+              <a mat-button [href]="project.codeUrl">
+                <mat-icon>code</mat-icon> {{ i18n.t('projects.btn_code') }}
+              </a>
+            }
+            <a mat-button color="primary"
+               (click)="$event.preventDefault(); transitionService.navigate('/projets/' + project.slug)">
+              {{ i18n.t('projects.btn_learn_more') }} <mat-icon iconPositionEnd>arrow_forward</mat-icon>
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Right Column: Three.js Pyramid -->
+    <div class="projects__pyramid-container" appReveal="right">
+      <canvas #pyramidCanvas class="pyramid-canvas"></canvas>
+
+      @if (totalPages() > 1) {
+        <div class="pyramid-pagination">
+          <button mat-icon-button (click)="prevPage()" [disabled]="currentPage() === 0">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+          <span class="pyramid-pagination__text">{{ currentPage() + 1 }} / {{ totalPages() }}</span>
+          <button mat-icon-button (click)="nextPage()">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+</section>

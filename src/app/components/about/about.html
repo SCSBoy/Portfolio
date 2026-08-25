@@ -1,0 +1,69 @@
+<section id="a-propos" class="section about">
+  <div class="about__intro" appReveal="left">
+    <p class="section-eyebrow">{{ i18n.t('about.title') }}</p>
+    <div class="about__title-group">
+      <h2 class="section-title">{{ i18n.t('about.title') }}</h2>
+      <img [src]="currentMode() === 'fullstack' ? 'images/WhoAmI.png' : (currentMode() === 'data' ? 'images/WhoAmI_2.png' : 'images/WhoAmI_3.png')" alt="Who Am I" class="about__title-image" loading="lazy" />
+    </div>
+    
+    <p class="about__text" [innerHTML]="aboutTexts().p1[i18n.currentLang()]"></p>
+    <p class="about__text">
+      {{ aboutTexts().p2[i18n.currentLang()] }}
+      <span class="about__next-btn" (click)="toggleMode()" role="button" tabindex="0">
+        {{ aboutTexts().next[i18n.currentLang()] }} <mat-icon>keyboard_double_arrow_right</mat-icon>
+      </span>
+    </p>
+
+    <div class="code-card" aria-hidden="true">
+      <div class="code-card__bar">
+        <span class="code-card__dot code-card__dot--red"></span>
+        <span class="code-card__dot code-card__dot--yellow"></span>
+        <span class="code-card__dot code-card__dot--green"></span>
+        <span class="code-card__filename">{{ currentMode() === 'fullstack' ? 'developer.ts' : (currentMode() === 'data' ? 'data_engineer.py' : 'awards.yml') }}</span>
+      </div>
+      <pre class="code-card__body"><code
+        ><span class="tok-keyword">const</span> <span class="tok-var">developer</span> = &#123;
+  <span class="tok-prop">name</span>: <span class="tok-string">'Charly EKLU'</span>,
+  <span class="tok-prop">role</span>: <span class="tok-string">{{ devCode().role[i18n.currentLang()] }}</span>,
+  <span class="tok-prop">stack</span>: <span class="tok-string">{{ devCode().stack }}</span>,
+  <span class="tok-prop">passion</span>: <span class="tok-string">{{ devCode().passion }}</span>,
+&#125;;</code></pre>
+    </div>
+  </div>
+
+  <div class="about__right-column" appReveal="right">
+    <div class="about__highlights" [@flipList]="currentMode()">
+      @for (item of highlights(); track item.label) {
+        <mat-card appearance="outlined" class="highlight-card">
+          <mat-icon class="highlight-card__icon">{{ item.icon }}</mat-icon>
+          <span class="highlight-card__value">{{ item.value }}</span>
+          <span class="highlight-card__label">{{ item.label[i18n.currentLang()] }}</span>
+        </mat-card>
+      }
+    </div>
+
+    <!-- Testimonials -->
+    <div class="about__testimonials">
+      <h3 class="about__testimonials-title">{{ i18n.currentLang() === 'en' ? 'What they say' : 'Ce qu\'ils en disent' }}</h3>
+      <div class="about__testimonials-list" [@flipList]="currentMode()">
+        @for (review of testimonials(); track review.name) {
+          <div class="testimonial-card">
+            <div class="testimonial-card__header">
+              <div class="testimonial-card__avatar">{{ review.avatar }}</div>
+              <div class="testimonial-card__meta">
+                <span class="testimonial-card__name">{{ review.name }}</span>
+                <span class="testimonial-card__role">{{ review.role[i18n.currentLang()] }}</span>
+              </div>
+              <div class="testimonial-card__stars">
+                @for (star of [1, 2, 3, 4, 5]; track star) {
+                  <mat-icon class="star-icon">star</mat-icon>
+                }
+              </div>
+            </div>
+            <p class="testimonial-card__text">"{{ review.text[i18n.currentLang()] }}"</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>

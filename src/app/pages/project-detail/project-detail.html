@@ -1,0 +1,155 @@
+@if (project(); as p) {
+  <section class="project-hero" [style.background]="p.gradient">
+    <div class="project-hero__inner" appReveal="bottom">
+      <a mat-button (click)="transitionService.navigate('/', 'projets')" class="project-hero__back" style="cursor: pointer;">
+        <mat-icon>arrow_back</mat-icon>
+        {{ i18n.t('project.back') }}
+      </a>
+      <p class="project-hero__eyebrow">{{ i18n.t('project.eyebrow') }}</p>
+      <h1 class="project-hero__title">{{ p.title }}</h1>
+      <p class="project-hero__summary">{{ p.summary[i18n.currentLang()] }}</p>
+
+      <div class="project-hero__actions">
+        @if (p.demoUrl) {
+          <a mat-flat-button color="primary" [href]="p.demoUrl">
+            <mat-icon>open_in_new</mat-icon>
+            {{ i18n.t('project.btn_demo') }}
+          </a>
+        }
+        @if (p.codeUrl) {
+          <a mat-stroked-button [href]="p.codeUrl">
+            <mat-icon>code</mat-icon>
+            {{ i18n.t('project.btn_code') }}
+          </a>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section project-detail">
+    <div class="project-detail__layout" [class.media-open]="mediaOpen()">
+
+      <!-- LEFT: Description + features (scrollable when gallery is open) -->
+      <div class="project-detail__main" [class.main-scrollable]="mediaOpen()" appReveal="left">
+        <h2 class="section-title">{{ i18n.t('project.about_title') }}</h2>
+        @for (paragraph of p.description; track paragraph.en) {
+          <p class="project-detail__paragraph">{{ paragraph[i18n.currentLang()] }}</p>
+        }
+
+        <h3 class="project-detail__subtitle">{{ i18n.t('project.features_title') }}</h3>
+        <ul class="project-detail__features">
+          @for (feature of p.features; track feature.en) {
+            <li>
+              <mat-icon>check_circle</mat-icon>
+              <span>{{ feature[i18n.currentLang()] }}</span>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- CENTER: Media gallery (collapsible) -->
+      <div class="project-media" appReveal="bottom" [revealDelay]="120">
+
+        <!-- Gallery header with toggle -->
+        <div class="project-media__header">
+          <h3 class="project-media__title">
+            <mat-icon>photo_library</mat-icon>
+            {{ i18n.t('project.media_title') }}
+          </h3>
+          <button mat-icon-button (click)="toggleMedia()" [attr.aria-label]="mediaOpen() ? i18n.t('project.media_hide') : i18n.t('project.media_show')" class="project-media__toggle">
+            <mat-icon>{{ mediaOpen() ? 'remove' : 'add' }}</mat-icon>
+          </button>
+        </div>
+
+        <!-- Collapsible body -->
+        <div class="collapsible-content" [class.is-open]="mediaOpen()">
+          <div class="collapsible-content__inner">
+
+            <!-- Main preview -->
+            <div class="project-media__preview">
+              @if (selectedMedia().type === 'video') {
+                <video
+                  class="project-media__preview-video"
+                  [poster]="selectedMedia().src"
+                  [src]="selectedMedia().videoSrc"
+                  controls
+                  preload="metadata">
+                </video>
+                <span class="project-media__badge project-media__badge--video">
+                  <mat-icon>play_circle</mat-icon> {{ i18n.t('project.badge_video') }}
+                </span>
+                <!-- Photo legend below video -->
+                <div class="project-media__video-legend">
+                  <img [src]="selectedMedia().src" [alt]="selectedMedia().label[i18n.currentLang()]" class="project-media__legend-thumb" />
+                  <div class="project-media__legend-text">
+                    <strong>{{ selectedMedia().label[i18n.currentLang()] }}</strong>
+                    <span>{{ selectedMedia().caption[i18n.currentLang()] }}</span>
+                  </div>
+                </div>
+              } @else {
+                <img
+                  class="project-media__preview-img"
+                  [src]="selectedMedia().src"
+                  [alt]="selectedMedia().label[i18n.currentLang()]" />
+                <span class="project-media__badge">
+                  <mat-icon>photo</mat-icon> {{ i18n.t('project.badge_photo') }}
+                </span>
+                <div class="project-media__caption">
+                  <strong>{{ selectedMedia().label[i18n.currentLang()] }}</strong>
+                  <span>{{ selectedMedia().caption[i18n.currentLang()] }}</span>
+                </div>
+              }
+            </div>
+
+            <!-- Thumbnails strip -->
+            <div class="project-media__thumbs">
+              @for (item of media; track item.label.en) {
+                <button
+                  class="project-media__thumb"
+                  [class.project-media__thumb--active]="selectedMedia().label.en === item.label.en"
+                  (click)="selectMedia(item)"
+                  [attr.aria-label]="item.label[i18n.currentLang()]">
+                  <img [src]="item.src" [alt]="item.label[i18n.currentLang()]" loading="lazy" />
+                  @if (item.type === 'video') {
+                    <span class="project-media__thumb-play">
+                      <mat-icon>play_circle_filled</mat-icon>
+                    </span>
+                  }
+                </button>
+              }
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Meta cards -->
+      <aside class="project-detail__sidebar" appReveal="right">
+        <div class="project-detail__card">
+          <span class="project-detail__card-label">{{ i18n.t('project.meta_role') }}</span>
+          <span class="project-detail__card-value">{{ p.role[i18n.currentLang()] }}</span>
+        </div>
+        <div class="project-detail__card">
+          <span class="project-detail__card-label">{{ i18n.t('project.meta_duration') }}</span>
+          <span class="project-detail__card-value">{{ p.duration[i18n.currentLang()] }}</span>
+        </div>
+        <div class="project-detail__card">
+          <span class="project-detail__card-label">{{ i18n.t('project.meta_stack') }}</span>
+          <mat-chip-set [attr.aria-label]="i18n.t('common.tech_used')">
+            @for (tag of p.tags; track tag) {
+              <mat-chip disabled>{{ tag }}</mat-chip>
+            }
+          </mat-chip-set>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+} @else {
+  <section class="section project-not-found">
+    <mat-icon>search_off</mat-icon>
+    <h1>{{ i18n.t('project.not_found_title') }}</h1>
+    <p>{{ i18n.t('project.not_found_desc') }}</p>
+    <a mat-flat-button color="primary" (click)="transitionService.navigate('/', 'projets')" style="cursor: pointer;">{{ i18n.t('project.back') }}</a>
+  </section>
+}

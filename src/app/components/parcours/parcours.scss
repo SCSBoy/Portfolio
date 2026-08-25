@@ -1,0 +1,312 @@
+/* ══════════════════════════════════════════════════════
+   PARCOURS — Timeline (Horizontal)
+══════════════════════════════════════════════════════ */
+
+.parcours {
+  position: relative;
+  overflow: hidden;
+}
+
+.parcours__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.parcours__content {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Tabs ───────────────────────────────────────────── */
+.parcours__tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 3rem 0;
+
+  .parcours__tab {
+    color: var(--text-muted);
+    border: 1px solid var(--border-default);
+    border-radius: 999px;
+    padding: 0.5rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    background: var(--bg-900);
+
+    mat-icon {
+      margin-right: 0.5rem;
+    }
+
+    &:hover {
+      border-color: var(--primary-400);
+      color: var(--primary-300);
+    }
+
+    &--active {
+      color: #000106 !important;
+      background: var(--primary-400);
+      border-color: var(--primary-400);
+      box-shadow: 0 0 12px rgba(3, 175, 249, 0.4);
+
+      &.parcours__tab--academic {
+        background: #fbbf24;
+        border-color: #fbbf24;
+        box-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
+      }
+    }
+  }
+}
+
+/* ── Container & Viewport ───────────────────────────── */
+.timeline-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.nav-btn {
+  flex-shrink: 0;
+  color: var(--text-primary) !important;
+  background: var(--bg-800) !important;
+  border: 1px solid var(--border-default) !important;
+  transition: all 0.2s;
+
+  &:not([disabled]):hover {
+    border-color: var(--primary-400) !important;
+    color: var(--primary-400) !important;
+    box-shadow: 0 0 12px rgba(3, 175, 249, 0.3) !important;
+  }
+}
+
+.timeline-viewport {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  padding: 3rem 0 1rem;
+  /* fade edges */
+  mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
+/* ── Axis ───────────────────────────────────────────── */
+.timeline-axis {
+  position: absolute;
+  top: 3.9rem; /* Align with dots */
+  left: 0;
+  width: 100%;
+  height: 2px;
+  z-index: 1;
+}
+
+.timeline-axis-line {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--primary-400), transparent);
+  opacity: 0.6;
+  transform-origin: left center;
+
+  &--academic {
+    background: linear-gradient(90deg, transparent, #fbbf24, transparent);
+  }
+}
+
+/* ── Track & Nodes ──────────────────────────────────── */
+.timeline-track {
+  display: flex;
+  position: relative;
+  z-index: 2;
+  width: max-content;
+  will-change: transform;
+}
+
+.timeline-node {
+  width: 340px; /* Matches NODE_W in TS */
+  flex-shrink: 0;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  opacity: 0; /* Animated by Anime.js */
+  transform: translateY(20px); /* Animated by Anime.js */
+}
+
+/* ── Dots ───────────────────────────────────────────── */
+.timeline-dot-wrapper {
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  position: relative;
+  z-index: 3;
+}
+
+.timeline-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--bg-900);
+  border: 2px solid var(--border-default);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  .timeline-node:hover & {
+    border-color: var(--primary-400);
+    transform: scale(1.3);
+  }
+
+  .timeline-node--academic:hover & {
+    border-color: #fbbf24;
+  }
+
+  .timeline-node--active & {
+    border-color: var(--primary-400);
+    background: var(--primary-400);
+    transform: scale(1.5);
+    box-shadow: 0 0 10px rgba(3, 175, 249, 0.6);
+  }
+
+  .timeline-node--active.timeline-node--academic & {
+    border-color: #fbbf24;
+    background: #fbbf24;
+    box-shadow: 0 0 10px rgba(251, 191, 36, 0.6);
+  }
+}
+
+/* ── Card ───────────────────────────────────────────── */
+.timeline-card {
+  background: var(--bg-800);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.3s;
+  height: 100%;
+
+  .timeline-node:hover & {
+    border-color: rgba(3, 175, 249, 0.3);
+  }
+
+  .timeline-node--academic:hover & {
+    border-color: rgba(251, 191, 36, 0.3);
+  }
+
+  .timeline-node--active & {
+    border-color: var(--primary-400);
+  }
+
+  .timeline-node--active.timeline-node--academic & {
+    border-color: #fbbf24;
+  }
+}
+
+.timeline-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.timeline-year {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+
+  .timeline-node--active & { color: var(--primary-300); }
+  .timeline-node--active.timeline-node--academic & { color: #fbbf24; }
+}
+
+.timeline-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(3, 175, 249, 0.15);
+  color: var(--primary-300);
+  border: 1px solid rgba(3, 175, 249, 0.3);
+
+  .timeline-node--academic & {
+    background: rgba(251, 191, 36, 0.12);
+    color: #fbbf24;
+    border-color: rgba(251, 191, 36, 0.3);
+  }
+}
+
+.timeline-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 0.5rem;
+  line-height: 1.4;
+}
+
+.timeline-place {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+
+  mat-icon {
+    font-size: 1rem;
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.timeline-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0 0 1.25rem;
+}
+
+.timeline-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.timeline-tag {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: var(--bg-700);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+
+  .timeline-node--active & {
+    background: rgba(3, 175, 249, 0.1);
+    color: var(--primary-300);
+    border-color: rgba(3, 175, 249, 0.2);
+  }
+
+  .timeline-node--active.timeline-node--academic & {
+    background: rgba(251, 191, 36, 0.1);
+    color: #fbbf24;
+    border-color: rgba(251, 191, 36, 0.2);
+  }
+}
+
+@media (max-width: 768px) {
+  .timeline-container { padding: 0 0.5rem; gap: 0.25rem; }
+  .nav-btn { transform: scale(0.85); }
+}
+
+@media (max-width: 600px) {
+  .timeline-node { width: 280px; }
+}

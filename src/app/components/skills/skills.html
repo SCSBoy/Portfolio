@@ -1,0 +1,46 @@
+<section id="competences" class="section">
+  <div appReveal="left">
+    <p class="section-eyebrow">{{ i18n.t('skills.title') }}</p>
+    <div class="section-header-row">
+      <h2 class="section-title">{{ i18n.t('skills.title') }}</h2>
+      <button mat-icon-button (click)="toggleOpen()" [attr.aria-label]="i18n.t('skills.aria_toggle')">
+        <mat-icon>{{ isOpen() ? 'remove' : 'add' }}</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="collapsible-content" [class.is-open]="isOpen()">
+    <div class="collapsible-content__inner">
+      <div class="skills">
+        <div class="skills__left-column">
+          <img src="images/CHARLY_TECH.png" alt="Tech Stack" class="skills__large-image" loading="lazy" />
+        </div>
+
+  <div class="skills__right-column">
+    <div class="skills__groups">
+      @for (group of groups; track group.category; let gi = $index) {
+        <div class="skills__group" appReveal="bottom" [revealDelay]="gi * 120">
+          <div class="skills__group-header">
+            <mat-icon>{{ group.icon }}</mat-icon>
+            <h3>{{ i18n.t(group.category) }}</h3>
+          </div>
+
+          <ul class="skills__list">
+            @for (item of group.items; track item.name) {
+              <li class="skill-item" [matTooltip]="item.projects[i18n.currentLang()]" matTooltipPosition="above" matTooltipClass="skill-tooltip">
+                <div class="skill-item__label">
+                  <i class="{{ item.icon }} colored skill-item__icon" aria-hidden="true"></i>
+                  <span class="skill-item__name">{{ item.name }}</span>
+                  <span class="skill-item__level">{{ item.level[i18n.currentLang()] }}</span>
+                </div>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>

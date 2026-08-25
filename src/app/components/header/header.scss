@@ -1,0 +1,99 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: transparent;
+  color: var(--text-primary);
+  transition: background-color 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
+  border-bottom: 1px solid transparent;
+
+  &--scrolled {
+    background: rgba(0, 1, 6, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom-color: rgba(3, 175, 249, 0.10);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.45);
+  }
+}
+
+.header__logo {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.8rem;
+  letter-spacing: -0.02em;
+  color: var(--primary-400);
+  text-shadow: 0 0 10px var(--primary-400), 0 0 20px rgba(3, 175, 249, 0.5);
+  flex: 0 0 auto;
+  cursor: pointer;
+  transition: text-shadow 0.3s ease;
+
+  &:hover {
+    text-shadow: 0 0 15px var(--primary-400), 0 0 30px rgba(3, 175, 249, 0.8);
+  }
+}
+
+.header__spacer {
+  flex: 1 1 auto;
+}
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+
+  /* Liens de navigation */
+  a[mat-button] {
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.01em;
+    transition: color 0.2s;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      width: 70%;
+      height: 1.5px;
+      background: var(--primary-400);
+      border-radius: 2px;
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    &:hover {
+      color: var(--primary-300);
+      &::after { transform: translateX(-50%) scaleX(1); }
+    }
+  }
+
+  /* Bouton CTA "Me contacter" */
+  a[mat-flat-button] {
+    background: linear-gradient(135deg, var(--primary-700), var(--primary-400)) !important;
+    color: #000106 !important;
+    font-weight: 600 !important;
+    border-radius: var(--radius-sm) !important;
+    box-shadow: var(--glow-primary) !important;
+    transition: box-shadow 0.2s, filter 0.2s !important;
+    margin-left: 0.5rem;
+
+    &:hover {
+      box-shadow: var(--glow-strong) !important;
+      filter: brightness(1.1);
+    }
+  }
+}
+
+.header__menu-trigger {
+  display: none;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .header__nav    { display: none; }
+  .header__menu-trigger { display: inline-flex; }
+}

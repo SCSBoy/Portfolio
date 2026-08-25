@@ -1,0 +1,113 @@
+/* ══════════════════════════════════════════════════════
+   FOOTER — Dark Tech · Electric Blue
+══════════════════════════════════════════════════════ */
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.5rem 8vw;
+  background: var(--bg-950);
+  border-top: 1px solid rgba(3,175,249,0.08);
+  color: var(--text-muted);
+}
+
+.footer__left {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.footer__character {
+  height: 160px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+  margin-top: -70px; // Allows the head to pop out of the footer top
+  margin-bottom: -1.5rem; // Anchors the character to the very bottom edge
+  position: relative;
+  z-index: 10; // Ensure it stays above other elements if it overlaps
+}
+
+.footer__center {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer__branding {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.footer__logo {
+  height: 64px;
+  width: auto;
+  object-fit: contain;
+}
+
+.footer__copy {
+  margin: 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
+
+.footer__right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.footer__socials {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 0.25rem 0.75rem;
+
+  .footer__social-link {
+    color: var(--text-muted) !important;
+    font-weight: 400 !important;
+    padding: 4px 12px !important;
+    transition: color 0.2s, filter 0.2s !important;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    mat-icon {
+      margin-right: 6px;
+    }
+
+    &:hover {
+      color: var(--primary-400) !important;
+      filter: drop-shadow(0 0 6px rgba(3,175,249,0.45));
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .footer {
+    flex-direction: column;
+    text-align: center;
+    gap: 3rem;
+  }
+  
+  .footer__character {
+    margin-top: -40px;
+    height: 140px;
+  }
+
+  .footer__left, .footer__right {
+    flex: auto;
+    justify-content: center;
+  }
+  
+  .footer__socials {
+    justify-content: center;
+  }
+}

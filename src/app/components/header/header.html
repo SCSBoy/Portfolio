@@ -1,0 +1,37 @@
+<mat-toolbar class="header" [class.header--scrolled]="scrolled()">
+  <div class="header__logo">C.E</div>
+  <span class="header__spacer"></span>
+
+  <nav class="header__nav">
+    @for (link of links; track link.fragment) {
+      <a mat-button routerLink="/" [fragment]="link.fragment" (click)="handleNavClick($event, link.fragment)">{{ i18n.t(link.key) }}</a>
+    }
+    <a mat-flat-button color="primary" routerLink="/" fragment="contact" (click)="handleNavClick($event, 'contact')">{{ i18n.t('nav.contact') }}</a>
+
+    <div class="header__lang-toggle">
+      <button mat-button (click)="i18n.toggleLanguage()" class="lang-btn">
+        {{ i18n.currentLang() | uppercase }}
+      </button>
+    </div>
+  </nav>
+
+  <button
+    class="header__menu-trigger"
+    mat-icon-button
+    [matMenuTriggerFor]="mobileMenu"
+    [attr.aria-label]="i18n.t('nav.menu_open')"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <mat-menu #mobileMenu="matMenu">
+    @for (link of links; track link.fragment) {
+      <a mat-menu-item routerLink="/" [fragment]="link.fragment" (click)="handleNavClick($event, link.fragment)">{{ i18n.t(link.key) }}</a>
+    }
+    <a mat-menu-item routerLink="/" fragment="contact" (click)="handleNavClick($event, 'contact')">{{ i18n.t('nav.contact') }}</a>
+    <button mat-menu-item (click)="i18n.toggleLanguage()">
+      <mat-icon>language</mat-icon>
+      <span>{{ i18n.t('nav.switch_lang') }}</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>

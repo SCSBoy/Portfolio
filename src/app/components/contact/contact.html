@@ -1,0 +1,95 @@
+<section id="contact" class="section contact">
+  <p class="section-eyebrow" appReveal="bottom">Contact</p>
+  <h2 class="section-title" appReveal="bottom" [revealDelay]="80">{{ i18n.t('contact.title') }}</h2>
+
+  <div class="contact__layout">
+    <div class="contact__info" appReveal="left">
+      <p class="contact__lead">
+        {{ i18n.t('contact.subtitle') }}
+      </p>
+
+      <div class="contact__list-wrapper">
+        <ul class="contact__list">
+          @for (item of contactInfo; track item.labelKey) {
+            <li>
+              <mat-icon>{{ item.icon }}</mat-icon>
+              <div>
+                <span class="contact__list-label">{{ i18n.t(item.labelKey) }}</span>
+                @if (item.href) {
+                  <a [href]="item.href">{{ item.value }}</a>
+                } @else {
+                  <span>{{ item.value }}</span>
+                }
+              </div>
+            </li>
+          }
+        </ul>
+        <div class="contact__charly">
+          <img src="images/CHARLY_HIRE.png" alt="Hire Charly" />
+        </div>
+      </div>
+
+      <div class="contact__map">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3966.5119597967905!2d1.1147177104589285!3d6.195978993765794!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNsKwMTEnNDUuNSJOIDHCsDA3JzAyLjMiRQ!5e0!3m2!1sfr!2stg!4v1787647245858!5m2!1sfr!2stg"
+          width="100%" height="220" style="border:0;"
+          allowfullscreen="" loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin">
+        </iframe>
+        <p class="contact__map-legend">
+          <mat-icon>location_on</mat-icon>
+          {{ location().city }}&nbsp;&middot;&nbsp;{{ location().timezone }}&nbsp;&middot;&nbsp;{{ location().availability }}
+        </p>
+      </div>
+    </div>
+
+    <form
+      class="contact__form"
+      appReveal="right"
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>{{ i18n.t('contact.form.name') }}</mat-label>
+        <input matInput [placeholder]="i18n.t('contact.form.name_placeholder')" formControlName="name" required />
+        @if (form.controls.name.invalid && form.controls.name.touched) {
+          <mat-error>{{ i18n.t('contact.error.name') }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ i18n.t('contact.form.email') }}</mat-label>
+        <input matInput type="email" [placeholder]="i18n.t('contact.form.email_placeholder')" formControlName="email" required />
+        @if (form.controls.email.invalid && form.controls.email.touched) {
+          <mat-error>{{ i18n.t('contact.error.email') }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ i18n.t('contact.form.message') }}</mat-label>
+        <textarea matInput rows="5" [placeholder]="i18n.t('contact.form.message_placeholder')" formControlName="message" required></textarea>
+        @if (form.controls.message.invalid && form.controls.message.touched) {
+          <mat-error>{{ i18n.t('contact.error.message') }}</mat-error>
+        }
+      </mat-form-field>
+
+      <button #submitButton mat-flat-button color="primary" type="submit" [disabled]="sending()">
+        @if (sending()) {
+          {{ i18n.t('contact.btn_sending') }}
+        } @else {
+          <span class="button-content">
+            {{ i18n.t('contact.btn_send') }}
+            <mat-icon>send</mat-icon>
+          </span>
+        }
+      </button>
+
+      @if (submitted()) {
+        <p class="contact__success">
+          <mat-icon>check_circle</mat-icon>
+          {{ i18n.t('contact.success') }}
+        </p>
+      }
+    </form>
+  </div>
+</section>

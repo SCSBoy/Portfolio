@@ -1,0 +1,80 @@
+<section #sectionEl id="parcours" class="section parcours">
+  <canvas #bgCanvas class="parcours__bg"></canvas>
+
+  <div class="parcours__content">
+    <p class="section-eyebrow" appReveal="bottom">{{ i18n.t('parcours.title') }}</p>
+    <div class="section-header-row" appReveal="bottom" [revealDelay]="80">
+      <h2 class="section-title">{{ i18n.t('parcours.title') }}</h2>
+      <button mat-icon-button (click)="toggleOpen()" [attr.aria-label]="i18n.t('parcours.aria_toggle')">
+        <mat-icon>{{ isOpen() ? 'remove' : 'add' }}</mat-icon>
+      </button>
+    </div>
+
+    <div class="collapsible-content" [class.is-open]="isOpen()">
+      <div class="collapsible-content__inner">
+        <div class="parcours__tabs">
+      <button mat-button class="parcours__tab" [class.parcours__tab--active]="tab() === 'pro'" (click)="switchTab('pro')">
+        <mat-icon>work_outline</mat-icon> {{ i18n.t('parcours.tab.pro') }}
+      </button>
+      <button mat-button class="parcours__tab parcours__tab--academic" [class.parcours__tab--active]="tab() === 'academic'" (click)="switchTab('academic')">
+        <mat-icon>school</mat-icon> {{ i18n.t('parcours.tab.academic') }}
+      </button>
+    </div>
+
+    <div class="timeline-container" appReveal="bottom" [revealDelay]="200">
+      <button mat-icon-button class="nav-btn nav-btn--prev" [disabled]="atStart()" (click)="navigate(-1)" [attr.aria-label]="i18n.t('parcours.aria_prev')">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+
+      <div #viewport class="timeline-viewport">
+        <!-- Ligne d'axe animée -->
+        <div class="timeline-axis">
+          <div #axisLine class="timeline-axis-line" [class.timeline-axis-line--academic]="tab() === 'academic'"></div>
+        </div>
+
+        <div #track class="timeline-track">
+          @for (item of items(); track item.title.en; let i = $index) {
+            <!-- 
+              L'ordre est inversé dans les données (Plus récent -> Plus ancien). 
+              Le premier élément est à gauche. 
+            -->
+            <div #node class="timeline-node" [class.timeline-node--active]="activeIdx() === i" [class.timeline-node--academic]="tab() === 'academic'">
+              
+              <div class="timeline-dot-wrapper" (click)="scrollToNode(i)">
+                <div class="timeline-dot"></div>
+              </div>
+              
+              <div class="timeline-card">
+                <div class="timeline-card-header">
+                  <span class="timeline-year">{{ item.year[i18n.currentLang()] }}</span>
+                  @if (item.current) {
+                    <span class="timeline-badge">{{ tab() === 'pro' ? i18n.t('parcours.badge_current') : i18n.t('parcours.badge_progress') }}</span>
+                  }
+                </div>
+                <h3 class="timeline-title">{{ item.title[i18n.currentLang()] }}</h3>
+                <p class="timeline-place">
+                  <mat-icon>{{ tab() === 'pro' ? 'business' : 'location_city' }}</mat-icon>
+                  {{ item.place[i18n.currentLang()] }}
+                </p>
+                <p class="timeline-desc">{{ item.description[i18n.currentLang()] }}</p>
+                @if (item.tags) {
+                  <div class="timeline-tags">
+                    @for (tag of item.tags; track tag) {
+                      <span class="timeline-tag">{{ tag }}</span>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <button mat-icon-button class="nav-btn nav-btn--next" [disabled]="atEnd()" (click)="navigate(1)" [attr.aria-label]="i18n.t('parcours.aria_next')">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+      </div>
+    </div>
+  </div>
+</div>
+</section>

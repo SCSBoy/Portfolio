@@ -1,0 +1,16 @@
+diff --git a/node_modules/@angular/build/src/builders/dev-server/vite/server.js b/node_modules/@angular/build/src/builders/dev-server/vite/server.js
+index 7e688fb..d69809f 100644
+--- a/node_modules/@angular/build/src/builders/dev-server/vite/server.js
++++ b/node_modules/@angular/build/src/builders/dev-server/vite/server.js
+@@ -91,6 +91,11 @@ async function createServerConfig(serverOptions, assets, ssrMode, preTransformRe
+                 (0, node_path_1.join)(serverOptions.workspaceRoot, 'node_modules'),
+                 ...[...assets.values()].map(({ source }) => source),
+             ],
++            // Vite unconditionally rejects any path containing "~" on Windows (a hardcoded
++            // heuristic against 8.3 short-name aliasing). Workspace paths that legitimately
++            // contain "~" in a folder name (e.g. CODE~UNIVERSE) trip this even though the
++            // path is already covered by the `allow` list above, so relax strict mode for dev.
++            strict: false,
+         },
+     };
+     if (serverOptions.ssl) {
