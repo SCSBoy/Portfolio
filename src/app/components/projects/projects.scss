@@ -129,6 +129,13 @@ mat-chip {
   .projects__layout {
     grid-template-columns: 1fr;
     gap: 2rem;
+    text-align: center;
+  }
+  .project-details__actions { 
+    justify-content: center; 
+  }
+  .pyramid-pagination {
+    justify-content: center;
   }
 
   .projects__pyramid-container { order: -1; }

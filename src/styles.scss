@@ -22,6 +22,7 @@ html {
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
+  overflow-x: hidden;
 }
 
 // ── Design Tokens ─────────────────────────────────────
@@ -74,15 +75,13 @@ body {
   color-scheme: dark;
   background-color: var(--bg-950);
   color: var(--text-primary);
-  font-family: 'Inter', 'Space Grotesk', system-ui, sans-serif;
-  font: unset; // retire le font de mat.theme pour utiliser le nôtre
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 1rem;
   line-height: 1.6;
-  color: var(--text-primary);
-  background-color: var(--bg-950);
   margin: 0;
   height: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -188,5 +187,17 @@ section:nth-child(even) {
 @media (max-width: 600px) {
   .section {
     padding: 4rem 6vw;
+  }
+  .section-eyebrow {
+    text-align: center;
+  }
+  .section-header-row {
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  .section-title {
+    text-align: center;
   }
 }

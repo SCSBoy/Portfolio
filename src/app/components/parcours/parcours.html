@@ -26,13 +26,12 @@
         <mat-icon>chevron_left</mat-icon>
       </button>
 
-      <div #viewport class="timeline-viewport">
-        <!-- Ligne d'axe animée -->
-        <div class="timeline-axis">
-          <div #axisLine class="timeline-axis-line" [class.timeline-axis-line--academic]="tab() === 'academic'"></div>
-        </div>
-
+      <div #viewport class="timeline-viewport" (scroll)="onViewportScroll($event)">
         <div #track class="timeline-track">
+          <!-- Ligne d'axe animée (maintenant dans la piste pour défiler avec) -->
+          <div class="timeline-axis">
+            <div #axisLine class="timeline-axis-line" [class.timeline-axis-line--academic]="tab() === 'academic'"></div>
+          </div>
           @for (item of items(); track item.title.en; let i = $index) {
             <!-- 
               L'ordre est inversé dans les données (Plus récent -> Plus ancien). 

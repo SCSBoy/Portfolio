@@ -93,7 +93,7 @@ export class Parcours implements AfterViewInit, OnDestroy {
 
   protected readonly tab    = signal<'pro'|'academic'>('pro');
   protected readonly isOpen = signal(false);
-  protected readonly trackX = signal(0);
+  protected readonly scrollLeft = signal(0);
   protected readonly i18n   = inject(I18nService);
 
   protected toggleOpen(): void {
@@ -102,12 +102,12 @@ export class Parcours implements AfterViewInit, OnDestroy {
     setTimeout(() => ScrollTrigger.refresh(), 300);
   }
   protected readonly items  = computed(() => this.tab() === 'pro' ? PROFESSIONAL : ACADEMIC);
-  protected readonly atStart = computed(() => this.trackX() >= 0);
+  protected readonly atStart = computed(() => this.scrollLeft() <= 0);
   protected readonly atEnd   = computed(() => {
     const max = (this.items().length - 1) * this.nodeWidth;
-    return Math.abs(this.trackX()) >= max;
+    return this.scrollLeft() >= max - 10; // -10 for safety margin
   });
-  protected readonly activeIdx = computed(() => Math.round(Math.abs(this.trackX()) / this.nodeWidth));
+  protected readonly activeIdx = computed(() => Math.round(this.scrollLeft() / this.nodeWidth));
 
   private threeRenderer?: THREE.WebGLRenderer;
   private threeAnimId?: number;
@@ -120,7 +120,10 @@ export class Parcours implements AfterViewInit, OnDestroy {
     // Rebuild timeline whenever tab changes
     effect(() => {
       this.tab(); // read signal
-      this.trackX.set(0);
+      if (this.viewport?.nativeElement) {
+        this.viewport.nativeElement.scrollLeft = 0;
+      }
+      this.scrollLeft.set(0);
       setTimeout(() => { this.resetAxis(); this.runAnime(); }, 80);
     });
   }
@@ -240,17 +243,22 @@ export class Parcours implements AfterViewInit, OnDestroy {
   protected navigate(dir: 1 | -1): void { this.pan(dir); }
 
   private pan(dir: 1 | -1): void {
-    const max = (this.items().length - 1) * this.nodeWidth;
-    const next = Math.max(-max, Math.min(0, this.trackX() - dir * this.nodeWidth));
-    this.trackX.set(next);
-    gsap.to(this.track.nativeElement, { x: next, duration: 0.6, ease: 'power3.out' });
+    if (!this.viewport?.nativeElement) return;
+    const vp = this.viewport.nativeElement;
+    vp.scrollBy({ left: dir * this.nodeWidth, behavior: 'smooth' });
   }
 
   protected switchTab(t: 'pro' | 'academic'): void { this.tab.set(t); }
+  
   protected scrollToNode(i: number): void {
-    const x = -i * this.nodeWidth;
-    this.trackX.set(x);
-    gsap.to(this.track.nativeElement, { x, duration: 0.6, ease: 'power3.out' });
+    if (!this.viewport?.nativeElement) return;
+    const x = i * this.nodeWidth;
+    this.viewport.nativeElement.scrollTo({ left: x, behavior: 'smooth' });
+  }
+
+  protected onViewportScroll(event: Event): void {
+    const target = event.target as HTMLElement;
+    this.scrollLeft.set(target.scrollLeft);
   }
 
   ngOnDestroy(): void {

@@ -162,5 +162,23 @@
 }
 
 @media (max-width: 900px) {
-  .contact__layout { grid-template-columns: 1fr; }
+  .contact__layout { 
+    grid-template-columns: 1fr; 
+    text-align: center;
+  }
+  .contact__list-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+  .contact__list li {
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+  }
+  .contact__map-legend {
+    justify-content: center;
+  }
+  .contact__form button {
+    align-self: center;
+  }
 }
