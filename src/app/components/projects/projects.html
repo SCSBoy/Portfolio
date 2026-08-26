@@ -7,7 +7,18 @@
     <div class="projects__details" appReveal="left">
       @if (activeProject(); as project) {
         <div class="project-details">
-          <h3 class="project-details__title">{{ project.title }}</h3>
+          <div class="project-details__header">
+            <h3 class="project-details__title">{{ project.title }}</h3>
+            <div class="project-details__nav">
+              <button mat-icon-button (click)="prevProject()" [attr.aria-label]="i18n.t('projects.aria_prev')">
+                <mat-icon>chevron_left</mat-icon>
+              </button>
+              <span class="project-details__nav-count">{{ activeProjectIndex() + 1 }} / {{ projects.length }}</span>
+              <button mat-icon-button (click)="nextProject()" [attr.aria-label]="i18n.t('projects.aria_next')">
+                <mat-icon>chevron_right</mat-icon>
+              </button>
+            </div>
+          </div>
           <p class="project-details__meta">{{ project.role[i18n.currentLang()] }} • {{ project.duration[i18n.currentLang()] }}</p>
 
           <div class="project-details__desc">

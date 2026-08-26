@@ -56,9 +56,10 @@
         }
 
         <!-- Video (always in DOM, crossfades in) -->
-        <video class="hero__presentation-media hero__presentation-video" 
-               [class.is-active]="isVideoMode()" 
-               controls 
+        <video class="hero__presentation-media hero__presentation-video"
+               [class.is-active]="isVideoMode()"
+               controls
+               preload="none"
                [autoplay]="isVideoMode()">
           <source src="videos/BG_vid.mp4" type="video/mp4" />
         </video>

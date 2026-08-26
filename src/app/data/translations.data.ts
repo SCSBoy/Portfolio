@@ -52,6 +52,8 @@ export const TRANSLATIONS = {
     'projects.btn_demo': 'Demo',
     'projects.btn_code': 'Code',
     'projects.btn_learn_more': 'Learn more',
+    'projects.aria_prev': 'Previous project',
+    'projects.aria_next': 'Next project',
 
     // Contact
     'contact.title': 'Let\'s collaborate',
@@ -149,6 +151,8 @@ export const TRANSLATIONS = {
     'projects.btn_demo': 'Démo',
     'projects.btn_code': 'Code',
     'projects.btn_learn_more': 'En savoir plus',
+    'projects.aria_prev': 'Projet précédent',
+    'projects.aria_next': 'Projet suivant',
 
     // Contact
     'contact.title': 'Collaborons ensemble',

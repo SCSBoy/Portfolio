@@ -34,6 +34,9 @@ export class Projects implements AfterViewInit, OnDestroy {
     const start = this.currentPage() * this.projectsPerPage;
     return this.projects.slice(start, start + this.projectsPerPage);
   });
+  protected readonly activeProjectIndex = computed(() =>
+    this.projects.findIndex(p => p.slug === this.activeProject().slug)
+  );
 
   private scene!: THREE.Scene;
   private camera!: THREE.PerspectiveCamera;
@@ -44,6 +47,7 @@ export class Projects implements AfterViewInit, OnDestroy {
   private raycaster = new THREE.Raycaster();
   private mouse = new THREE.Vector2();
   private frame = 0;
+  private sceneObserver?: IntersectionObserver;
 
   // Bound event listeners for proper cleanup
   private onResizeBound = this.onResize.bind(this);
@@ -66,7 +70,23 @@ export class Projects implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     // Reset Three.js group so re-mounting (after navigation) starts fresh
     this.pyramidGroup = new THREE.Group();
-    this.initScene();
+
+    // Defer the (relatively heavy) WebGL init until the canvas is about to
+    // scroll into view, so it doesn't compete with the initial page load
+    // on mobile.
+    const canvas = this.canvasRef.nativeElement;
+    if (typeof IntersectionObserver === 'undefined') {
+      this.initScene();
+      return;
+    }
+    this.sceneObserver = new IntersectionObserver((entries) => {
+      if (entries[0]?.isIntersecting) {
+        this.sceneObserver?.disconnect();
+        this.sceneObserver = undefined;
+        this.initScene();
+      }
+    }, { rootMargin: '200px' });
+    this.sceneObserver.observe(canvas);
   }
 
   private makeToonGradient(): THREE.Texture {
@@ -91,6 +111,7 @@ export class Projects implements AfterViewInit, OnDestroy {
     const canvas = this.canvasRef.nativeElement;
     const W = canvas.clientWidth || 460;
     const H = canvas.clientHeight || 380;
+    const isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 768;
 
     this.scene = new THREE.Scene();
     this.scene.add(this.pyramidGroup);
@@ -101,16 +122,16 @@ export class Projects implements AfterViewInit, OnDestroy {
     this.camera.position.set(5, 6, 8);
     this.camera.lookAt(0, 1.2, 0);
 
-    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: !isMobile, alpha: true, powerPreference: 'low-power' });
     this.renderer.setSize(W, H);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    this.renderer.shadowMap.enabled = true;
+    this.renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
+    this.renderer.shadowMap.enabled = !isMobile;
 
     // Cartoon-friendly lighting
     this.scene.add(new THREE.AmbientLight(0xffffff, 0.9));
     const key = new THREE.DirectionalLight(0xffffff, 1.4);
     key.position.set(4, 8, 6);
-    key.castShadow = true;
+    key.castShadow = !isMobile;
     this.scene.add(key);
     const rim = new THREE.DirectionalLight(0xaaddff, 0.4);
     rim.position.set(-5, 2, -3);
@@ -253,6 +274,23 @@ export class Projects implements AfterViewInit, OnDestroy {
 
   public selectProject(p: Project): void { this.activeProject.set(p); }
 
+  public nextProject(): void {
+    this.gotoProjectIndex((this.activeProjectIndex() + 1) % this.projects.length);
+  }
+
+  public prevProject(): void {
+    this.gotoProjectIndex((this.activeProjectIndex() - 1 + this.projects.length) % this.projects.length);
+  }
+
+  private gotoProjectIndex(idx: number): void {
+    const page = Math.floor(idx / this.projectsPerPage);
+    if (page !== this.currentPage()) {
+      this.currentPage.set(page);
+      this.buildPyramid();
+    }
+    this.activeProject.set(this.projects[idx]);
+  }
+
   public nextPage(): void {
     this.currentPage.set((this.currentPage() + 1) % this.totalPages());
     this.buildPyramid();
@@ -266,6 +304,7 @@ export class Projects implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.sceneObserver?.disconnect();
     cancelAnimationFrame(this.animId);
     // Dispose all geometries and materials in the pyramid group
     this.cubeMeshes.forEach(m => {
