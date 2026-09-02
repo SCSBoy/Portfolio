@@ -1,44 +1,37 @@
 <section id="accueil" class="hero">
 
-  <!-- Vidéo de fond en boucle, sans son -->
-  <video
-    class="hero__bg-video"
-    #bgVideo
-    [muted]="true"
-    autoplay
-    loop
-    playsinline
-    aria-hidden="true"
-    preload="auto"
-  >
-    <source src="videos/BG_vid.mp4" type="video/mp4" />
-  </video>
+  <!-- Fond du hero : bascule 'image' / 'video' dans hero.ts (heroBackground) -->
+  @if (heroBackground === 'video') {
+    <video class="hero__bg-video" #bgVideo
+           autoplay muted loop playsinline preload="auto" aria-hidden="true">
+      <source src="videos/BG_vid.mp4" type="video/mp4" />
+    </video>
+  } @else {
+    <img class="hero__bg-video" src="images/image.png" alt="" aria-hidden="true" />
+  }
 
-  <!-- ── Colonne gauche : Panel flottant ── -->
   <div class="hero__content" #contentPanel>
-    <button class="hero__close-btn" mat-icon-button
-      (click)="collapseToBadge()" [attr.aria-label]="i18n.t('hero.aria_collapse')">
-      <mat-icon>close</mat-icon>
-    </button>
     <p class="hero__eyebrow">
       {{ i18n.t('hero.eyebrow') }} <span #typedRole class="hero__typed"></span>
     </p>
     <h1 class="hero__title">
       {{ i18n.t('hero.title_hi') }} <span class="hero__title-accent">{{ i18n.t('hero.name_hi') }}</span>
     </h1>
+    <p class="hero__tagline" #taglineEl>
+      {{ i18n.t('hero.tagline') }}
+    </p>
     <div class="hero__actions">
-      <a mat-flat-button color="primary" href="documents/CV-EKLU Charly Yayra.pdf" target="_blank" rel="noopener noreferrer">
-        <mat-icon iconPositionEnd>download</mat-icon>
+      <a mat-flat-button color="primary" href="#projets">
+        <mat-icon>code</mat-icon>
+        {{ i18n.currentLang() === 'en' ? 'View my work' : 'Voir mes projets' }}
+      </a>
+      <a mat-stroked-button href="documents/CV-EKLU Charly Yayra.pdf" target="_blank" rel="noopener noreferrer">
+        <mat-icon>download</mat-icon>
         {{ i18n.t('hero.btn_resume') }}
       </a>
-      <button mat-stroked-button (click)="toggleVideoMode()">
-        <mat-icon>{{ isVideoMode() ? 'photo_camera' : 'play_circle' }}</mat-icon>
-        {{ isVideoMode() ? i18n.t('hero.btn_return_photo') : i18n.t('hero.btn_video') }}
-      </button>
     </div>
   </div>
 
-  <!-- ── Colonne droite : Portrait (toujours visible) ── -->
   <div class="hero__portrait" appReveal="right">
     <div class="hero__hex-wrap" [class.is-video-mode]="isVideoMode()" #hexWrap>
       <div class="hero__hexagon" #hexagon>
@@ -75,23 +68,22 @@
         </video>
       </div>
 
-      <!-- Badge "!" — toujours dans le DOM, animé par JS -->
-      <button class="hero__badge" #badgeBtn
-        (click)="expandToPanel()"
-        [attr.aria-label]="i18n.t('hero.aria_expand')">
-        <span class="hero__badge-text">!</span>
+      <button
+        class="hero__play-button"
+        (click)="toggleVideoMode()"
+        [attr.aria-label]="isVideoMode() ? i18n.t('hero.btn_return_photo') : i18n.t('hero.btn_video')">
+        <span class="hero__play-icon">
+          <mat-icon>{{ isVideoMode() ? 'photo_camera' : 'play_arrow' }}</mat-icon>
+        </span>
+        <span class="hero__play-label">
+          {{ isVideoMode() ? i18n.t('hero.btn_return_photo') : i18n.t('hero.btn_video') }}
+        </span>
       </button>
 
       <span class="hero__tag hero__tag--1" aria-hidden="true">&lt;div&gt;</span>
       <span class="hero__tag hero__tag--2" aria-hidden="true">&lt;/&gt;</span>
       <span class="hero__tag hero__tag--3" aria-hidden="true">&#123; &#125;</span>
       <span class="hero__tag hero__tag--4" aria-hidden="true">&lt;h1/&gt;</span>
-    </div>
-
-    <div class="hero__tagline-card">
-      <p class="hero__tagline" #taglineEl>
-        {{ i18n.t('hero.tagline') }}
-      </p>
     </div>
   </div>
 

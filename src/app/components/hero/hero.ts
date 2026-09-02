@@ -33,12 +33,21 @@ export class Hero implements AfterViewInit, OnDestroy {
   protected readonly isVideoMode = signal(false);
   protected readonly profileViewerOpen = signal(false);
 
+  /**
+   * Arriere-plan du hero, au choix du developpeur :
+   *   'image' -> images/BG.png      (statique, leger)
+   *   'video' -> videos/BG_vid.mp4  (boucle muette en fond)
+   */
+  protected readonly heroBackground: 'image' | 'video' = 'image';
+
   private typed?: Typed;
   private detachTilt?: () => void;
   private collapseTimer?: ReturnType<typeof setTimeout>;
   private busy = false;
   private activeAnim?: Animation;
   private taglineTween?: gsap.core.Tween;
+  private photoWrapWidth?: string;
+  private photoPortraitMaxWidth?: string;
 
   constructor() {
     // Re-initialize animated text when language changes
@@ -59,6 +68,8 @@ export class Hero implements AfterViewInit, OnDestroy {
       const v = this.bgVideoEl.nativeElement;
       v.muted  = true;
       v.volume = 0;
+      // Certains navigateurs ignorent l'attribut autoplay : on relance nous-memes.
+      v.play().catch(() => {});
     }
 
     this.initTyped(this.i18n.currentLang());
@@ -68,10 +79,7 @@ export class Hero implements AfterViewInit, OnDestroy {
     // GSAP Word-by-word on tagline
     this.animateTagline();
 
-    this.collapseTimer = setTimeout(
-      () => this.collapseToBadge(),
-      1000 + Math.random() * 3000
-    );
+    clearTimeout(this.collapseTimer);
   }
 
   private initTyped(lang: string) {
@@ -258,41 +266,43 @@ export class Hero implements AfterViewInit, OnDestroy {
     const isVideo = !this.isVideoMode();
     this.isVideoMode.set(isVideo);
 
-    if (this.hexWrapEl && this.hexEl) {
-      const wrap = this.hexWrapEl.nativeElement;
-      const hex = this.hexEl.nativeElement;
-      // We also need to target the portrait wrapper to remove max-width constraints smoothly
-      const portrait = wrap.closest('.hero__portrait') as HTMLElement;
+    const wrap = this.hexWrapEl?.nativeElement;
+    const hex = this.hexEl?.nativeElement;
+    if (!wrap || !hex) return;
 
-      if (isVideo) {
-        if (portrait) {
-          animate(portrait, { maxWidth: '500px' }, { duration: 0.85, ease: 'easeInOut' });
-        }
-        
-        animate(wrap, {
-          width: 'min(500px, 90vw)',
-          aspectRatio: 16 / 9
-        }, { duration: 0.85, ease: 'easeInOut' });
-        
-        animate(hex, {
-          borderRadius: '12px',
-          padding: '2px'
-        }, { duration: 0.85, ease: 'easeInOut' });
-      } else {
-        if (portrait) {
-          animate(portrait, { maxWidth: '352px' }, { duration: 0.85, ease: 'easeInOut' }); // 352px = 22rem
-        }
+    const portrait = wrap.closest('.hero__portrait') as HTMLElement | null;
 
-        animate(wrap, {
-          width: 'min(300px, 62vw)',
-          aspectRatio: 1
-        }, { duration: 0.85, ease: 'easeInOut' });
-
-        animate(hex, {
-          borderRadius: '16px',
-          padding: '5px'
-        }, { duration: 0.85, ease: 'easeInOut' });
+    if (isVideo) {
+      // Mémorise la taille CSS d'origine pour la restaurer à l'identique
+      this.photoWrapWidth ??= `${wrap.getBoundingClientRect().width}px`;
+      if (portrait) {
+        this.photoPortraitMaxWidth ??= getComputedStyle(portrait).maxWidth;
+        animate(portrait, { maxWidth: '500px' }, { duration: 0.85, ease: 'easeInOut' });
       }
+
+      animate(wrap, {
+        width: 'min(500px, 90vw)',
+        aspectRatio: 16 / 9
+      }, { duration: 0.85, ease: 'easeInOut' });
+
+      animate(hex, { borderRadius: '12px' }, { duration: 0.85, ease: 'easeInOut' });
+    } else {
+      if (portrait && this.photoPortraitMaxWidth) {
+        animate(portrait, { maxWidth: this.photoPortraitMaxWidth }, { duration: 0.85, ease: 'easeInOut' })
+          .then(() => { portrait.style.maxWidth = ''; });
+      }
+
+      animate(wrap, {
+        width: this.photoWrapWidth ?? 'min(430px, 86vw)',
+        aspectRatio: 1
+      }, { duration: 0.85, ease: 'easeInOut' })
+        .then(() => {
+          wrap.style.width = '';
+          wrap.style.aspectRatio = '';
+        });
+
+      animate(hex, { borderRadius: '28px' }, { duration: 0.85, ease: 'easeInOut' })
+        .then(() => { hex.style.borderRadius = ''; });
     }
   }
 }

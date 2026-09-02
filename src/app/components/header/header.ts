@@ -27,6 +27,8 @@ export class Header implements AfterViewInit {
   protected readonly transitionService = inject(TransitionService);
   protected readonly scrolled = signal(false);
 
+  private heroHeight?: number;
+
   protected readonly links: NavLink[] = [
     { key: 'nav.home', fragment: 'accueil' },
     { key: 'nav.about', fragment: 'a-propos' },
@@ -40,7 +42,25 @@ export class Header implements AfterViewInit {
 
   @HostListener('window:scroll')
   protected onScroll(): void {
-    this.scrolled.set(window.scrollY > 24);
+    this.scrolled.set(window.scrollY > this.solidThreshold());
+  }
+
+  @HostListener('window:resize')
+  protected onResize(): void {
+    this.heroHeight = undefined;
+    this.onScroll();
+  }
+
+  /**
+   * La barre devient opaque une fois le hero depasse. Sur les pages sans hero
+   * (detail projet), elle devient opaque des le premier scroll.
+   */
+  private solidThreshold(): number {
+    if (this.heroHeight === undefined) {
+      const hero = document.querySelector('.hero') as HTMLElement | null;
+      this.heroHeight = hero ? hero.offsetHeight : 0;
+    }
+    return this.heroHeight > 0 ? this.heroHeight - 80 : 24;
   }
 
   protected handleNavClick(e: Event, fragment: string): void {

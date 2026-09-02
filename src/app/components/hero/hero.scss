@@ -6,37 +6,27 @@
 
 .hero {
   position: relative;
-  min-height: 90vh;
+  min-height: 100vh;
+  min-height: 100svh;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.86fr);
   align-items: center;
-  gap: clamp(2.5rem, 6vw, 5rem);
+  gap: clamp(3rem, 7vw, 6.5rem);
   padding: 8rem 8vw 6rem;
   box-sizing: border-box;
-  background-color: var(--bg-950);
+  background: #f8fbff;
   overflow: hidden;
 
-  /* Lueur Electric Blue en bas-gauche — décorative */
+  &::before,
   &::after {
     content: '';
     position: absolute;
-    bottom: -8rem;
-    left: -6rem;
-    width: 40rem;
-    height: 40rem;
-    border-radius: 50%;
-    background: radial-gradient(
-      circle,
-      rgba(3,175,249,0.12) 0%,
-      rgba(3,175,249,0.04) 45%,
-      transparent 70%
-    );
-    z-index: 0;
+    left: 0;
+    right: 0;
     pointer-events: none;
   }
 }
 
-/* ── Vidéo de fond — opacité réduite pour effet particles ── */
 .hero__bg-video {
   position: absolute;
   inset: 0;
@@ -44,26 +34,17 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.4;
+  opacity: 1;
   pointer-events: none;
-  mix-blend-mode: screen;
 }
 
-/* ── Panel info (gauche) ─────────────────────────────── */
 .hero__content {
   position: relative;
   z-index: 2;
-  max-width: 34rem;
+  max-width: 36rem;
   width: 100%;
-  padding: 2.25rem 2.5rem;
-  border-radius: var(--radius-xl);
-  background: rgba(0, 10, 41, 0.78);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border: 1px solid var(--border-default);
-  box-shadow:
-    var(--shadow-card),
-    0 0 0 1px rgba(3,175,249,0.05) inset;
+  padding: 0;
+  color: #07111f;
   box-sizing: border-box;
 }
 
@@ -85,45 +66,81 @@
 
 /* ── Texte ───────────────────────────────────────────── */
 .hero__eyebrow {
-  margin: 0 0 0.75rem;
-  min-height: 1.3em;
-  color: var(--primary-400);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 0;
+  margin: 0 0 1rem;
+  padding: 0.45rem 0.7rem;
+  color: #0054dd;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  font-size: 0.72rem;
   text-transform: uppercase;
+  background: #fff;
+  border: 1px solid rgba(0, 84, 221, 0.12);
+  border-radius: 8px;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.05);
 }
 
 .hero__typed {
   font-family: 'Roboto Mono', ui-monospace, monospace;
   font-weight: 700;
-  color: var(--primary-300);
+  color: #0054dd;
 }
 
 .hero__title {
-  margin: 0 0 1.25rem;
-  font-size: clamp(2.25rem, 4vw, 3.4rem);
-  line-height: 1.12;
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: -0.025em;
+  margin: 0 0 1rem;
+  font-size: clamp(3rem, 6vw, 5.7rem);
+  line-height: 0.96;
+  font-weight: 800;
+  color: #07111f;
+  letter-spacing: 0;
 }
 
 .hero__title-accent {
-  color: var(--primary-400);
+  color: #0054dd;
   font-weight: 800;
-  /* Glow subtil sur le nom */
-  text-shadow: 0 0 32px rgba(3,175,249,0.45);
+  text-shadow: none;
 }
 
 .hero__actions {
   display: flex;
-  gap: 1rem;
+  gap: 0.8rem;
   flex-wrap: wrap;
-  margin-top: 1.75rem;
+  margin-top: 1.9rem;
+
+  a[mat-flat-button] {
+    height: 46px;
+    padding: 0 1.1rem !important;
+    border-radius: 10px !important;
+    background: #0054dd !important;
+    color: #fff !important;
+    font-weight: 800 !important;
+    box-shadow: 0 14px 28px rgba(0, 84, 221, 0.22) !important;
+
+    mat-icon {
+      margin-right: 0.35rem;
+    }
+  }
+
+  a[mat-stroked-button] {
+    height: 46px;
+    padding: 0 1.1rem !important;
+    border-radius: 10px !important;
+    background: #fff !important;
+    color: #0f172a !important;
+    border-color: rgba(15, 23, 42, 0.12) !important;
+    font-weight: 800 !important;
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06) !important;
+
+    mat-icon {
+      margin-right: 0.35rem;
+      color: #0054dd;
+    }
+  }
 }
 
-/* ── Portrait (droite — fixe) ────────────────────────── */
 .hero__portrait {
   position: relative;
   z-index: 2;
@@ -131,13 +148,14 @@
   flex-direction: column;
   align-items: center;
   gap: 1.75rem;
-  max-width: 22rem;
+  max-width: 34rem;
+  justify-self: center;
   text-align: center;
 }
 
 .hero__hex-wrap {
   position: relative;
-  width: min(300px, 62vw);
+  width: min(430px, 86vw);
   aspect-ratio: 1 / 1;
 }
 
@@ -145,19 +163,31 @@
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: var(--radius-lg); 
-  background: linear-gradient(135deg, var(--primary-950) 0%, var(--primary-700) 100%);
+  border-radius: 28px;
+  background: #fff;
+  border: 2px solid rgba(0, 84, 221, 0.28);
   overflow: hidden;
-  box-shadow:
-    0 24px 55px rgba(0,0,0,0.55),
-    var(--glow-primary);
+  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.14);
+  clip-path: polygon(13% 0, 87% 0, 100% 13%, 100% 87%, 87% 100%, 13% 100%, 0 87%, 0 13%);
   will-change: transform;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    z-index: 1;
+    border: 1px solid rgba(0, 84, 221, 0.2);
+    border-radius: 22px;
+    clip-path: inherit;
+    pointer-events: none;
+  }
 }
 
 .hero__profile-open {
   position: absolute !important;
-  top: 0.85rem;
-  right: 0.85rem;
+  /* 15% : reste dans le bord plat du haut, jamais rogne par le biseau */
+  top: 0.75rem;
+  right: 15%;
   z-index: 6;
   color: #fff !important;
   background: rgba(0, 1, 6, 0.72) !important;
@@ -180,11 +210,12 @@
 
 .hero__presentation-media {
   position: absolute;
-  inset: 5px; /* keep the 5px gradient border */
-  width: calc(100% - 10px);
-  height: calc(100% - 10px);
+  inset: 10px;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
   object-fit: cover;
-  border-radius: calc(var(--radius-lg) - 5px);
+  border-radius: 22px;
+  clip-path: polygon(12% 0, 88% 0, 100% 12%, 100% 88%, 88% 100%, 12% 100%, 0 88%, 0 12%);
   transition: opacity 0.6s ease-in-out;
 }
 
@@ -209,6 +240,59 @@
     pointer-events: auto;
     z-index: 3;
   }
+}
+
+.hero__play-button {
+  position: absolute;
+  right: -1.15rem;
+  bottom: 1.5rem;
+  z-index: 8;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 58px;
+  max-width: min(260px, 75vw);
+  padding: 0.4rem 1rem 0.4rem 0.45rem;
+  border: 0;
+  border-radius: 16px;
+  cursor: pointer;
+  color: #07111f;
+  background: #fff;
+  box-shadow: 0 22px 45px rgba(15, 23, 42, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 26px 55px rgba(0, 84, 221, 0.22);
+  }
+}
+
+.hero__play-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  color: #fff;
+  background: #0054dd;
+  box-shadow: 0 10px 24px rgba(0, 84, 221, 0.28);
+
+  mat-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 28px;
+    line-height: 28px;
+  }
+}
+
+.hero__play-label {
+  max-width: 10rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.15;
+  text-align: left;
 }
 
 .hero__hexagon-fallback {
@@ -292,13 +376,13 @@
   position: absolute;
   padding: 0.3rem 0.6rem;
   border-radius: var(--radius-sm);
-  background: var(--bg-800);
-  color: var(--primary-400);
-  border: 1px solid var(--border-default);
+  background: #fff;
+  color: #0054dd;
+  border: 1px solid rgba(0, 84, 221, 0.12);
   font-family: 'Roboto Mono', ui-monospace, monospace;
   font-size: 0.75rem;
-  font-weight: 600;
-  box-shadow: var(--glow-primary);
+  font-weight: 800;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
   animation: hero-float 4.5s ease-in-out infinite;
   pointer-events: none;
 }
@@ -330,10 +414,15 @@
 
 .hero__tagline {
   margin: 0;
-  font-size: 0.93rem;
+  max-width: 30rem;
+  line-height: 1.65;
+  color: #536581;
   line-height: 1.7;
-  color: var(--text-secondary);
-  font-weight: 500;
+  font-weight: 400;
+  max-width: 30rem;
+  text-shadow: 0 0 8px rgb(255 255 255 / 13%);
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .hero__tagline-word {
@@ -345,15 +434,22 @@
 /* ── Scroll cue ──────────────────────────────────────── */
 .hero__scroll-cue {
   position: absolute;
-  bottom: 2rem;
+  bottom: 2.5rem;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 2;
+  z-index: 3;
   display: inline-flex;
-  color: var(--primary-400);
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  color: #0054dd;
+  background: #fff;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
   animation: hero-bounce 1.8s ease-in-out infinite;
   grid-column: 1 / -1;
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .profile-viewer {
@@ -425,13 +521,14 @@
   .hero {
     grid-template-columns: 1fr;
     justify-items: center;
-    min-height: auto;
-    padding: 7rem 6vw 5rem;
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: 6.5rem 6vw 4rem;
     gap: 2rem;
     text-align: center;
 
     &::before {
-      background: rgba(0,1,6,0.78);
+      background: linear-gradient(180deg, rgba(248, 251, 255, 0.92) 0%, rgba(248, 251, 255, 0.78) 55%, rgba(248, 251, 255, 0.6) 100%);
     }
   }
   .hero__content { max-width: min(100%, 38rem); width: 100%; order: 2; padding: 1.75rem 1.5rem; }
@@ -441,6 +538,30 @@
   .hero__badge { bottom: -5%; right: 50%; transform: translateX(50%); }
   .hero__tag        { display: none; }
   .hero__scroll-cue { display: none; }
+
+  /* Le libelle ne tient pas a cote d'un portrait de 220px : icone seule */
+  .hero__play-button {
+    right: -0.5rem;
+    bottom: -0.5rem;
+    min-height: 0;
+    max-width: none;
+    padding: 0.3rem;
+    border-radius: 50%;
+    box-shadow: 0 12px 26px rgba(15, 23, 42, 0.2);
+  }
+  .hero__play-label { display: none; }
+  .hero__play-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+
+    mat-icon {
+      width: 24px;
+      height: 24px;
+      font-size: 24px;
+      line-height: 24px;
+    }
+  }
 }
 
 @media (max-width: 600px) {
@@ -463,6 +584,33 @@
   .hero__profile-open {
     opacity: 1;
     transform: translateY(0);
+    --mdc-icon-button-state-layer-size: 34px;
+    width: 34px !important;
+    height: 34px !important;
+    padding: 0 !important;
+
+    mat-icon {
+      width: 18px;
+      height: 18px;
+      font-size: 18px;
+      line-height: 18px;
+    }
+  }
+  .hero__play-button {
+    right: -0.35rem;
+    bottom: -0.35rem;
+    padding: 0.25rem;
+  }
+  .hero__play-icon {
+    width: 38px;
+    height: 38px;
+
+    mat-icon {
+      width: 21px;
+      height: 21px;
+      font-size: 21px;
+      line-height: 21px;
+    }
   }
   .profile-viewer {
     padding: 4.5rem 1rem 2rem;
