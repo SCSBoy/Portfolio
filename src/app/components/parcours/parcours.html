@@ -19,6 +19,9 @@
       <button mat-button class="parcours__tab parcours__tab--academic" [class.parcours__tab--active]="tab() === 'academic'" (click)="switchTab('academic')">
         <mat-icon>school</mat-icon> {{ i18n.t('parcours.tab.academic') }}
       </button>
+      <button mat-button class="parcours__tab parcours__tab--certifications" [class.parcours__tab--active]="tab() === 'certifications'" (click)="switchTab('certifications')">
+        <mat-icon>workspace_premium</mat-icon> {{ i18n.t('parcours.tab.certifications') }}
+      </button>
     </div>
 
     <div class="timeline-container" appReveal="bottom" [revealDelay]="200">
@@ -30,14 +33,25 @@
         <div #track class="timeline-track">
           <!-- Ligne d'axe animée (maintenant dans la piste pour défiler avec) -->
           <div class="timeline-axis">
-            <div #axisLine class="timeline-axis-line" [class.timeline-axis-line--academic]="tab() === 'academic'"></div>
+            <div
+              #axisLine
+              class="timeline-axis-line"
+              [class.timeline-axis-line--academic]="tab() === 'academic'"
+              [class.timeline-axis-line--certifications]="tab() === 'certifications'"
+            ></div>
           </div>
           @for (item of items(); track item.title.en; let i = $index) {
             <!-- 
               L'ordre est inversé dans les données (Plus récent -> Plus ancien). 
               Le premier élément est à gauche. 
             -->
-            <div #node class="timeline-node" [class.timeline-node--active]="activeIdx() === i" [class.timeline-node--academic]="tab() === 'academic'">
+            <div
+              #node
+              class="timeline-node"
+              [class.timeline-node--active]="activeIdx() === i"
+              [class.timeline-node--academic]="tab() === 'academic'"
+              [class.timeline-node--certifications]="tab() === 'certifications'"
+            >
               
               <div class="timeline-dot-wrapper" (click)="scrollToNode(i)">
                 <div class="timeline-dot"></div>
@@ -52,10 +66,29 @@
                 </div>
                 <h3 class="timeline-title">{{ item.title[i18n.currentLang()] }}</h3>
                 <p class="timeline-place">
-                  <mat-icon>{{ tab() === 'pro' ? 'business' : 'location_city' }}</mat-icon>
+                  <mat-icon>{{ tab() === 'pro' ? 'business' : (tab() === 'academic' ? 'location_city' : 'verified') }}</mat-icon>
                   {{ item.place[i18n.currentLang()] }}
                 </p>
+                @if (item.previewType === 'image' && item.previewUrl) {
+                  <a class="certificate-preview certificate-preview--png" [href]="item.credentialUrl" target="_blank" rel="noopener noreferrer" [attr.aria-label]="i18n.t('parcours.cert_preview') + ' ' + item.title[i18n.currentLang()]">
+                    <img [src]="item.previewUrl" [alt]="item.title[i18n.currentLang()]" loading="lazy" />
+                    <span class="certificate-preview__open">
+                      <mat-icon>open_in_new</mat-icon>
+                    </span>
+                  </a>
+                } @else if (item.previewType === 'pdf') {
+                  <a class="certificate-preview certificate-preview--pdf" [href]="item.credentialUrl" target="_blank" rel="noopener noreferrer" [attr.aria-label]="i18n.t('parcours.cert_preview') + ' ' + item.title[i18n.currentLang()]">
+                    <mat-icon>picture_as_pdf</mat-icon>
+                    <span>PDF</span>
+                  </a>
+                }
                 <p class="timeline-desc">{{ item.description[i18n.currentLang()] }}</p>
+                @if (item.credentialUrl) {
+                  <a mat-stroked-button class="certificate-link" [href]="item.credentialUrl" target="_blank" rel="noopener noreferrer">
+                    <mat-icon>open_in_new</mat-icon>
+                    {{ i18n.t('parcours.cert_preview') }}
+                  </a>
+                }
                 @if (item.tags) {
                   <div class="timeline-tags">
                     @for (tag of item.tags; track tag) {

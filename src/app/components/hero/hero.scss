@@ -154,6 +154,30 @@
   will-change: transform;
 }
 
+.hero__profile-open {
+  position: absolute !important;
+  top: 0.85rem;
+  right: 0.85rem;
+  z-index: 6;
+  color: #fff !important;
+  background: rgba(0, 1, 6, 0.72) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
+
+  &:hover {
+    background: rgba(3, 175, 249, 0.28) !important;
+  }
+}
+
+.hero__hexagon:hover .hero__profile-open,
+.hero__profile-open:focus-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .hero__presentation-media {
   position: absolute;
   inset: 5px; /* keep the 5px gradient border */
@@ -332,6 +356,52 @@
   opacity: 0.7;
 }
 
+.profile-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 5rem 5vw 3rem;
+  background: rgba(0, 1, 6, 0.92);
+  backdrop-filter: blur(14px);
+}
+
+.profile-viewer__figure {
+  width: min(760px, 100%);
+  max-height: 86vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-viewer__image {
+  max-width: 100%;
+  max-height: 82vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: #000;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+}
+
+.profile-viewer__close {
+  position: fixed !important;
+  top: 1.25rem;
+  right: 1.25rem;
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  backdrop-filter: blur(12px);
+
+  &:hover {
+    background: rgba(3, 175, 249, 0.26) !important;
+  }
+}
+
 @keyframes hero-bounce {
   0%, 100% { transform: translate(-50%, 0); }
   50%       { transform: translate(-50%, 8px); }
@@ -390,6 +460,16 @@
   .hero__hex-wrap { width: min(190px, 58vw); }
   .hero__badge { width: 44px; height: 44px; }
   .hero__badge-text { font-size: 1.3rem; }
+  .hero__profile-open {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .profile-viewer {
+    padding: 4.5rem 1rem 2rem;
+  }
+  .profile-viewer__image {
+    max-height: 78vh;
+  }
 }
 
 @media (max-width: 380px) {

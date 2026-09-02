@@ -37,11 +37,7 @@ export class App implements AfterViewInit {
     const drawTl = gsap.timeline();
     drawTl
       .to(path, { strokeDashoffset: 0, duration: 1.5, ease: "power2.inOut" })
-      .to(path, { strokeDashoffset: -length, duration: 1, ease: "power2.inOut", opacity: 0 }, "+=0.2");
-
-    // Only reveal the page once its resources (images, video, fonts…) have
-    // actually finished loading — not on a fixed timer — so nothing pops in
-    // after the preloader disappears.
+      .to(path, { strokeDashoffset: -length, duration: 1, ease: "power2.inOut", opacity: 0 }, "+=0.2")
     const pageReady = new Promise<void>(resolve => {
       if (document.readyState === 'complete') { resolve(); return; }
       window.addEventListener('load', () => resolve(), { once: true });

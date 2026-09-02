@@ -6,7 +6,7 @@
         {{ i18n.t('project.back') }}
       </a>
       <p class="project-hero__eyebrow">{{ i18n.t('project.eyebrow') }}</p>
-      <h1 class="project-hero__title">{{ p.title }}</h1>
+      <h1 class="project-hero__title">{{ p.title[i18n.currentLang()] }}</h1>
       <p class="project-hero__summary">{{ p.summary[i18n.currentLang()] }}</p>
 
       <div class="project-hero__actions">
@@ -67,6 +67,14 @@
 
             <!-- Main preview -->
             <div class="project-media__preview">
+              <button
+                mat-icon-button
+                class="project-media__open"
+                (click)="openMediaViewer()"
+                [attr.aria-label]="i18n.currentLang() === 'en' ? 'Open media viewer' : 'Ouvrir la visionneuse'">
+                <mat-icon>fullscreen</mat-icon>
+              </button>
+
               @if (selectedMedia().type === 'video') {
                 <video
                   class="project-media__preview-video"
@@ -103,10 +111,10 @@
 
             <!-- Thumbnails strip -->
             <div class="project-media__thumbs">
-              @for (item of media; track item.label.en) {
+              @for (item of media(); track item.src) {
                 <button
                   class="project-media__thumb"
-                  [class.project-media__thumb--active]="selectedMedia().label.en === item.label.en"
+                  [class.project-media__thumb--active]="selectedMedia().src === item.src"
                   (click)="selectMedia(item)"
                   [attr.aria-label]="item.label[i18n.currentLang()]">
                   <img [src]="item.src" [alt]="item.label[i18n.currentLang()]" loading="lazy" />
@@ -145,6 +153,61 @@
 
     </div>
   </section>
+
+  @if (mediaViewerOpen()) {
+    <div
+      class="media-viewer"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="selectedMedia().label[i18n.currentLang()]"
+      (click)="closeMediaViewer()">
+      <button
+        mat-icon-button
+        class="media-viewer__close"
+        (click)="closeMediaViewer(); $event.stopPropagation()"
+        [attr.aria-label]="i18n.currentLang() === 'en' ? 'Close viewer' : 'Fermer la visionneuse'">
+        <mat-icon>close</mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        class="media-viewer__nav media-viewer__nav--prev"
+        (click)="prevMedia(); $event.stopPropagation()"
+        [attr.aria-label]="i18n.currentLang() === 'en' ? 'Previous media' : 'Média précédent'">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+
+      <figure class="media-viewer__figure" (click)="$event.stopPropagation()">
+        @if (selectedMedia().type === 'video') {
+          <video
+            class="media-viewer__video"
+            [poster]="selectedMedia().src"
+            [src]="selectedMedia().videoSrc"
+            controls
+            autoplay>
+          </video>
+        } @else {
+          <img
+            class="media-viewer__image"
+            [src]="selectedMedia().src"
+            [alt]="selectedMedia().label[i18n.currentLang()]" />
+        }
+
+        <figcaption class="media-viewer__caption">
+          <strong>{{ selectedMedia().label[i18n.currentLang()] }}</strong>
+          <span>{{ selectedMediaIndex() + 1 }} / {{ media().length }}</span>
+        </figcaption>
+      </figure>
+
+      <button
+        mat-icon-button
+        class="media-viewer__nav media-viewer__nav--next"
+        (click)="nextMedia(); $event.stopPropagation()"
+        [attr.aria-label]="i18n.currentLang() === 'en' ? 'Next media' : 'Média suivant'">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  }
 } @else {
   <section class="section project-not-found">
     <mat-icon>search_off</mat-icon>

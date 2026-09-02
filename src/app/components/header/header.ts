@@ -7,11 +7,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { UpperCasePipe } from '@angular/common';
 
 import { I18nService } from '../../shared/i18n.service';
-import { TRANSLATIONS } from '../../data/translations.data';
+import { TranslationKey } from '../../data/translations.data';
 import { TransitionService } from '../../shared/transition.service';
 
 interface NavLink {
-  key: keyof typeof TRANSLATIONS['en'];
+  key: TranslationKey;
   fragment: string;
 }
 

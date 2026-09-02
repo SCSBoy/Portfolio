@@ -11,6 +11,12 @@ import { TransitionService } from '../../shared/transition.service';
 import { I18nService } from '../../shared/i18n.service';
 import * as THREE from 'three';
 
+interface CubeColors {
+  top: number;
+  front: number;
+  right: number;
+}
+
 @Component({
   selector: 'app-projects',
   imports: [MatButtonModule, MatIconModule, MatChipsModule, RevealDirective],
@@ -23,7 +29,7 @@ export class Projects implements AfterViewInit, OnDestroy {
   protected readonly projects = PROJECTS;
   public readonly activeProject = signal<Project>(this.projects[0]);
   public readonly currentPage = signal<number>(0);
-  protected readonly projectsPerPage = 3;
+  protected readonly projectsPerPage = 6;
   protected readonly transitionService = inject(TransitionService);
   protected readonly i18n = inject(I18nService);
 
@@ -57,15 +63,40 @@ export class Projects implements AfterViewInit, OnDestroy {
   // Cartoon toon gradient texture
   private toonGradient!: THREE.Texture;
 
-  // Per-slot default colors [top, front, right]
-  private readonly defaultColors = [
-    { top: 0x4FC3F7, front: 0x0288D1, right: 0x01579B },
-    { top: 0x81D4FA, front: 0x03A9F4, right: 0x0277BD },
-    { top: 0xB3E5FC, front: 0x29B6F6, right: 0x0288D1 },
+  private readonly pyramidRowsPerPage = 3;
+
+  private readonly defaultColorPalettes: CubeColors[][] = [
+    [
+      { top: 0x4FC3F7, front: 0x0288D1, right: 0x01579B },
+      { top: 0x81D4FA, front: 0x03A9F4, right: 0x0277BD },
+      { top: 0xB3E5FC, front: 0x29B6F6, right: 0x0288D1 },
+      { top: 0x90CAF9, front: 0x1E88E5, right: 0x0D47A1 },
+      { top: 0x80DEEA, front: 0x00ACC1, right: 0x006064 },
+      { top: 0xB2EBF2, front: 0x26C6DA, right: 0x00838F },
+    ],
+    [
+      { top: 0xC4B5FD, front: 0x7C3AED, right: 0x4C1D95 },
+      { top: 0xA78BFA, front: 0x6D28D9, right: 0x3B0764 },
+      { top: 0xDDD6FE, front: 0x8B5CF6, right: 0x5B21B6 },
+      { top: 0xF0ABFC, front: 0xC026D3, right: 0x86198F },
+      { top: 0xF5D0FE, front: 0xD946EF, right: 0xA21CAF },
+      { top: 0xE9D5FF, front: 0x9333EA, right: 0x6B21A8 },
+    ],
+    [
+      { top: 0x86EFAC, front: 0x16A34A, right: 0x14532D },
+      { top: 0xA7F3D0, front: 0x059669, right: 0x064E3B },
+      { top: 0x99F6E4, front: 0x0D9488, right: 0x134E4A },
+      { top: 0xBBF7D0, front: 0x22C55E, right: 0x166534 },
+      { top: 0xCCFBF1, front: 0x14B8A6, right: 0x115E59 },
+      { top: 0xD9F99D, front: 0x65A30D, right: 0x365314 },
+    ],
   ];
 
-  // Active highlight colors
-  private readonly activeColors = { top: 0xFFE082, front: 0xFFCA28, right: 0xF9A825 };
+  private readonly activeColorPalettes: CubeColors[] = [
+    { top: 0xFFE082, front: 0xFFCA28, right: 0xF9A825 },
+    { top: 0xFDA4AF, front: 0xF43F5E, right: 0xBE123C },
+    { top: 0xA7F3D0, front: 0x10B981, right: 0x047857 },
+  ];
 
   ngAfterViewInit(): void {
     // Reset Three.js group so re-mounting (after navigation) starts fresh
@@ -159,7 +190,7 @@ export class Projects implements AfterViewInit, OnDestroy {
     return new THREE.CanvasTexture(cv);
   }
 
-  private makeMaterials(cols: { top: number; front: number; right: number }, frontTex: THREE.Texture | null): THREE.MeshToonMaterial[] {
+  private makeMaterials(cols: CubeColors, frontTex: THREE.Texture | null): THREE.MeshToonMaterial[] {
     const make = (color: number, map?: THREE.Texture) =>
       new THREE.MeshToonMaterial({ color, gradientMap: this.toonGradient, ...(map ? { map } : {}) });
     return [
@@ -172,45 +203,72 @@ export class Projects implements AfterViewInit, OnDestroy {
     ];
   }
 
+  private getDefaultColors(page: number, localIndex: number): CubeColors {
+    const palette = this.defaultColorPalettes[page % this.defaultColorPalettes.length];
+    return palette[localIndex % palette.length];
+  }
+
+  private getActiveColors(page: number): CubeColors {
+    return this.activeColorPalettes[page % this.activeColorPalettes.length];
+  }
+
+  private framePyramid(rowsUsed: number, cubeSize: number): void {
+    if (!this.camera) return;
+    const pyramidHeight = Math.max(rowsUsed, 1) * cubeSize;
+
+    this.camera.position.set(5, pyramidHeight + 4, 8);
+    this.camera.lookAt(0, pyramidHeight / 2, 0);
+    this.camera.updateProjectionMatrix();
+  }
+
   private buildPyramid(): void {
     while (this.pyramidGroup.children.length) this.pyramidGroup.remove(this.pyramidGroup.children[0]);
     this.cubeMeshes = [];
 
-    const S = 1.6; // cute small cube
+    const S = 1.35;
     const projects = this.currentPyramidProjects();
+    const page = this.currentPage();
+    const pageStartIndex = page * this.projectsPerPage;
+    let projectCursor = 0;
+    let rowsUsed = 0;
 
-    const layout = [
-      { x: 0, y: S, pidx: 0 },
-      { x: -S / 2, y: 0, pidx: 1 },
-      { x: S / 2, y: 0, pidx: 2 },
-    ];
+    for (let row = 0; row < this.pyramidRowsPerPage && projectCursor < projects.length; row++) {
+      const rowCapacity = this.pyramidRowsPerPage - row;
+      const cubesInRow = Math.min(rowCapacity, projects.length - projectCursor);
+      const startX = -((cubesInRow - 1) * S) / 2;
+      rowsUsed = row + 1;
 
-    layout.forEach(({ x, y, pidx }) => {
-      if (pidx >= projects.length) return;
-      const project = projects[pidx];
-      const numTex = this.makeNumberTexture(pidx + 1);
-      const cols = this.defaultColors[pidx];
-      const geo = new THREE.BoxGeometry(S, S, S);
-      const mats = this.makeMaterials(cols, numTex);
+      for (let col = 0; col < cubesInRow; col++) {
+        const localIndex = projectCursor;
+        const globalIndex = pageStartIndex + localIndex;
+        const project = projects[localIndex];
+        const numTex = this.makeNumberTexture(globalIndex + 1);
+        const cols = this.getDefaultColors(page, localIndex);
+        const geo = new THREE.BoxGeometry(S, S, S);
+        const mats = this.makeMaterials(cols, numTex);
 
-      const mesh = new THREE.Mesh(geo, mats);
-      const posY = y + S / 2;
-      mesh.position.set(x, posY, 0);
-      mesh.userData = { project, pidx, posY };
-      mesh.castShadow = true;
-      mesh.receiveShadow = true;
+        const mesh = new THREE.Mesh(geo, mats);
+        const x = startX + col * S;
+        const y = row * S + S / 2;
+        mesh.position.set(x, y, 0);
+        mesh.userData = { project, page, localIndex, globalIndex };
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
 
-      // === Cartoon outline (BackSide trick) ===
-      const outlineMat = new THREE.MeshBasicMaterial({
-        color: 0x1a1a2e,
-        side: THREE.BackSide,
-      });
-      const outline = new THREE.Mesh(new THREE.BoxGeometry(S * 1.10, S * 1.10, S * 1.10), outlineMat);
-      mesh.add(outline);
+        const outlineMat = new THREE.MeshBasicMaterial({
+          color: 0x1a1a2e,
+          side: THREE.BackSide,
+        });
+        const outline = new THREE.Mesh(new THREE.BoxGeometry(S * 1.10, S * 1.10, S * 1.10), outlineMat);
+        mesh.add(outline);
 
-      this.pyramidGroup.add(mesh);
-      this.cubeMeshes.push(mesh);
-    });
+        this.pyramidGroup.add(mesh);
+        this.cubeMeshes.push(mesh);
+        projectCursor++;
+      }
+    }
+
+    this.framePyramid(rowsUsed, S);
   }
 
   private loop(): void {
@@ -221,9 +279,10 @@ export class Projects implements AfterViewInit, OnDestroy {
     const tmpColor = new THREE.Color();
 
     this.cubeMeshes.forEach(m => {
-      const pidx: number = m.userData['pidx'];
+      const page: number = m.userData['page'];
+      const localIndex: number = m.userData['localIndex'];
       const isActive = m.userData['project']?.slug === activeSlug;
-      const cols = isActive ? this.activeColors : this.defaultColors[pidx];
+      const cols = isActive ? this.getActiveColors(page) : this.getDefaultColors(page, localIndex);
       const mats = m.material as THREE.MeshToonMaterial[];
 
       const targetColors = [

@@ -20,53 +20,101 @@ export interface TimelineItem {
   description: { en: string; fr: string };
   tags?: string[];
   current?: boolean;
+  credentialUrl?: string;
+  previewUrl?: string;
+  previewType?: 'image' | 'pdf';
 }
+
+type ParcoursTab = 'pro' | 'academic' | 'certifications';
 
 const PROFESSIONAL: TimelineItem[] = [
   { 
-    year: { en: '2024 – Present', fr: '2024 – Présent' }, 
-    title: { en: 'Freelance Full-Stack Developer', fr: 'Développeur Full-Stack Freelance' }, 
-    place: { en: 'Independent — Lomé, Togo', fr: 'Indépendant — Lomé, Togo' }, 
-    description: { en: 'Designing modern web applications for local and international clients. Stack: Angular, Spring Boot, PostgreSQL.', fr: 'Conception d\'applications web modernes pour clients locaux et internationaux. Stack : Angular, Spring Boot, PostgreSQL.' }, 
-    tags: ['Angular', 'Spring Boot', 'PostgreSQL'], current: true 
+    year: { en: 'May 2025 – August 2025', fr: 'Mai 2025 – Août 2025' }, 
+    title: { en: 'Software Developer Intern', fr: 'Développeur logiciel' }, 
+    place: { en: 'ORABANK-TOGO — Lomé', fr: 'ORABANK-TOGO — Lomé' }, 
+    description: { en: 'Software development internship at ORABANK-TOGO. Built a web application that automates change request file creation with a configurable approval workflow.', fr: 'Stage en programmation logiciel à ORABANK-TOGO. Développement d\'une application web d\'automatisation de la création de fiche de changement avec un workflow d\'approbation paramétrable.' }, 
+    tags: ['Angular', 'Spring Boot', 'Workflow'], current: true 
   },
   { 
-    year: { en: '2023 – 2024', fr: '2023 – 2024' }, 
-    title: { en: 'Front-End Developer', fr: 'Développeur Front-End' }, 
-    place: { en: 'FinTech Startup — Lomé, Togo', fr: 'Startup FinTech — Lomé, Togo' }, 
-    description: { en: 'Developed the user interface for a micro-finance application. Implemented the design system and integrated REST APIs.', fr: 'Développement de l\'interface d\'une appli de micro-finance. Mise en place du design system et intégration des APIs REST.' }, 
-    tags: ['Angular', 'RxJS', 'Design System'] 
+    year: { en: 'July 2024 – August 2024', fr: 'Juillet 2024 – Août 2024' }, 
+    title: { en: 'Software Developer Intern', fr: 'Développeur logiciel' }, 
+    place: { en: 'ORABANK-TOGO — Lomé', fr: 'ORABANK-TOGO — Lomé' }, 
+    description: { en: 'Software development internship at ORABANK-TOGO. Developed a banking reconciliation web application with Angular and Spring Boot.', fr: 'Stage en programmation logiciel à ORABANK-TOGO. Développement d\'une application web de rapprochements bancaires avec les technologies Angular et Spring Boot.' }, 
+    tags: ['Angular', 'Spring Boot', 'Banking'] 
   },
   { 
-    year: { en: '2022 – 2023', fr: '2022 – 2023' }, 
-    title: { en: 'Junior Web Developer', fr: 'Développeur Web Junior' }, 
-    place: { en: 'Digital Agency — Lomé, Togo', fr: 'Agence Numérique — Lomé, Togo' }, 
-    description: { en: 'Created showcase websites and web apps for SMEs using React, Node.js, and MySQL.', fr: 'Création de sites vitrines et applications web pour des PME. Utilisation de React, Node.js et MySQL.' }, 
-    tags: ['React', 'Node.js', 'MySQL'] 
+    year: { en: 'July 2023 – August 2023', fr: 'Juillet 2023 – Août 2023' }, 
+    title: { en: 'IT Technician Intern', fr: 'Technicien Informatique' }, 
+    place: { en: 'Clinique BIASA — Lomé', fr: 'Clinique BIASA — Lomé' }, 
+    description: { en: 'Software development internship at Clinique BIASA. Provided user support and resolved technical issues.', fr: 'Stage en programmation logiciel à la Clinique BIASA. Support utilisateur et résolution de problèmes techniques.' }, 
+    tags: ['Support', 'IT', 'Troubleshooting'] 
   },
 ];
 
 const ACADEMIC: TimelineItem[] = [
   { 
-    year: { en: '2024 – Present', fr: '2024 – Présent' }, 
-    title: { en: 'Master\'s in Computer Systems & Software', fr: 'Master Systèmes Informatiques & Logiciels' }, 
-    place: { en: 'University of Lomé — Togo', fr: 'Université de Lomé — Togo' }, 
-    description: { en: 'Specializing in software architecture, distributed systems, and applied artificial intelligence.', fr: 'Spécialisation en architecture logicielle, systèmes distribués et intelligence artificielle appliquée.' }, 
-    tags: ['Architecture', 'IA', 'Cloud'], current: true 
+    year: { en: '2025 – 2027 (In progress)', fr: '2025 – 2027 (En cours)' }, 
+    title: { en: 'Master\'s in AI and Big Data', fr: 'Master en IA et Big Data' }, 
+    place: { en: 'EPL — Lomé', fr: 'EPL — Lomé' }, 
+    description: { en: 'Master\'s program focused on artificial intelligence and Big Data.', fr: 'Master en IA et Big Data.' }, 
+    tags: ['IA', 'Big Data'], current: true 
   },
   { 
-    year: { en: '2020 – 2023', fr: '2020 – 2023' }, 
-    title: { en: 'Bachelor in Computer Science', fr: 'Licence en Informatique' }, 
-    place: { en: 'University of Lomé — Togo', fr: 'Université de Lomé — Togo' }, 
-    description: { en: 'Fundamentals of algorithms, data structures, web development, and relational databases.', fr: 'Fondamentaux en algorithmique, structures de données, développement web et bases de données relationnelles.' }, 
-    tags: ['Algorithms', 'Databases', 'Web'] 
+    year: { en: '2024 – 2025', fr: '2024 – 2025' }, 
+    title: { en: 'Bachelor\'s Degree in Computer Engineering', fr: 'Licence' }, 
+    place: { en: 'IAI-TOGO — Lomé', fr: 'IAI-TOGO — Lomé' }, 
+    description: { en: 'Diploma in computer engineering, BAC+3 level.', fr: 'Diplôme d\'Ingénieur des Travaux Informatiques BAC+3.' }, 
+    tags: ['Informatique', 'BAC+3'] 
   },
   { 
-    year: { en: '2019 – 2020', fr: '2019 – 2020' }, 
-    title: { en: 'High School Diploma (Science)', fr: 'Baccalauréat Scientifique (Série C)' }, 
-    place: { en: 'Lomé High School — Togo', fr: 'Lycée de Lomé — Togo' }, 
-    description: { en: 'Graduated with honors, majoring in Mathematics and Physics.', fr: 'Obtention du baccalauréat avec mention, option mathématiques et sciences physiques.' }, 
-    tags: ['Mathematics', 'Science'] 
+    year: { en: '2022 – 2023', fr: '2022 – 2023' }, 
+    title: { en: 'BAC 2 — Series C', fr: 'BAC 2 — Série C' }, 
+    place: { en: 'Lycée moderne d\'Adidogomé 1', fr: 'Lycée moderne d\'Adidogomé 1' }, 
+    description: { en: 'Scientific track, Series C.', fr: 'Série C.' }, 
+    tags: ['Sciences', 'Mathématiques'] 
+  },
+];
+
+const CERTIFICATIONS: TimelineItem[] = [
+  {
+    year: { en: 'Certificate', fr: 'Certificat' },
+    title: { en: 'CCNAv7: Switching, Routing, and Wireless Essentials', fr: 'CCNAv7 : Switching, Routing, and Wireless Essentials' },
+    place: { en: 'Cisco Networking Academy', fr: 'Cisco Networking Academy' },
+    description: { en: 'Networking certification focused on switching, routing and wireless essentials.', fr: 'Certification réseau axée sur les notions essentielles de commutation, routage et réseaux sans fil.' },
+    tags: ['Cisco', 'CCNA', 'Networking'],
+    credentialUrl: 'documents/CCNA-_Switching-_Routing-_and_Wireless_Essentials_certificate.png',
+    previewUrl: 'documents/CCNA-_Switching-_Routing-_and_Wireless_Essentials_certificate.png',
+    previewType: 'image',
+  },
+  {
+    year: { en: 'Certificate', fr: 'Certificat' },
+    title: { en: 'CCNAv7: Introduction to Networks', fr: 'CCNAv7 : Introduction to Networks' },
+    place: { en: 'Cisco Networking Academy', fr: 'Cisco Networking Academy' },
+    description: { en: 'Networking certification covering network fundamentals and introductory CCNA concepts.', fr: 'Certification réseau couvrant les fondamentaux des réseaux et les premières notions CCNA.' },
+    tags: ['Cisco', 'CCNA', 'Networks'],
+    credentialUrl: 'documents/CCNA-_Introduction_to_Networks_certificate.png',
+    previewUrl: 'documents/CCNA-_Introduction_to_Networks_certificate.png',
+    previewType: 'image',
+  },
+  {
+    year: { en: 'Certificate', fr: 'Certificat' },
+    title: { en: 'Certificate of Completion for Free AI Video Generation Course', fr: 'Certificate of Completion for Free AI Video Generation Course' },
+    place: { en: 'AI Video Generation Course', fr: 'AI Video Generation Course' },
+    description: { en: 'Course completion certificate focused on AI-assisted video generation.', fr: 'Certificat de fin de formation autour de la génération vidéo assistée par IA.' },
+    tags: ['AI', 'Video', 'Generation'],
+    credentialUrl: 'documents/Free%20AI%20Video%20Generation%20Course_Certificate.png',
+    previewUrl: 'documents/Free%20AI%20Video%20Generation%20Course_Certificate.png',
+    previewType: 'image',
+  },
+  {
+    year: { en: 'Certificate', fr: 'Certificat' },
+    title: { en: 'Certificate of Completion for Angular Basics', fr: 'Certificate of Completion for Angular Basics' },
+    place: { en: 'Angular Training', fr: 'Formation Angular' },
+    description: { en: 'Angular basics certificate covering the fundamentals of modern Angular development.', fr: 'Certificat Angular basics couvrant les bases du développement Angular moderne.' },
+    tags: ['Angular', 'Frontend', 'TypeScript'],
+    credentialUrl: 'documents/ANGULAR_CERTIFICATION.png',
+    previewUrl: 'documents/ANGULAR_CERTIFICATION.png',
+    previewType: 'image',
   },
 ];
 
@@ -91,7 +139,7 @@ export class Parcours implements AfterViewInit, OnDestroy {
   @ViewChild('viewport')  viewport!:  ElementRef<HTMLElement>;
   @ViewChildren('node')   nodeRefs!:  QueryList<ElementRef<HTMLElement>>;
 
-  protected readonly tab    = signal<'pro'|'academic'>('pro');
+  protected readonly tab    = signal<ParcoursTab>('pro');
   protected readonly isOpen = signal(false);
   protected readonly scrollLeft = signal(0);
   protected readonly i18n   = inject(I18nService);
@@ -101,7 +149,11 @@ export class Parcours implements AfterViewInit, OnDestroy {
     // Refresh ScrollTrigger after a short delay so heights recalculate
     setTimeout(() => ScrollTrigger.refresh(), 300);
   }
-  protected readonly items  = computed(() => this.tab() === 'pro' ? PROFESSIONAL : ACADEMIC);
+  protected readonly items  = computed(() => {
+    if (this.tab() === 'pro') return PROFESSIONAL;
+    if (this.tab() === 'academic') return ACADEMIC;
+    return CERTIFICATIONS;
+  });
   protected readonly atStart = computed(() => this.scrollLeft() <= 0);
   protected readonly atEnd   = computed(() => {
     const max = (this.items().length - 1) * this.nodeWidth;
@@ -248,7 +300,7 @@ export class Parcours implements AfterViewInit, OnDestroy {
     vp.scrollBy({ left: dir * this.nodeWidth, behavior: 'smooth' });
   }
 
-  protected switchTab(t: 'pro' | 'academic'): void { this.tab.set(t); }
+  protected switchTab(t: ParcoursTab): void { this.tab.set(t); }
   
   protected scrollToNode(i: number): void {
     if (!this.viewport?.nativeElement) return;

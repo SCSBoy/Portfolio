@@ -1,5 +1,5 @@
 import { Injectable, computed, signal } from '@angular/core';
-import { TRANSLATIONS, Language } from '../data/translations.data';
+import { TRANSLATIONS, Language, TranslationKey } from '../data/translations.data';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class I18nService {
   /**
    * Get translation for a specific key
    */
-  t(key: keyof typeof TRANSLATIONS['en']): string {
+  t(key: TranslationKey): string {
     return this.activeTranslations()[key] || key;
   }
 }

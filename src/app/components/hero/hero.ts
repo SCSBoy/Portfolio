@@ -1,5 +1,5 @@
 import {
-  AfterViewInit, Component, ElementRef,
+  AfterViewInit, Component, ElementRef, HostListener,
   OnDestroy, ViewChild, signal, inject, effect
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,19 +31,24 @@ export class Hero implements AfterViewInit, OnDestroy {
   protected readonly imgError   = signal(false);
   protected readonly panelState = signal<PanelState>('open');
   protected readonly isVideoMode = signal(false);
+  protected readonly profileViewerOpen = signal(false);
 
   private typed?: Typed;
   private detachTilt?: () => void;
   private collapseTimer?: ReturnType<typeof setTimeout>;
   private busy = false;
   private activeAnim?: Animation;
+  private taglineTween?: gsap.core.Tween;
 
   constructor() {
-    // Re-initialize Typed.js when language changes
+    // Re-initialize animated text when language changes
     effect(() => {
       const lang = this.i18n.currentLang();
       if (this.typedEl && this.typed) {
         this.initTyped(lang);
+      }
+      if (this.taglineEl) {
+        this.animateTagline();
       }
     });
   }
@@ -88,6 +93,23 @@ export class Hero implements AfterViewInit, OnDestroy {
     this.detachTilt?.();
     clearTimeout(this.collapseTimer);
     this.activeAnim?.cancel();
+    this.taglineTween?.kill();
+  }
+
+  protected openProfileViewer(): void {
+    if (this.isVideoMode() || this.imgError()) return;
+    this.profileViewerOpen.set(true);
+  }
+
+  protected closeProfileViewer(): void {
+    this.profileViewerOpen.set(false);
+  }
+
+  @HostListener('document:keydown.escape')
+  protected closeProfileViewerWithKeyboard(): void {
+    if (this.profileViewerOpen()) {
+      this.closeProfileViewer();
+    }
   }
 
   // ── Panel → Badge (Web Animations API — no TS type conflicts) ─────────────
@@ -209,13 +231,14 @@ export class Hero implements AfterViewInit, OnDestroy {
     if (!el) return;
 
     // Enveloppe chaque mot dans un <span> animable
-    const raw   = el.innerText;
+    this.taglineTween?.kill();
+    const raw   = this.i18n.t('hero.tagline');
     const words = raw.trim().split(/\s+/);
     el.innerHTML = words
       .map(w => `<span class="hero__tagline-word">${w}</span>`)
       .join(' ');
 
-    gsap.fromTo(
+    this.taglineTween = gsap.fromTo(
       el.querySelectorAll('.hero__tagline-word'),
       { opacity: 0, y: 18, filter: 'blur(4px)' },
       {

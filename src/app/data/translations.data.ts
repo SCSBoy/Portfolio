@@ -15,7 +15,8 @@ export const TRANSLATIONS = {
     // Hero
     'hero.eyebrow': 'Developer',
     'hero.title_hi': 'Hello, I am',
-    'hero.tagline': 'I design and build robust web applications, from the user interface to the server architecture — with a strong focus on code quality and user experience.',
+    'hero.name_hi': 'Charly EKLU',
+    'hero.tagline': 'I design and build robust web applications, from the user interface to the server architecture with a strong focus on code quality and user experience.',
     'hero.btn_resume': 'View my resume',
     'hero.btn_video': 'Video presentation',
     'hero.btn_return_photo': 'Return to photo',
@@ -40,11 +41,13 @@ export const TRANSLATIONS = {
     'parcours.title': 'My Journey',
     'parcours.tab.pro': 'Professional',
     'parcours.tab.academic': 'Academic',
+    'parcours.tab.certifications': 'Certifications',
     'parcours.aria_toggle': 'Show/Hide journey',
     'parcours.aria_prev': 'Past',
     'parcours.aria_next': 'Earlier',
     'parcours.badge_current': 'Current',
     'parcours.badge_progress': 'In Progress',
+    'parcours.cert_preview': 'Preview certificate',
 
     // Projects
     'projects.title': 'Featured Projects',
@@ -113,8 +116,9 @@ export const TRANSLATIONS = {
 
     // Hero
     'hero.eyebrow': 'Développeur',
-    'hero.title_hi': 'Bonjour, je suis',
-    'hero.tagline': 'Je conçois et développe des applications web robustes, de l\'interface utilisateur à l\'architecture serveur — avec une attention particulière portée à la qualité du code et à l\'expérience utilisateur.',
+    'hero.title_hi': 'Salut, je m\'appelle',
+    'hero.name_hi': 'EKLU Charly',
+    'hero.tagline': 'Je conçois et développe des applications web robustes, de l\'interface utilisateur à l\'architecture serveur avec une attention particulière portée à la qualité du code et à l\'expérience utilisateur.',
     'hero.btn_resume': 'Voir mon CV',
     'hero.btn_video': 'Vidéo de présentation',
     'hero.btn_return_photo': 'Retour à la photo',
@@ -139,11 +143,13 @@ export const TRANSLATIONS = {
     'parcours.title': 'Mon Parcours',
     'parcours.tab.pro': 'Professionnel',
     'parcours.tab.academic': 'Académique',
+    'parcours.tab.certifications': 'Certifications',
     'parcours.aria_toggle': 'Afficher/Masquer le parcours',
     'parcours.aria_prev': 'Passé',
     'parcours.aria_next': 'Plus ancien',
     'parcours.badge_current': 'Actuel',
     'parcours.badge_progress': 'En cours',
+    'parcours.cert_preview': 'Aperçu du certificat',
 
     // Projects
     'projects.title': 'Projets Récents',
@@ -200,3 +206,5 @@ export const TRANSLATIONS = {
     'project.not_found_desc': 'Ce projet n\'existe pas ou a été déplacé.',
   }
 };
+
+export type TranslationKey = keyof typeof TRANSLATIONS['en'];

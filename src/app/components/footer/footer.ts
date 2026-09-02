@@ -23,7 +23,7 @@ export class Footer {
   protected readonly socials: SocialLink[] = [
     { icon: 'code', label: 'GitHub', href: 'https://github.com/CharlyEKLU' },
     { icon: 'work', label: 'LinkedIn', href: '#' },
-    { icon: 'mail', label: 'Email', href: 'mailto:eklufamily@gmail.com' },
+    { icon: 'mail', label: 'Email', href: 'mailto:charlyeklu27@gmail.com' },
     { icon: 'play_circle_filled', label: 'YouTube', href: '#' },
     { icon: 'facebook', label: 'Facebook', href: '#' },
     { icon: 'music_note', label: 'TikTok', href: '#' },

@@ -3,7 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RevealDirective } from '../../shared/reveal.directive';
 import { I18nService } from '../../shared/i18n.service';
-import { TRANSLATIONS } from '../../data/translations.data';
+import { TranslationKey } from '../../data/translations.data';
 
 interface SkillItem {
   name: string;
@@ -13,7 +13,7 @@ interface SkillItem {
 }
 
 interface SkillGroup {
-  category: keyof typeof TRANSLATIONS['en'];
+  category: TranslationKey;
   icon: string;
   items: SkillItem[];
 }
@@ -38,39 +38,37 @@ export class Skills implements AfterViewInit {
       category: 'skills.category.frontend',
       icon: 'web',
       items: [
-        { name: 'Angular', icon: 'devicon-angular-plain', level: { en: 'Mastered / Advanced', fr: 'Maîtrisé / Avancé' }, projects: { en: 'Projects: Portfolio, KPI Dashboard, E-commerce app', fr: 'Projets: Portfolio, Dashboard KPI, E-commerce app' } },
-        { name: 'TypeScript', icon: 'devicon-typescript-plain', level: { en: 'Mastered / Advanced', fr: 'Maîtrisé / Avancé' }, projects: { en: 'Projects: All recent frontend projects', fr: 'Projets: Tous les projets frontend récents' } },
-        { name: 'JavaScript', icon: 'devicon-javascript-plain', level: { en: 'Mastered / Advanced', fr: 'Maîtrisé / Avancé' }, projects: { en: 'Projects: GSAP animations, Utility scripts', fr: 'Projets: Animations GSAP, Scripts utilitaires' } },
-        { name: 'HTML5/Sass', icon: 'devicon-html5-plain', level: { en: 'Mastered / Advanced', fr: 'Maîtrisé / Avancé' }, projects: { en: 'Projects: Design systems, Pixel-perfect integration', fr: 'Projets: Design systems, Intégration pixel-perfect' } },
+        { name: 'Angular', icon: 'devicon-angular-plain', level: { en: 'Mastered / Advanced', fr: 'Maîtrisé / Avancé' }, projects: { en: 'Used at ORABANK-TOGO for banking reconciliation and change request workflow web applications.', fr: 'Utilisé à ORABANK-TOGO pour les applications web de rapprochements bancaires et de workflow de fiches de changement.' } },
+        { name: 'TypeScript', icon: 'devicon-typescript-plain', level: { en: 'Mastered / Advanced', fr: 'Maîtrisé / Avancé' }, projects: { en: 'Typed Angular front-end logic for ORABANK projects and this portfolio.', fr: 'Logique front-end Angular typée pour les projets ORABANK et ce portfolio.' } },
+        { name: 'JavaScript', icon: 'devicon-javascript-plain', level: { en: 'Mastered / Advanced', fr: 'Maîtrisé / Avancé' }, projects: { en: 'Interactive interfaces, animations and technical problem solving across portfolio and internship work.', fr: 'Interfaces interactives, animations et résolution de problèmes techniques sur le portfolio et les stages.' } },
+        { name: 'React', icon: 'devicon-react-plain', level: { en: 'Intermediate / Practiced', fr: 'Intermédiaire / Pratiqué' }, projects: { en: 'Front-end practice alongside Angular, with reusable components and responsive UI work.', fr: 'Pratique front-end complémentaire à Angular, avec composants réutilisables et interfaces responsives.' } },
       ],
     },
     {
       category: 'skills.category.backend',
       icon: 'dns',
       items: [
-        { name: 'Node.js', icon: 'devicon-nodejs-plain', level: { en: 'Intermediate / Practiced', fr: 'Intermédiaire / Pratiqué' }, projects: { en: 'Projects: RESTful APIs, Automation scripts', fr: 'Projets: API RESTful, Scripts d\'automatisation' } },
-        { name: 'Spring Boot', icon: 'devicon-spring-plain', level: { en: 'Mastered / Advanced', fr: 'Maîtrisé / Avancé' }, projects: { en: 'Projects: Banking microservices, E-commerce backend', fr: 'Projets: Microservices bancaires, Backend e-commerce' } },
-        { name: 'Java', icon: 'devicon-java-plain', level: { en: 'Mastered / Advanced', fr: 'Maîtrisé / Avancé' }, projects: { en: 'Projects: Algorithms, Academic projects', fr: 'Projets: Algorithmique, Projets académiques' } },
-        { name: 'Python', icon: 'devicon-python-plain', level: { en: 'Intermediate / Practiced', fr: 'Intermédiaire / Pratiqué' }, projects: { en: 'Projects: Data scripts, AI models', fr: 'Projets: Scripts Data, Modèles IA' } },
+        { name: 'Node.js', icon: 'devicon-nodejs-plain', level: { en: 'Intermediate / Practiced', fr: 'Intermédiaire / Pratiqué' }, projects: { en: 'API and tooling practice for web application back ends.', fr: 'Pratique des API et outils côté back-end pour applications web.' } },
+        { name: 'Spring Boot', icon: 'devicon-spring-plain', level: { en: 'Mastered / Advanced', fr: 'Maîtrisé / Avancé' }, projects: { en: 'Back-end technology used for ORABANK banking reconciliation and approval workflow applications.', fr: 'Technologie back-end utilisée pour les applications ORABANK de rapprochements bancaires et de workflow d\'approbation.' } },
+        { name: 'Java', icon: 'devicon-java-plain', level: { en: 'Intermediate / Practiced', fr: 'Intermédiaire / Pratiqué' }, projects: { en: 'Core language behind Spring Boot work and academic software engineering projects.', fr: 'Langage principal derrière Spring Boot et les projets académiques de génie logiciel.' } },
       ],
     },
     {
       category: 'skills.category.database',
       icon: 'storage',
       items: [
-        { name: 'PostgreSQL', icon: 'devicon-postgresql-plain', level: { en: 'Mastered / Advanced', fr: 'Maîtrisé / Avancé' }, projects: { en: 'Projects: Main backend, Complex queries', fr: 'Projets: Backend principal, Requêtes complexes' } },
-        { name: 'MySQL', icon: 'devicon-mysql-plain', level: { en: 'Intermediate / Practiced', fr: 'Intermédiaire / Pratiqué' }, projects: { en: 'Projects: Legacy systems, Personal projects', fr: 'Projets: Systèmes legacy, Projets personnels' } },
-        { name: 'MongoDB', icon: 'devicon-mongodb-plain', level: { en: 'Basics / Learning', fr: 'Notions / En apprentissage' }, projects: { en: 'Projects: Proof of concepts (PoC)', fr: 'Projets: Proof of concepts (PoC)' } },
+        { name: 'PostgreSQL', icon: 'devicon-postgresql-plain', level: { en: 'Mastered / Advanced', fr: 'Maîtrisé / Avancé' }, projects: { en: 'Relational database design for structured business workflows and web application back ends.', fr: 'Conception de bases relationnelles pour workflows métier structurés et back-ends web.' } },
+        { name: 'MySQL', icon: 'devicon-mysql-plain', level: { en: 'Intermediate / Practiced', fr: 'Intermédiaire / Pratiqué' }, projects: { en: 'Academic and web development database practice during the computer engineering curriculum.', fr: 'Pratique base de données en projets académiques et web durant le parcours informatique.' } },
+        { name: 'MongoDB', icon: 'devicon-mongodb-plain', level: { en: 'Basics / Learning', fr: 'Notions / En apprentissage' }, projects: { en: 'NoSQL exploration connected to the AI and Big Data master\'s path.', fr: 'Exploration NoSQL liée au parcours Master en IA et Big Data.' } },
       ],
     },
     {
       category: 'skills.category.tools',
       icon: 'construction',
       items: [
-        { name: 'Git', icon: 'devicon-git-plain', level: { en: 'Mastered / Advanced', fr: 'Maîtrisé / Avancé' }, projects: { en: 'Projects: Daily versioning, CI/CD', fr: 'Projets: Versioning quotidien, CI/CD' } },
-        { name: 'Docker', icon: 'devicon-docker-plain', level: { en: 'Intermediate / Practiced', fr: 'Intermédiaire / Pratiqué' }, projects: { en: 'Projects: Database and API containerization', fr: 'Projets: Conteneurisation de bases de données et API' } },
-        { name: 'Figma', icon: 'devicon-figma-plain', level: { en: 'Intermediate / Practiced', fr: 'Intermédiaire / Pratiqué' }, projects: { en: 'Projects: UI/UX mockups, Design systems', fr: 'Projets: Maquettage UI/UX, Design systems' } },
-        { name: 'Jest', icon: 'devicon-jest-plain', level: { en: 'Intermediate / Practiced', fr: 'Intermédiaire / Pratiqué' }, projects: { en: 'Projects: Frontend unit testing', fr: 'Projets: Tests unitaires frontend' } },
+        { name: 'Git', icon: 'devicon-git-plain', level: { en: 'Mastered / Advanced', fr: 'Maîtrisé / Avancé' }, projects: { en: 'Versioning for portfolio work, academic projects and internship application development.', fr: 'Versioning pour le portfolio, les projets académiques et les développements réalisés en stage.' } },
+        { name: 'Docker', icon: 'devicon-docker-plain', level: { en: 'Intermediate / Practiced', fr: 'Intermédiaire / Pratiqué' }, projects: { en: 'Environment setup practice for APIs, databases and full-stack applications.', fr: 'Mise en place d\'environnements pour API, bases de données et applications full-stack.' } },
+        { name: 'Figma', icon: 'devicon-figma-plain', level: { en: 'Intermediate / Practiced', fr: 'Intermédiaire / Pratiqué' }, projects: { en: 'UI preparation and layout thinking for portfolio and web application screens.', fr: 'Préparation UI et réflexion sur les écrans du portfolio et des applications web.' } },
       ],
     },
   ];

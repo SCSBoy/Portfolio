@@ -60,6 +60,12 @@
         border-color: #fbbf24;
         box-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
       }
+
+      &.parcours__tab--certifications {
+        background: #22c55e;
+        border-color: #22c55e;
+        box-shadow: 0 0 12px rgba(34, 197, 94, 0.35);
+      }
     }
   }
 }
@@ -126,6 +132,10 @@
   &--academic {
     background: linear-gradient(90deg, transparent, #fbbf24, transparent);
   }
+
+  &--certifications {
+    background: linear-gradient(90deg, transparent, #22c55e, transparent);
+  }
 }
 
 /* ── Track & Nodes ──────────────────────────────────── */
@@ -179,6 +189,10 @@
     border-color: #fbbf24;
   }
 
+  .timeline-node--certifications:hover & {
+    border-color: #22c55e;
+  }
+
   .timeline-node--active & {
     border-color: var(--primary-400);
     background: var(--primary-400);
@@ -190,6 +204,12 @@
     border-color: #fbbf24;
     background: #fbbf24;
     box-shadow: 0 0 10px rgba(251, 191, 36, 0.6);
+  }
+
+  .timeline-node--active.timeline-node--certifications & {
+    border-color: #22c55e;
+    background: #22c55e;
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.55);
   }
 }
 
@@ -211,12 +231,20 @@
     border-color: rgba(251, 191, 36, 0.3);
   }
 
+  .timeline-node--certifications:hover & {
+    border-color: rgba(34, 197, 94, 0.3);
+  }
+
   .timeline-node--active & {
     border-color: var(--primary-400);
   }
 
   .timeline-node--active.timeline-node--academic & {
     border-color: #fbbf24;
+  }
+
+  .timeline-node--active.timeline-node--certifications & {
+    border-color: #22c55e;
   }
 }
 
@@ -235,6 +263,7 @@
 
   .timeline-node--active & { color: var(--primary-300); }
   .timeline-node--active.timeline-node--academic & { color: #fbbf24; }
+  .timeline-node--active.timeline-node--certifications & { color: #22c55e; }
 }
 
 .timeline-badge {
@@ -251,6 +280,12 @@
     background: rgba(251, 191, 36, 0.12);
     color: #fbbf24;
     border-color: rgba(251, 191, 36, 0.3);
+  }
+
+  .timeline-node--certifications & {
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+    border-color: rgba(34, 197, 94, 0.3);
   }
 }
 
@@ -284,6 +319,91 @@
   margin: 0 0 1.25rem;
 }
 
+.certificate-preview {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  margin: 0.9rem 0 1rem;
+  overflow: hidden;
+  border: 1px solid rgba(34, 197, 94, 0.22);
+  border-radius: var(--radius-sm);
+  background: rgba(34, 197, 94, 0.08);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: rgba(34, 197, 94, 0.55);
+    box-shadow: 0 0 18px rgba(34, 197, 94, 0.18);
+    transform: translateY(-2px);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  &__open {
+    position: absolute;
+    right: 0.55rem;
+    bottom: 0.55rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    color: #000106;
+    background: #22c55e;
+    border-radius: 50%;
+    box-shadow: 0 0 14px rgba(34, 197, 94, 0.45);
+
+    mat-icon {
+      width: 1rem;
+      height: 1rem;
+      font-size: 1rem;
+    }
+  }
+
+  &--pdf {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    color: #22c55e;
+    text-decoration: none;
+    font-weight: 700;
+
+    mat-icon {
+      width: 2rem;
+      height: 2rem;
+      font-size: 2rem;
+    }
+  }
+}
+
+.certificate-link {
+  width: 100%;
+  margin: 0 0 1rem;
+  color: #22c55e !important;
+  border-color: rgba(34, 197, 94, 0.35) !important;
+  border-radius: var(--radius-sm) !important;
+
+  mat-icon {
+    margin-right: 0.4rem;
+    font-size: 1rem;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  &:hover {
+    background: rgba(34, 197, 94, 0.1) !important;
+    border-color: rgba(34, 197, 94, 0.7) !important;
+  }
+}
+
 .timeline-tags {
   display: flex;
   flex-wrap: wrap;
@@ -309,6 +429,12 @@
     background: rgba(251, 191, 36, 0.1);
     color: #fbbf24;
     border-color: rgba(251, 191, 36, 0.2);
+  }
+
+  .timeline-node--active.timeline-node--certifications & {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    border-color: rgba(34, 197, 94, 0.2);
   }
 }
 

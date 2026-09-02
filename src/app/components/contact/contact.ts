@@ -7,16 +7,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { animate } from 'motion';
 import { RevealDirective } from '../../shared/reveal.directive';
 import { I18nService } from '../../shared/i18n.service';
-import { TRANSLATIONS } from '../../data/translations.data';
+import { TranslationKey } from '../../data/translations.data';
 
 interface ContactInfo {
   icon: string;
-  labelKey: keyof typeof TRANSLATIONS['en'];
+  labelKey: TranslationKey;
   value: string;
   href: string;
 }
 
-const CONTACT_EMAIL = 'eklufamily@gmail.com';
+const CONTACT_EMAIL = 'charlyeklu27@gmail.com';
 
 @Component({
   selector: 'app-contact',

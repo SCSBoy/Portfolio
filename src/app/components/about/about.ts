@@ -11,7 +11,7 @@ interface Highlight {
   label: { en: string; fr: string };
 }
 
-interface Testimonial {
+interface Testimonial { 
   name: string;
   role: { en: string; fr: string };
   text: { en: string; fr: string };
@@ -46,8 +46,8 @@ export class About {
 
   protected readonly fullstackHighlights: Highlight[] = [
     { icon: 'work_history', value: '3+', label: { en: 'Years of experience', fr: "Années d'expérience" } },
-    { icon: 'rocket_launch', value: '20+', label: { en: 'Projects delivered', fr: 'Projets livrés' } },
-    { icon: 'groups', value: '10+', label: { en: 'Happy clients', fr: 'Clients satisfaits' } },
+    { icon: 'rocket_launch', value: '10+', label: { en: 'Projects delivered', fr: 'Projets livrés' } },
+    { icon: 'groups', value: '4', label: { en: 'Happy clients', fr: 'Clients satisfaits' } },
     { icon: 'school', value: '5+', label: { en: 'Technologies mastered', fr: 'Technologies maîtrisées' } },
   ];
 
@@ -74,18 +74,19 @@ export class About {
   });
 
   protected readonly fullstackTestimonials: Testimonial[] = [
-    { name: 'Sarah L.', role: { en: 'Product Owner', fr: 'Product Owner' }, text: { en: 'Charly transformed our vision into a robust and intuitive application. Outstanding work!', fr: 'Charly a transformé notre vision en une application robuste et intuitive. Un travail exceptionnel !' }, avatar: 'S' },
-    { name: 'Marc D.', role: { en: 'CTO', fr: 'CTO' }, text: { en: 'Clean code, solid architecture, and delivered on time. A real added value for our team.', fr: 'Code propre, architecture solide et livraison dans les temps. Une vraie valeur ajoutée pour notre équipe.' }, avatar: 'M' }
+    { name: 'Ben EKLU', role: { en: 'JURINABE CoFounder', fr: 'CoFondateur JURINABE' }, text: { en: 'Charly transformed our vision into a robust and intuitive application. Outstanding work!', fr: 'Charly a transformé notre vision en une application robuste et intuitive. Un travail exceptionnel !' }, avatar: 'B' },
+    { name: 'Frédéric ALLAH-ASSOGBA.', role: { en: 'CTO', fr: 'CTO' }, text: { en: 'Clean code, solid architecture, and delivered on time. A real added value for our team.', fr: 'Code propre, architecture solide et livraison dans les temps. Une vraie valeur ajoutée pour notre équipe.' }, avatar: 'F' }
   ];
 
   protected readonly dataTestimonials: Testimonial[] = [
-    { name: 'Elodie P.', role: { en: 'Head of Data', fr: 'Head of Data' }, text: { en: 'His ETL pipelines drastically improved our processing times. Reliable and proactive.', fr: 'Ses pipelines ETL ont drastiquement amélioré nos temps de traitement. Fiable et proactif.' }, avatar: 'E' },
-    { name: 'Jean M.', role: { en: 'Lead Data Scientist', fr: 'Lead Data Scientist' }, text: { en: 'A smooth model deployment perfectly integrated into production. A rare technical expertise.', fr: 'Un déploiement de modèles fluide et parfaitement intégré en production. Une expertise technique rare.' }, avatar: 'J' }
+    { name: 'Abel CHEROUAT.', role: { en: 'Advanced Programming Professor', fr: 'Professeur en Programmation Avancée' }, text: { en: 'His deep understanding of data structures and algorithms was evident in his project. A rigorous and competent student.', fr: 'Sa maîtrise approfondie des structures de données et des algorithmes était évidente dans son projet. Un étudiant rigoureux et compétent.' }, avatar: 'A' },
+    // { name: 'Jean M.', role: { en: 'Lead Data Scientist', fr: 'Lead Data Scientist' }, text: { en: 'A smooth model deployment perfectly integrated into production. A rare technical expertise.', fr: 'Un déploiement de modèles fluide et parfaitement intégré en production. Une expertise technique rare.' }, avatar: 'J' }
   ];
 
   protected readonly autresTestimonials: Testimonial[] = [
-    { name: 'CEPA Jury', role: { en: 'English Competition', fr: 'Concours d\'anglais' }, text: { en: 'An eloquent presentation and excellent team spirit that led to victory in 2023.', fr: 'Une présentation éloquente et un excellent esprit d\'équipe qui ont mené à la victoire en 2023.' }, avatar: 'C' },
-    { name: 'Mentor', role: { en: 'First GLOBAL', fr: 'First GLOBAL' }, text: { en: 'Remarkable technical curiosity and resilience during this international robotics competition.', fr: 'Curiosité technique et résilience remarquables lors de cette compétition de robotique internationale.' }, avatar: 'M' }
+    { name: 'Antoine DEKPOH', role: { en: 'First place in the 2023 English competition', fr: 'Premier au Concours d\'anglais 2023' }, text: { en: 'His presentation was eloquent and his team spirit excellent, leading to victory in 2023.', fr: 'Sa présentation était éloquente et son esprit d\'équipe excellent, menant à la victoire en 2023.' }, avatar: 'A' },
+    { name: 'Olorode ATANLEY', role: { en: 'First GLOBAL Mentor', fr: 'Mentor First GLOBAL' }, text: { en: 'Remarkable technical curiosity and resilience during this international robotics competition.', fr: 'Curiosité technique et résilience remarquables lors de cette compétition de robotique internationale.' }, avatar: 'O' },
+
   ];
 
   protected readonly testimonials = computed(() => {
@@ -100,14 +101,14 @@ export class About {
     if (this.currentMode() === 'fullstack') {
       return {
         role: { en: "'Full-Stack Developer'", fr: "'Développeur Full-Stack'" },
-        stack: "['Angular', 'Spring Boot', 'PostgreSQL']",
-        passion: "'clean code'"
+        stack: "['Angular', 'Django', 'Laravel', 'Spring Boot', 'PostgreSQL']",
+        passion: "'UI/UX Design'"
       };
     } else if (this.currentMode() === 'data') {
       return {
-        role: { en: "'AI Data Engineer'", fr: "'AI Data Engineer'" },
-        stack: "['Python', 'TensorFlow', 'PySpark']",
-        passion: "'data architecture'"
+        role: { en: "'AI Data Engineer'", fr: "'Ingénieur IA & Data'" },
+        stack: "['Python', 'Apache Spark', 'Talend', 'Scikit-learn']",
+        passion: "'AI, Data, Data Science'"
       };
     } else {
       return {
@@ -123,7 +124,7 @@ export class About {
       return {
         p1: { en: 'Passionate developer, I build modern web applications using clean and maintainable architectures. I enjoy transforming complex business needs into simple, accessible, and user-friendly interfaces.', fr: 'Développeur passionné, je conçois des applications web modernes en m\'appuyant sur des architectures propres et maintenables. J\'aime transformer des besoins métier complexes en interfaces simples, accessibles et agréables à utiliser.' },
         p2: { en: 'Curious and meticulous, I am equally invested in code quality as I am in the final user experience — from prototyping to production.', fr: 'Curieux et rigoureux, je m\'investis autant sur la qualité du code que sur l\'expérience finale livrée à l\'utilisateur — du prototypage à la mise en production.' },
-        next: { en: 'AI Data Engineer Profile', fr: 'Profil AI Data Engineer' }
+        next: { en: 'AI Data Engineer Profile', fr: 'Profil Ingénieur IA & Data' }
       };
     } else if (this.currentMode() === 'data') {
       return {

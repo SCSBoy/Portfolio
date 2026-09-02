@@ -24,7 +24,7 @@
       {{ i18n.t('hero.eyebrow') }} <span #typedRole class="hero__typed"></span>
     </p>
     <h1 class="hero__title">
-      {{ i18n.t('hero.title_hi') }} <span class="hero__title-accent">Charly Eklu</span>
+      {{ i18n.t('hero.title_hi') }} <span class="hero__title-accent">{{ i18n.t('hero.name_hi') }}</span>
     </h1>
     <div class="hero__actions">
       <a mat-flat-button color="primary" href="documents/CV-EKLU Charly Yayra.pdf" target="_blank" rel="noopener noreferrer">
@@ -42,6 +42,16 @@
   <div class="hero__portrait" appReveal="right">
     <div class="hero__hex-wrap" [class.is-video-mode]="isVideoMode()" #hexWrap>
       <div class="hero__hexagon" #hexagon>
+        @if (!isVideoMode() && !imgError()) {
+          <button
+            class="hero__profile-open"
+            mat-icon-button
+            (click)="openProfileViewer(); $event.stopPropagation()"
+            [attr.aria-label]="i18n.currentLang() === 'en' ? 'Open profile photo' : 'Ouvrir la photo de profil'">
+            <mat-icon>fullscreen</mat-icon>
+          </button>
+        }
+
         <!-- Photo (always in DOM, crossfades out) -->
         <img src="images/ME_portfolio.png" alt="Photo de Charly Eklu"
              class="hero__presentation-media hero__presentation-img"
@@ -88,4 +98,27 @@
   <a class="hero__scroll-cue" href="#a-propos" [attr.aria-label]="i18n.t('hero.aria_scroll_next')">
     <mat-icon>keyboard_arrow_down</mat-icon>
   </a>
+
+  @if (profileViewerOpen()) {
+    <div
+      class="profile-viewer"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="i18n.currentLang() === 'en' ? 'Profile photo' : 'Photo de profil'"
+      (click)="closeProfileViewer()">
+      <button
+        class="profile-viewer__close"
+        mat-icon-button
+        (click)="closeProfileViewer(); $event.stopPropagation()"
+        [attr.aria-label]="i18n.currentLang() === 'en' ? 'Close profile photo' : 'Fermer la photo de profil'">
+        <mat-icon>close</mat-icon>
+      </button>
+      <figure class="profile-viewer__figure" (click)="$event.stopPropagation()">
+        <img
+          class="profile-viewer__image"
+          src="images/ME_portfolio.png"
+          alt="Photo de Charly Eklu" />
+      </figure>
+    </div>
+  }
 </section>
