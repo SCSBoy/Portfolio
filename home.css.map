@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/pages/home/home.scss"],
+  "sourcesContent": [":host {\n  display: block;\n}\n\n.page-section--tinted {\n  background: var(--mat-sys-surface-container-lowest);\n}\n"],
+  "mappings": ";AAAA;AACE,WAAA;;AAGF,CAAA;AACE,cAAA,IAAA;;",
+  "names": []
+}
