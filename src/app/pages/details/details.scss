@@ -1,0 +1,21 @@
+:host {
+  display: block;
+}
+
+/* Page "détails" : toutes les sections hors hero, sur une seule page.
+   Rythme : À propos (fond) → Compétences (fond teinté)
+   → Parcours (bande marine diagonale) → Projets (fond)
+   → Contact (bande charbon diagonale) → Footer. */
+.details {
+  padding-top: 4.5rem; /* espace sous le header fixe */
+}
+
+.page-section {
+  position: relative;
+  background: var(--bg);
+  transition: background-color 0.35s ease;
+}
+
+.page-section--alt {
+  background: var(--bg-alt);
+}

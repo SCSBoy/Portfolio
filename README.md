@@ -5,10 +5,12 @@ Welcome to the source code of my personal developer portfolio! This project is a
 ## ✨ Features
 
 - **Modern Angular Architecture:** Built with the latest Angular features (Standalone components, Signals, advanced animations).
-- **Responsive & Dynamic UI:** The interface uses Material Design mixed with custom CSS variables (Neon Blues, Dark themes) for a unique, tech-focused aesthetic.
+- **Responsive & Dynamic UI:** The interface uses Material Design mixed with custom CSS design tokens ("Hexagon Blue" palette: ash grey, charcoal, navy and electric blue, no neon effects) for a unique, tech-focused aesthetic.
+- **Two pages:** the home page is the hero only; every other section (about, skills, journey, projects, contact) lives on `/details`, reached through the GSAP transition and anchored by the nav links.
+- **Light / Dark theme:** Dark by default, toggle in the header, persisted in `localStorage`. The 3D project cubes adapt their palette to the theme. Sections alternate between ash-grey backgrounds and always-dark navy / charcoal bands with diagonal edges; the hero image sits under a dark veil in dark mode.
 - **Bilingual (i18n):** Full support for English and French with seamless live switching via a custom internationalization service.
 - **3D Graphics & Animations:** Integrated with `three.js` to render interactive 3D elements (like the rotating pyramids and particle backgrounds).
-- **GSAP Animations:** Smooth scroll animations and page transitions powered by GSAP and ScrollTrigger.
+- **GSAP Animations:** Smooth scroll animations and a cascading-panels page transition (with the "C.E" hexagon monogram) powered by GSAP and ScrollTrigger.
 - **Performance Optimized:** Uses lazy loading, optimized assets, and efficient DOM rendering.
 
 ## 🛠️ Technology Stack

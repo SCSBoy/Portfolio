@@ -9,6 +9,7 @@ import { gsap }            from 'gsap';
 import Typed from 'typed.js';
 import { RevealDirective } from '../../shared/reveal.directive';
 import { I18nService } from '../../shared/i18n.service';
+import { TransitionService } from '../../shared/transition.service';
 
 type PanelState = 'open' | 'badge';
 
@@ -28,6 +29,7 @@ export class Hero implements AfterViewInit, OnDestroy {
   @ViewChild('bgVideo')      private bgVideoEl?:  ElementRef<HTMLVideoElement>;
 
   protected readonly i18n = inject(I18nService);
+  private readonly transitionService = inject(TransitionService);
   protected readonly imgError   = signal(false);
   protected readonly panelState = signal<PanelState>('open');
   protected readonly isVideoMode = signal(false);
@@ -102,6 +104,12 @@ export class Hero implements AfterViewInit, OnDestroy {
     clearTimeout(this.collapseTimer);
     this.activeAnim?.cancel();
     this.taglineTween?.kill();
+  }
+
+  /** Les sections detaillees vivent sur /details : transition GSAP puis ancre. */
+  protected goToDetails(e: Event, fragment: string): void {
+    e.preventDefault();
+    this.transitionService.navigate('/details', fragment);
   }
 
   protected openProfileViewer(): void {
@@ -211,19 +219,21 @@ export class Hero implements AfterViewInit, OnDestroy {
     this.busy = false;
   }
 
-  // ── Tilt hexagone (motion — déjà fonctionnel) ─────────────────────────────
+  // ── Tilt hexagone (motion) — amplitude volontairement faible ──────────────
+  private static readonly TILT_DEG = 4;
+
   private enableTilt(el: HTMLElement): () => void {
     const onMove = (e: MouseEvent) => {
       const r = el.getBoundingClientRect();
       animate(el, {
-        transformPerspective: 700,
-        rotateY: ((e.clientX - r.left) / r.width  - 0.5) * 16,
-        rotateX: ((e.clientY - r.top)  / r.height - 0.5) * -16,
-      }, { duration: 0.4, ease: 'easeOut' });
+        transformPerspective: 900,
+        rotateY: ((e.clientX - r.left) / r.width  - 0.5) * Hero.TILT_DEG,
+        rotateX: ((e.clientY - r.top)  / r.height - 0.5) * -Hero.TILT_DEG,
+      }, { duration: 0.7, ease: 'easeOut' });
     };
     const onLeave = () =>
-      animate(el, { transformPerspective: 700, rotateY: 0, rotateX: 0 },
-        { duration: 0.6, ease: 'easeOut' });
+      animate(el, { transformPerspective: 900, rotateY: 0, rotateX: 0 },
+        { duration: 0.8, ease: 'easeOut' });
 
     el.addEventListener('mousemove', onMove);
     el.addEventListener('mouseleave', onLeave);

@@ -1,5 +1,7 @@
-import { AfterViewInit, Component, ElementRef, HostListener, ViewChild, signal, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component, HostListener, computed, signal, inject } from '@angular/core';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { filter, map, startWith } from 'rxjs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,10 +11,13 @@ import { UpperCasePipe } from '@angular/common';
 import { I18nService } from '../../shared/i18n.service';
 import { TranslationKey } from '../../data/translations.data';
 import { TransitionService } from '../../shared/transition.service';
+import { ThemeService } from '../../shared/theme.service';
 
 interface NavLink {
   key: TranslationKey;
-  fragment: string;
+  /** Page cible : '/' (hero seul) ou '/details' (toutes les sections). */
+  path: '/' | '/details';
+  fragment?: string;
 }
 
 @Component({
@@ -21,28 +26,50 @@ interface NavLink {
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
-export class Header implements AfterViewInit {
+export class Header {
   protected readonly i18n = inject(I18nService);
   protected readonly router = inject(Router);
   protected readonly transitionService = inject(TransitionService);
-  protected readonly scrolled = signal(false);
+  protected readonly theme = inject(ThemeService);
+
+  private readonly scrollY = signal(0);
+
+  /** Chemin courant sans fragment ni query. */
+  private readonly currentPath = toSignal(
+    this.router.events.pipe(
+      filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+      map(() => { this.heroHeight = undefined; return this.pathOf(this.router.url); }),
+      startWith(this.pathOf(this.router.url)),
+    ),
+    { initialValue: '/' }
+  );
+
+  protected readonly isHome = computed(() => this.currentPath() === '/');
+  private readonly isProjectDetail = computed(() => this.currentPath().startsWith('/projets/'));
+
+  /** Barre opaque : toujours sur /details, après le seuil ailleurs. */
+  protected readonly scrolled = computed(() =>
+    (!this.isHome() && !this.isProjectDetail()) || this.scrollY() > this.solidThreshold()
+  );
+
+  /** Texte clair sur fond sombre : hero en thème sombre, ou dégradé projet. */
+  protected readonly inverse = computed(() =>
+    !this.scrolled() && (this.isProjectDetail() || this.theme.isDark())
+  );
 
   private heroHeight?: number;
 
   protected readonly links: NavLink[] = [
-    { key: 'nav.home', fragment: 'accueil' },
-    { key: 'nav.about', fragment: 'a-propos' },
-    { key: 'nav.skills', fragment: 'competences' },
-    { key: 'nav.parcours', fragment: 'parcours' },
-    { key: 'nav.projects', fragment: 'projets' },
+    { key: 'nav.home', path: '/' },
+    { key: 'nav.about', path: '/details', fragment: 'a-propos' },
+    { key: 'nav.skills', path: '/details', fragment: 'competences' },
+    { key: 'nav.parcours', path: '/details', fragment: 'parcours' },
+    { key: 'nav.projects', path: '/details', fragment: 'projets' },
   ];
-
-  ngAfterViewInit(): void {
-  }
 
   @HostListener('window:scroll')
   protected onScroll(): void {
-    this.scrolled.set(window.scrollY > this.solidThreshold());
+    this.scrollY.set(window.scrollY);
   }
 
   @HostListener('window:resize')
@@ -51,24 +78,30 @@ export class Header implements AfterViewInit {
     this.onScroll();
   }
 
+  private pathOf(url: string): string {
+    return url.split('#')[0].split('?')[0] || '/';
+  }
+
   /**
-   * La barre devient opaque une fois le hero depasse. Sur les pages sans hero
-   * (detail projet), elle devient opaque des le premier scroll.
+   * Sur l'accueil, la barre devient opaque a ~35 % du hero (avant la zone
+   * sombre de l'image de fond). Sur la page projet, des le premier scroll.
    */
   private solidThreshold(): number {
     if (this.heroHeight === undefined) {
       const hero = document.querySelector('.hero') as HTMLElement | null;
       this.heroHeight = hero ? hero.offsetHeight : 0;
     }
-    return this.heroHeight > 0 ? this.heroHeight - 80 : 24;
+    return this.heroHeight > 0 ? this.heroHeight * 0.35 : 24;
   }
 
-  protected handleNavClick(e: Event, fragment: string): void {
-    // Si on n'est pas sur la page d'accueil (ex: sur une page projet)
-    const isHome = this.router.url === '/' || this.router.url.startsWith('/#');
-    if (!isHome) {
+  /**
+   * Meme page : on laisse le routerLink gerer l'ancre.
+   * Autre page : transition GSAP puis navigation.
+   */
+  protected handleNavClick(e: Event, path: string, fragment?: string): void {
+    if (this.currentPath() !== path) {
       e.preventDefault();
-      this.transitionService.navigate('/', fragment);
+      this.transitionService.navigate(path, fragment);
     }
   }
 }

@@ -2,10 +2,11 @@
   display: block;
 }
 
+/* ── Preloader — fond du thème, tracé bleu, sans halo ── */
 .preloader {
   position: fixed;
   inset: 0;
-  background: var(--bg-950);
+  background: var(--bg);
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -20,43 +21,13 @@
 
   .circuit-path {
     fill: none;
-    stroke: var(--primary-400);
+    stroke: var(--primary);
     stroke-width: 3;
     stroke-linecap: round;
     stroke-linejoin: round;
-    filter: drop-shadow(0 0 10px var(--primary-400));
-    opacity: 0.8;
+    opacity: 0.95;
   }
 }
 
-.page-transition-overlay {
-  position: fixed;
-  inset: 0;
-  background: var(--bg-950);
-  z-index: 10000;
-  transform: translateY(100%);
-  pointer-events: none;
-  overflow: hidden;
-  border-top: 2px solid var(--primary-400);
-  box-shadow: 0 -10px 30px rgba(3, 175, 249, 0.2);
-
-  // Scan bar — sweeps horizontally during the hold
-  .transition-scan {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg,
-      transparent 0%,
-      var(--primary-400) 40%,
-      #fff 50%,
-      var(--primary-400) 60%,
-      transparent 100%
-    );
-    box-shadow: 0 0 20px var(--primary-400), 0 0 40px rgba(3, 175, 249, 0.4);
-    transform-origin: left center;
-    transform: scaleX(0);
-    opacity: 0;
-  }
-}
+/* Les styles de .page-transition-overlay sont globaux (styles.scss) :
+   le service injecte les volets par innerHTML, hors encapsulation Angular. */

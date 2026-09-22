@@ -11,6 +11,8 @@ export const TRANSLATIONS = {
     'nav.contact': 'Contact',
     'nav.menu_open': 'Open navigation menu',
     'nav.switch_lang': 'Switch to French',
+    'nav.theme_dark': 'Switch to dark theme',
+    'nav.theme_light': 'Switch to light theme',
 
     // Hero
     'hero.eyebrow': 'Developer',
@@ -23,6 +25,7 @@ export const TRANSLATIONS = {
     'hero.aria_collapse': 'Collapse presentation',
     'hero.aria_expand': 'Open presentation',
     'hero.aria_scroll_next': 'Scroll to next section',
+    'hero.btn_details': 'Details',
 
     // About
     'about.title': 'About me',
@@ -113,6 +116,8 @@ export const TRANSLATIONS = {
     'nav.contact': 'Me contacter',
     'nav.menu_open': 'Ouvrir le menu de navigation',
     'nav.switch_lang': 'Switch to English',
+    'nav.theme_dark': 'Passer en thème sombre',
+    'nav.theme_light': 'Passer en thème clair',
 
     // Hero
     'hero.eyebrow': 'Développeur',
@@ -125,6 +130,7 @@ export const TRANSLATIONS = {
     'hero.aria_collapse': 'Réduire la présentation',
     'hero.aria_expand': 'Ouvrir la présentation',
     'hero.aria_scroll_next': 'Défiler vers la section suivante',
+    'hero.btn_details': 'Détails',
 
     // About
     'about.title': 'À propos de moi',

@@ -1,14 +1,10 @@
 import { Component } from '@angular/core';
 import { Hero } from '../../components/hero/hero';
-import { About } from '../../components/about/about';
-import { Skills } from '../../components/skills/skills';
-import { Parcours } from '../../components/parcours/parcours';
-import { Projects } from '../../components/projects/projects';
-import { Contact } from '../../components/contact/contact';
 
+/** Page d'accueil : uniquement le hero. Le reste vit sur /details. */
 @Component({
   selector: 'app-home',
-  imports: [Hero, About, Skills, Parcours, Projects, Contact],
+  imports: [Hero],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })

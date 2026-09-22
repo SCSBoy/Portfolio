@@ -1,16 +1,18 @@
 /* ══════════════════════════════════════════════════════
    FOOTER — Dark Tech · Electric Blue
+   Volontairement figé : mêmes couleurs quel que soit le thème.
 ══════════════════════════════════════════════════════ */
 
 .footer {
+  color-scheme: dark;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
   padding: 1.5rem 8vw;
-  background: var(--bg-950);
+  background: #000106;
   border-top: 1px solid rgba(3,175,249,0.08);
-  color: var(--text-muted);
+  color: #65758B;
 }
 
 .footer__left {
@@ -44,7 +46,7 @@
   gap: 0.75rem;
   font-size: 0.9rem;
   font-weight: 500;
-  color: var(--text-primary);
+  color: #F5FAFF;
 }
 
 .footer__logo {
@@ -71,7 +73,7 @@
   gap: 0.25rem 0.75rem;
 
   .footer__social-link {
-    color: var(--text-muted) !important;
+    color: #65758B !important;
     font-weight: 400 !important;
     padding: 4px 12px !important;
     transition: color 0.2s, filter 0.2s !important;
@@ -84,7 +86,7 @@
     }
 
     &:hover {
-      color: var(--primary-400) !important;
+      color: #03AFF9 !important;
       filter: drop-shadow(0 0 6px rgba(3,175,249,0.45));
     }
   }
@@ -96,7 +98,7 @@
     text-align: center;
     gap: 3rem;
   }
-  
+
   .footer__character {
     margin-top: -40px;
     height: 140px;
@@ -106,7 +108,7 @@
     flex: auto;
     justify-content: center;
   }
-  
+
   .footer__socials {
     justify-content: center;
   }

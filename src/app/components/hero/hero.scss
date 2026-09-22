@@ -1,10 +1,22 @@
 /* ══════════════════════════════════════════════════════
-   HERO  —  Dark Tech · Electric Blue
+   HERO  —  Hexagon Blue
    Grid 2 colonnes : panel (gauche) · portrait (droite)
-   Vidéo BG à faible opacité + overlay dark gradient
+   Image de fond + voile (cendre léger en clair, noir en sombre)
 ══════════════════════════════════════════════════════ */
 
 .hero {
+  /* Tokens locaux : valeurs du thème clair, redéfinies plus bas en sombre */
+  --hero-bg:        #DFE3E8;
+  --hero-card:      #E8EBEF;
+  --hero-title:     #4A5568;
+  --hero-accent:    #0A4FC4;
+  --hero-text:      #4E5665;
+  --hero-ink:       #1C2028;
+  --hero-img-filter: brightness(0.9) contrast(0.96) saturate(0.85);
+  --hero-border:    rgba(0, 84, 221, 0.14);
+  --hero-shadow:    0 12px 28px rgba(20, 23, 28, 0.08);
+  --hero-tag-color: #0054DD;
+
   position: relative;
   min-height: 100vh;
   min-height: 100svh;
@@ -14,17 +26,31 @@
   gap: clamp(3rem, 7vw, 6.5rem);
   padding: 8rem 8vw 6rem;
   box-sizing: border-box;
-  background: #f8fbff;
+  background: var(--hero-bg);
   overflow: hidden;
 
-  &::before,
-  &::after {
+  /* Voile posé sur l'image de fond (--hero-veil défini dans styles.scss) */
+  &::before {
     content: '';
     position: absolute;
-    left: 0;
-    right: 0;
+    inset: 0;
+    z-index: 1;
+    background: var(--hero-veil);
     pointer-events: none;
   }
+}
+
+:host-context([data-theme="dark"]) .hero {
+  --hero-bg:        #0B0D11;
+  --hero-card:      #151920;
+  --hero-title:     #C3CAD5;
+  --hero-accent:    #74A6F5;
+  --hero-text:      #AEB6C2;
+  --hero-ink:       #EDF0F4;
+  --hero-border:    rgba(255, 255, 255, 0.10);
+  --hero-shadow:    0 12px 28px rgba(0, 0, 0, 0.45);
+  --hero-tag-color: #A9C6F2;
+  --hero-img-filter: none;
 }
 
 .hero__bg-video {
@@ -36,6 +62,8 @@
   object-fit: cover;
   opacity: 1;
   pointer-events: none;
+  /* En clair : l'image (blanc pur) est assombrie par filtre, sans couche */
+  filter: var(--hero-img-filter);
 }
 
 .hero__content {
@@ -44,7 +72,7 @@
   max-width: 36rem;
   width: 100%;
   padding: 0;
-  color: #07111f;
+  color: var(--hero-ink);
   box-sizing: border-box;
 }
 
@@ -72,21 +100,21 @@
   min-height: 0;
   margin: 0 0 1rem;
   padding: 0.45rem 0.7rem;
-  color: #0054dd;
+  color: var(--hero-accent);
   font-weight: 800;
   letter-spacing: 0.04em;
   font-size: 0.72rem;
   text-transform: uppercase;
-  background: #fff;
-  border: 1px solid rgba(0, 84, 221, 0.12);
+  background: var(--hero-card);
+  border: 1px solid var(--hero-border);
   border-radius: 8px;
-  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.05);
+  box-shadow: var(--hero-shadow);
 }
 
 .hero__typed {
   font-family: 'Roboto Mono', ui-monospace, monospace;
   font-weight: 700;
-  color: #0054dd;
+  color: var(--hero-accent);
 }
 
 .hero__title {
@@ -94,12 +122,12 @@
   font-size: clamp(3rem, 6vw, 5.7rem);
   line-height: 0.96;
   font-weight: 800;
-  color: #46546b;
+  color: var(--hero-title);
   letter-spacing: 0;
 }
 
 .hero__title-accent {
-  color: #0054dd;
+  color: var(--hero-accent);
   font-weight: 800;
   text-shadow: none;
 }
@@ -115,9 +143,9 @@
     padding: 0 1.1rem !important;
     border-radius: 10px !important;
     background: #0054dd !important;
-    color: #fff !important;
+    color: #F2F4F7 !important;
     font-weight: 800 !important;
-    box-shadow: 0 14px 28px rgba(0, 84, 221, 0.22) !important;
+    box-shadow: none !important;
 
     mat-icon {
       margin-right: 0.35rem;
@@ -128,15 +156,15 @@
     height: 46px;
     padding: 0 1.1rem !important;
     border-radius: 10px !important;
-    background: #fff !important;
-    color: #0f172a !important;
-    border-color: rgba(15, 23, 42, 0.12) !important;
+    background: var(--hero-card) !important;
+    color: var(--hero-ink) !important;
+    border-color: var(--hero-border) !important;
     font-weight: 800 !important;
-    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06) !important;
+    box-shadow: none !important;
 
     mat-icon {
       margin-right: 0.35rem;
-      color: #0054dd;
+      color: var(--hero-accent);
     }
   }
 }
@@ -164,10 +192,10 @@
   width: 100%;
   height: 100%;
   border-radius: 28px;
-  background: #fff;
-  border: 2px solid rgba(0, 84, 221, 0.28);
+  background: var(--hero-card);
+  border: 2px solid var(--hero-border);
   overflow: hidden;
-  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.14);
+  box-shadow: var(--hero-shadow);
   clip-path: polygon(13% 0, 87% 0, 100% 13%, 100% 87%, 87% 100%, 13% 100%, 0 87%, 0 13%);
   will-change: transform;
 
@@ -176,7 +204,7 @@
     position: absolute;
     inset: 8px;
     z-index: 1;
-    border: 1px solid rgba(0, 84, 221, 0.2);
+    border: 1px solid var(--hero-border);
     border-radius: 22px;
     clip-path: inherit;
     pointer-events: none;
@@ -190,7 +218,7 @@
   right: 15%;
   z-index: 6;
   color: #fff !important;
-  background: rgba(0, 1, 6, 0.72) !important;
+  background: rgba(8, 9, 12, 0.72) !important;
   border: 1px solid rgba(255, 255, 255, 0.18) !important;
   backdrop-filter: blur(10px);
   opacity: 0;
@@ -198,7 +226,7 @@
   transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
 
   &:hover {
-    background: rgba(3, 175, 249, 0.28) !important;
+    background: rgba(77, 139, 240, 0.5) !important;
   }
 }
 
@@ -256,15 +284,15 @@
   border: 0;
   border-radius: 16px;
   cursor: pointer;
-  color: #07111f;
-  background: #fff;
-  box-shadow: 0 22px 45px rgba(15, 23, 42, 0.18);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: var(--hero-ink);
+  background: var(--hero-card);
+  border: 1px solid var(--hero-border);
+  box-shadow: var(--hero-shadow);
+  transition: transform 0.2s ease;
 
   &:hover,
   &:focus-visible {
     transform: translateY(-2px);
-    box-shadow: 0 26px 55px rgba(0, 84, 221, 0.22);
   }
 }
 
@@ -275,9 +303,8 @@
   width: 46px;
   height: 46px;
   border-radius: 13px;
-  color: #fff;
+  color: #F2F4F7;
   background: #0054dd;
-  box-shadow: 0 10px 24px rgba(0, 84, 221, 0.28);
 
   mat-icon {
     width: 28px;
@@ -330,9 +357,7 @@
   cursor: pointer;
   background: linear-gradient(135deg, var(--primary-700) 0%, var(--primary-400) 100%);
   color: #000106;
-  box-shadow:
-    var(--glow-primary),
-    0 4px 20px rgba(0,0,0,0.50);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.50);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -355,20 +380,8 @@
 }
 
 @keyframes badge-pulse {
-  0%, 50%, 100% {
-    box-shadow: var(--glow-primary), 0 4px 20px rgba(0,0,0,0.50);
-  }
-  18% {
-    box-shadow:
-      0 0 0  7px rgba(3,175,249,0.30),
-      0 0 0 16px rgba(3,175,249,0.15),
-      0 0 0 28px rgba(3,175,249,0.07),
-      0 0 0 42px rgba(3,175,249,0.03),
-      var(--glow-strong);
-  }
-  36% {
-    box-shadow: 0 0 0 3px rgba(3,175,249,0.10), var(--glow-primary);
-  }
+  0%, 100% { transform: scale(1); }
+  18%      { transform: scale(1.08); }
 }
 
 /* ── Tags flottants ──────────────────────────────────── */
@@ -376,13 +389,13 @@
   position: absolute;
   padding: 0.3rem 0.6rem;
   border-radius: var(--radius-sm);
-  background: #fff;
-  color: #0054dd;
-  border: 1px solid rgba(0, 84, 221, 0.12);
+  background: var(--hero-card);
+  color: var(--hero-tag-color);
+  border: 1px solid var(--hero-border);
   font-family: 'Roboto Mono', ui-monospace, monospace;
   font-size: 0.75rem;
   font-weight: 800;
-  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+  box-shadow: var(--hero-shadow);
   animation: hero-float 4.5s ease-in-out infinite;
   pointer-events: none;
 }
@@ -415,12 +428,8 @@
 .hero__tagline {
   margin: 0;
   max-width: 30rem;
-  line-height: 1.65;
-  color: #536581;
+  color: var(--hero-text);
   line-height: 1.7;
-  font-weight: 400;
-  max-width: 30rem;
-  text-shadow: 0 0 8px rgb(255 255 255 / 13%);
   font-size: 1rem;
   font-weight: 600;
 }
@@ -432,7 +441,8 @@
 }
 
 /* ── Scroll cue ──────────────────────────────────────── */
-.hero__scroll-cue {
+/* Bouton texte vers la page /details (remplace l'ancienne flèche) */
+.hero__details-cue {
   position: absolute;
   bottom: 2.5rem;
   left: 50%;
@@ -440,16 +450,34 @@
   z-index: 3;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
+  gap: 0.45rem;
+  padding: 0.6rem 1rem 0.6rem 1.15rem;
   border-radius: 999px;
-  color: #0054dd;
-  background: #fff;
-  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
-  animation: hero-bounce 1.8s ease-in-out infinite;
-  grid-column: 1 / -1;
-  opacity: 1;
+  color: var(--hero-accent);
+  background: var(--hero-card);
+  border: 1px solid var(--hero-border);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+
+  mat-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+    line-height: 18px;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover,
+  &:focus-visible {
+    transform: translate(-50%, -2px);
+    border-color: var(--hero-accent);
+
+    mat-icon { transform: translateX(3px); }
+  }
 }
 
 .profile-viewer {
@@ -459,7 +487,7 @@
   display: grid;
   place-items: center;
   padding: 5rem 5vw 3rem;
-  background: rgba(0, 1, 6, 0.92);
+  background: var(--viewer-bg);
   backdrop-filter: blur(14px);
 }
 
@@ -494,7 +522,7 @@
   backdrop-filter: blur(12px);
 
   &:hover {
-    background: rgba(3, 175, 249, 0.26) !important;
+    background: rgba(77, 139, 240, 0.45) !important;
   }
 }
 
@@ -526,10 +554,6 @@
     padding: 6.5rem 6vw 4rem;
     gap: 2rem;
     text-align: center;
-
-    &::before {
-      background: linear-gradient(180deg, rgba(248, 251, 255, 0.92) 0%, rgba(248, 251, 255, 0.78) 55%, rgba(248, 251, 255, 0.6) 100%);
-    }
   }
   .hero__content { max-width: min(100%, 38rem); width: 100%; order: 2; padding: 1.75rem 1.5rem; }
   .hero__portrait { order: 1; }
@@ -537,7 +561,7 @@
   .hero__actions { justify-content: center; }
   .hero__badge { bottom: -5%; right: 50%; transform: translateX(50%); }
   .hero__tag        { display: none; }
-  .hero__scroll-cue { display: none; }
+  .hero__details-cue { display: none; }
 
   /* Le libelle ne tient pas a cote d'un portrait de 220px : icone seule */
   .hero__play-button {
@@ -547,7 +571,6 @@
     max-width: none;
     padding: 0.3rem;
     border-radius: 50%;
-    box-shadow: 0 12px 26px rgba(15, 23, 42, 0.2);
   }
   .hero__play-label { display: none; }
   .hero__play-icon {

@@ -1,6 +1,6 @@
 import {
   AfterViewInit, Component, ElementRef, OnDestroy,
-  ViewChild, signal, computed, inject
+  ViewChild, signal, computed, effect, inject
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,6 +9,7 @@ import { PROJECTS, Project } from '../../data/projects.data';
 import { RevealDirective } from '../../shared/reveal.directive';
 import { TransitionService } from '../../shared/transition.service';
 import { I18nService } from '../../shared/i18n.service';
+import { ThemeService } from '../../shared/theme.service';
 import * as THREE from 'three';
 
 interface CubeColors {
@@ -32,6 +33,7 @@ export class Projects implements AfterViewInit, OnDestroy {
   protected readonly projectsPerPage = 6;
   protected readonly transitionService = inject(TransitionService);
   protected readonly i18n = inject(I18nService);
+  private readonly theme = inject(ThemeService);
 
   protected readonly totalPages = computed(() =>
     Math.ceil(this.projects.length / this.projectsPerPage)
@@ -65,7 +67,25 @@ export class Projects implements AfterViewInit, OnDestroy {
 
   private readonly pyramidRowsPerPage = 3;
 
-  private readonly defaultColorPalettes: CubeColors[][] = [
+  constructor() {
+    // Face numérotée : texture selon le thème (voir makeNumberTexture).
+    effect(() => {
+      const dark = this.theme.isDark();
+      this.cubeMeshes.forEach(m => {
+        const front = (m.material as THREE.MeshToonMaterial[])[4];
+        const tex = dark ? m.userData['texDark'] : m.userData['texLight'];
+        if (front && tex) { front.map = tex; front.needsUpdate = true; }
+      });
+    });
+  }
+
+  /**
+   * Couleurs des cubes selon le thème. Les faces sont interpolées à chaque
+   * frame dans loop(), donc un changement de thème se fond en douceur.
+   * Sombre : tons vifs qui ressortent sur le charbon.
+   * Clair  : tons plus profonds / moins saturés pour le gris cendre.
+   */
+  private readonly darkColorPalettes: CubeColors[][] = [
     [
       { top: 0x4FC3F7, front: 0x0288D1, right: 0x01579B },
       { top: 0x81D4FA, front: 0x03A9F4, right: 0x0277BD },
@@ -92,11 +112,61 @@ export class Projects implements AfterViewInit, OnDestroy {
     ],
   ];
 
-  private readonly activeColorPalettes: CubeColors[] = [
+  private readonly lightColorPalettes: CubeColors[][] = [
+    [
+      { top: 0x8FBCF3, front: 0x2F7CF6, right: 0x0B3E99 },
+      { top: 0xA9C6F2, front: 0x0054DD, right: 0x00256F },
+      { top: 0xB9D9F7, front: 0x1E88E5, right: 0x0D47A1 },
+      { top: 0x9AD0EA, front: 0x0FA3D6, right: 0x05628A },
+      { top: 0xA8DDE8, front: 0x0097A7, right: 0x004D57 },
+      { top: 0xBFE3EC, front: 0x1E9AAE, right: 0x00707C },
+    ],
+    [
+      { top: 0xC9B8F5, front: 0x6D3FD6, right: 0x3E1A80 },
+      { top: 0xB39DF0, front: 0x5B21B6, right: 0x2E0A5E },
+      { top: 0xD4C6F7, front: 0x7C4DE6, right: 0x4B1C9E },
+      { top: 0xE9A8F7, front: 0xA21CAF, right: 0x701A75 },
+      { top: 0xEFC1F7, front: 0xC026D3, right: 0x86198F },
+      { top: 0xDCC7F3, front: 0x7E22CE, right: 0x581C87 },
+    ],
+    [
+      { top: 0x9BE3B5, front: 0x15803D, right: 0x0F4A28 },
+      { top: 0xA7F3D0, front: 0x047857, right: 0x053F31 },
+      { top: 0x99E9DD, front: 0x0F766E, right: 0x0F3F3A },
+      { top: 0xB4EFC7, front: 0x16A34A, right: 0x14532D },
+      { top: 0xBFEFE6, front: 0x0D9488, right: 0x115E59 },
+      { top: 0xD3EFA6, front: 0x4D7C0F, right: 0x2F4A0A },
+    ],
+  ];
+
+  private readonly darkActivePalettes: CubeColors[] = [
     { top: 0xFFE082, front: 0xFFCA28, right: 0xF9A825 },
     { top: 0xFDA4AF, front: 0xF43F5E, right: 0xBE123C },
     { top: 0xA7F3D0, front: 0x10B981, right: 0x047857 },
   ];
+
+  private readonly lightActivePalettes: CubeColors[] = [
+    { top: 0xFFD98A, front: 0xF5B301, right: 0xB7791F },
+    { top: 0xF9A8B8, front: 0xE11D48, right: 0x9F1239 },
+    { top: 0x9EE6C6, front: 0x059669, right: 0x047857 },
+  ];
+
+  private get defaultColorPalettes(): CubeColors[][] {
+    return this.theme.isDark() ? this.darkColorPalettes : this.lightColorPalettes;
+  }
+
+  private get activeColorPalettes(): CubeColors[] {
+    return this.theme.isDark() ? this.darkActivePalettes : this.lightActivePalettes;
+  }
+
+  /** Face arrière / contour cartoon, eux aussi selon le thème. */
+  private get backFaceColor(): number {
+    return this.theme.isDark() ? 0x000820 : 0x0B1B36;
+  }
+
+  private get outlineColor(): number {
+    return this.theme.isDark() ? 0x1A1A2E : 0x14171C;
+  }
 
   ngAfterViewInit(): void {
     // Reset Three.js group so re-mounting (after navigation) starts fresh
@@ -175,14 +245,25 @@ export class Projects implements AfterViewInit, OnDestroy {
     this.loop();
   }
 
-  /** Simple number-only texture for cartoon cube face */
-  private makeNumberTexture(num: number): THREE.Texture | null {
+  /**
+   * Texture de la face numérotée (multipliée par la couleur de la face) :
+   *  - sombre : fond transparent → face noire, chiffre de la couleur du cube
+   *    (look cartoon) ;
+   *  - clair  : fond blanc → face de la couleur du cube, chiffre charbon.
+   */
+  private makeNumberTexture(num: number, variant: 'dark' | 'light'): THREE.Texture | null {
     const cv = document.createElement('canvas');
     cv.width = 128; cv.height = 128;
     const ctx = cv.getContext('2d');
     if (!ctx) return null; // Guard against SSR / headless env
     ctx.clearRect(0, 0, 128, 128);
-    ctx.fillStyle = 'rgba(255,255,255,0.92)';
+    if (variant === 'light') {
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, 128, 128);
+      ctx.fillStyle = 'rgba(20, 23, 28, 0.88)';
+    } else {
+      ctx.fillStyle = 'rgba(255,255,255,0.92)';
+    }
     ctx.font = 'bold 72px Inter, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -197,7 +278,7 @@ export class Projects implements AfterViewInit, OnDestroy {
       make(cols.right),
       make(cols.right),
       make(cols.top),
-      make(0x000820),
+      make(this.backFaceColor),
       frontTex ? make(cols.front, frontTex) : make(cols.front), // safe guard: never pass undefined map
       make(cols.right),
     ];
@@ -226,6 +307,11 @@ export class Projects implements AfterViewInit, OnDestroy {
     this.cubeMeshes = [];
 
     const S = 1.35;
+    // Pas entre cubes : le contour cartoon (BackSide, +6 %) ne doit jamais
+    // entrer dans le volume d'un cube voisin, sinon il dessine des traits
+    // parasites sur ses faces.
+    const OUTLINE = 1.06;
+    const STEP = S * 1.16;
     const projects = this.currentPyramidProjects();
     const page = this.currentPage();
     const pageStartIndex = page * this.projectsPerPage;
@@ -235,31 +321,33 @@ export class Projects implements AfterViewInit, OnDestroy {
     for (let row = 0; row < this.pyramidRowsPerPage && projectCursor < projects.length; row++) {
       const rowCapacity = this.pyramidRowsPerPage - row;
       const cubesInRow = Math.min(rowCapacity, projects.length - projectCursor);
-      const startX = -((cubesInRow - 1) * S) / 2;
+      const startX = -((cubesInRow - 1) * STEP) / 2;
       rowsUsed = row + 1;
 
       for (let col = 0; col < cubesInRow; col++) {
         const localIndex = projectCursor;
         const globalIndex = pageStartIndex + localIndex;
         const project = projects[localIndex];
-        const numTex = this.makeNumberTexture(globalIndex + 1);
+        const texDark = this.makeNumberTexture(globalIndex + 1, 'dark');
+        const texLight = this.makeNumberTexture(globalIndex + 1, 'light');
+        const numTex = this.theme.isDark() ? texDark : texLight;
         const cols = this.getDefaultColors(page, localIndex);
         const geo = new THREE.BoxGeometry(S, S, S);
         const mats = this.makeMaterials(cols, numTex);
 
         const mesh = new THREE.Mesh(geo, mats);
-        const x = startX + col * S;
-        const y = row * S + S / 2;
+        const x = startX + col * STEP;
+        const y = row * STEP + S / 2;
         mesh.position.set(x, y, 0);
-        mesh.userData = { project, page, localIndex, globalIndex };
+        mesh.userData = { project, page, localIndex, globalIndex, texDark, texLight };
         mesh.castShadow = true;
         mesh.receiveShadow = true;
 
         const outlineMat = new THREE.MeshBasicMaterial({
-          color: 0x1a1a2e,
+          color: this.outlineColor,
           side: THREE.BackSide,
         });
-        const outline = new THREE.Mesh(new THREE.BoxGeometry(S * 1.10, S * 1.10, S * 1.10), outlineMat);
+        const outline = new THREE.Mesh(new THREE.BoxGeometry(S * OUTLINE, S * OUTLINE, S * OUTLINE), outlineMat);
         mesh.add(outline);
 
         this.pyramidGroup.add(mesh);
@@ -268,7 +356,7 @@ export class Projects implements AfterViewInit, OnDestroy {
       }
     }
 
-    this.framePyramid(rowsUsed, S);
+    this.framePyramid(rowsUsed, STEP);
   }
 
   private loop(): void {
@@ -287,9 +375,15 @@ export class Projects implements AfterViewInit, OnDestroy {
 
       const targetColors = [
         cols.right, cols.right, cols.top,
-        0x000820, cols.front, cols.right,
+        this.backFaceColor, cols.front, cols.right,
       ];
       mats.forEach((mat, i) => mat.color.lerp(tmpColor.setHex(targetColors[i]), 0.1));
+
+      // Contour cartoon (enfant du cube) suit aussi le thème
+      const outline = m.children[0] as THREE.Mesh | undefined;
+      if (outline) {
+        (outline.material as THREE.MeshBasicMaterial).color.lerp(tmpColor.setHex(this.outlineColor), 0.1);
+      }
 
       // Scale up active cube (no Y movement to avoid overlap)
       const targetScale = isActive ? 1.05 : 1.0;
@@ -369,6 +463,8 @@ export class Projects implements AfterViewInit, OnDestroy {
     this.cubeMeshes.forEach(m => {
       (m.geometry as THREE.BufferGeometry).dispose();
       (m.material as THREE.Material[]).forEach(mat => mat.dispose());
+      (m.userData['texDark'] as THREE.Texture | undefined)?.dispose();
+      (m.userData['texLight'] as THREE.Texture | undefined)?.dispose();
     });
     this.toonGradient?.dispose();
     if (this.renderer) {

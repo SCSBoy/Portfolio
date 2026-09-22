@@ -1,8 +1,11 @@
 import { Component, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { filter, map, startWith } from 'rxjs';
 import { Header } from './components/header/header';
 import { Footer } from './components/footer/footer';
 import { PreloaderService } from './shared/preloader.service';
+import { ThemeService } from './shared/theme.service';
 import { gsap } from 'gsap';
 
 @Component({
@@ -16,6 +19,24 @@ export class App implements AfterViewInit {
   @ViewChild('circuitPath') circuitPath!: ElementRef<SVGPathElement>;
 
   private readonly preloaderService = inject(PreloaderService);
+  // Instancié ici pour appliquer le thème dès le démarrage.
+  private readonly themeService = inject(ThemeService);
+  private readonly router = inject(Router);
+
+  /** L'accueil (hero seul) n'affiche pas le footer. */
+  protected readonly isHome = toSignal(
+    this.router.events.pipe(
+      filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+      map(() => this.isHomeUrl()),
+      startWith(this.isHomeUrl()),
+    ),
+    { initialValue: true }
+  );
+
+  private isHomeUrl(): boolean {
+    const path = this.router.url.split('#')[0].split('?')[0];
+    return path === '/' || path === '';
+  }
 
   constructor() {
     // Block scroll during preloader

@@ -1,11 +1,7 @@
 /* ══════════════════════════════════════════════════════
-   PROJECTS — Dark Tech · Electric Blue
+   PROJECTS — Hexagon Blue (fond du thème)
    Two-column: details (left) + Three.js pyramid (right)
 ══════════════════════════════════════════════════════ */
-
-.projects {
-  background-color: var(--bg-900);
-}
 
 /* ── Layout ──────────────────────────────────────────── */
 .projects__layout {
@@ -39,7 +35,11 @@
 .project-details {
   display: flex;
   flex-direction: column;
-  padding-right: 1rem;
+  padding: 1.75rem 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
 }
 
 .project-details__header {
@@ -52,9 +52,9 @@
 }
 
 .project-details__title {
-  color: var(--text-primary);
+  color: var(--text-1);
   font-size: 2rem;
-  font-weight: 700;
+  font-weight: 800;
   margin: 0;
   letter-spacing: -0.02em;
 }
@@ -65,21 +65,31 @@
   gap: 0.25rem;
   flex-shrink: 0;
 
-  button { color: var(--primary-400) !important; }
+  button {
+    color: var(--primary) !important;
+    background: var(--primary-tint) !important;
+    border: 1px solid var(--border) !important;
+    transition: background 0.2s, border-color 0.2s !important;
+
+    &:hover {
+      background: var(--primary-tint-strong) !important;
+      border-color: var(--border-strong) !important;
+    }
+  }
 }
 
 .project-details__nav-count {
   font-size: 0.85rem;
-  color: var(--text-secondary);
+  color: var(--text-2);
   font-family: 'Roboto Mono', ui-monospace, monospace;
   min-width: 3.5rem;
   text-align: center;
 }
 
 .project-details__meta {
-  color: var(--primary-400);
-  font-size: 0.95rem;
-  font-weight: 500;
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 600;
   margin-bottom: 1.5rem;
   font-family: 'Roboto Mono', ui-monospace, monospace;
 }
@@ -88,7 +98,7 @@
   margin-bottom: 1.5rem;
 
   p {
-    color: var(--text-secondary);
+    color: var(--text-2);
     line-height: 1.75;
     font-size: 1rem;
   }
@@ -100,12 +110,13 @@
 
 /* ── Chips ───────────────────────────────────────────── */
 mat-chip {
-  background: rgba(3,175,249,0.08) !important;
-  color: var(--primary-300) !important;
-  border: 1px solid rgba(3,175,249,0.20) !important;
+  background: var(--primary-tint) !important;
+  color: var(--primary) !important;
+  border: 1px solid var(--border-strong) !important;
   font-size: 0.75rem !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
   font-family: 'Roboto Mono', ui-monospace, monospace !important;
+  opacity: 1 !important;
 }
 
 /* ── Actions ─────────────────────────────────────────── */
@@ -116,20 +127,27 @@ mat-chip {
   flex-wrap: wrap;
 
   a[mat-button] {
-    color: var(--text-muted) !important;
+    color: var(--text-3) !important;
     font-size: 0.9rem !important;
-    font-weight: 500 !important;
-    transition: color 0.2s !important;
+    font-weight: 600 !important;
+    transition: color 0.2s, background 0.2s !important;
     mat-icon { font-size: 1.1rem; }
-    &:hover { color: var(--primary-400) !important; }
+    &:hover { color: var(--primary) !important; background: var(--primary-tint); }
   }
 
   a[color="primary"] {
-    color: var(--primary-400) !important;
-    font-weight: 600 !important;
+    color: var(--on-primary) !important;
+    background: var(--primary) !important;
+    font-weight: 700 !important;
+    border-radius: 10px !important;
+    box-shadow: var(--shadow-card);
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s !important;
+
     &:hover {
-      color: var(--primary-200) !important;
-      text-shadow: 0 0 8px rgba(3,175,249,0.35);
+      color: var(--on-primary) !important;
+      background: var(--primary-hover) !important;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-hover);
     }
   }
 }
@@ -140,13 +158,18 @@ mat-chip {
   align-items: center;
   gap: 0.75rem;
   margin-top: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  box-shadow: var(--shadow-card);
 
-  button { color: var(--primary-400) !important; }
+  button { color: var(--primary) !important; }
 }
 
 .pyramid-pagination__text {
   font-size: 0.85rem;
-  color: var(--text-secondary);
+  color: var(--text-2);
   font-family: 'Roboto Mono', ui-monospace, monospace;
 }
 
@@ -172,14 +195,17 @@ mat-chip {
 }
 
 @media (max-width: 600px) {
+  .project-details {
+    padding: 1.25rem 1.1rem;
+  }
   .project-details__actions {
     flex-direction: column;
     align-items: stretch;
     width: 100%;
   }
-  .project-details__actions > * { 
-    width: 100%; 
-    text-align: center; 
-    justify-content: center; 
+  .project-details__actions > * {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
   }
 }

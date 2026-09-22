@@ -1,17 +1,23 @@
 // ══════════════════════════════════════════════════════
-//  Electric Blue / Dark Tech — Design System
-//  Angular Material + CSS Design Tokens
+//  Hexagon Blue — Design System
+//  Palette tirée de public/images/image.png, adoucie :
+//    gris cendre (au lieu du blanc pur) · marine #071A3A
+//    charbon / noir · bleu #0054DD · bleu clair #A9C6F2
+//  Deux thèmes : sombre "charbon" (par défaut) / clair "cendre",
+//  + bandes toujours sombres (marine ou charbon). Aucun effet néon.
 // ══════════════════════════════════════════════════════
 @use '@angular/material' as mat;
 
 html {
   height: 100%;
+  // theme-type: color-scheme → Material suit la propriété CSS `color-scheme`
+  // (light-dark()), ce qui permet de basculer par thème ET par section.
   @include mat.theme(
     (
       color: (
         primary: mat.$azure-palette,
         tertiary: mat.$blue-palette,
-        theme-type: dark,
+        theme-type: color-scheme,
       ),
       typography: Inter,
       density: 0,
@@ -25,64 +31,182 @@ html {
   overflow-x: hidden;
 }
 
-// ── Design Tokens ─────────────────────────────────────
+// ── Mixins de tokens ──────────────────────────────────
+// Thème clair : gris cendre, jamais de blanc pur.
+@mixin light-tokens {
+  color-scheme: light;
+
+  --bg:            #DFE3E8;
+  --bg-alt:        #D5DAE1;
+  --surface:       #E8EBEF;
+  --surface-2:     #DCE0E6;
+
+  --border:        rgba(28, 32, 40, 0.10);
+  --border-strong: rgba(10, 79, 196, 0.32);
+
+  --text-1: #1C2028;
+  --text-2: #4E5665;
+  --text-3: #6F7785;
+
+  --primary:             #0A4FC4;
+  --primary-hover:       #083E9A;
+  --primary-bright:      #2F72DE;
+  --primary-soft:        #9FB9E3;
+  --primary-tint:        rgba(10, 79, 196, 0.08);
+  --primary-tint-strong: rgba(10, 79, 196, 0.15);
+  --on-primary:          #E8EBEF;
+
+  --shadow-card:  0 6px 20px rgba(20, 23, 28, 0.06);
+  --shadow-hover: 0 12px 28px rgba(20, 23, 28, 0.10);
+
+  --code-bg:  #0E1116;
+  --code-bar: #161A21;
+}
+
+// Thème sombre : charbon / noir, le bleu n'est qu'un accent.
+@mixin dark-tokens {
+  color-scheme: dark;
+
+  --bg:            #0B0D11;
+  --bg-alt:        #101318;
+  --surface:       #151920;
+  --surface-2:     #1C2129;
+
+  --border:        rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(116, 166, 245, 0.45);
+
+  --text-1: #EDF0F4;
+  --text-2: #AEB6C2;
+  --text-3: #7B8492;
+
+  --primary:             #4D8BF0;
+  --primary-hover:       #74A6F5;
+  --primary-bright:      #74A6F5;
+  --primary-soft:        #A9C6F2;
+  --primary-tint:        rgba(77, 139, 240, 0.12);
+  --primary-tint-strong: rgba(77, 139, 240, 0.20);
+  --on-primary:          #F2F4F7;
+
+  --shadow-card:  0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-hover: 0 14px 32px rgba(0, 0, 0, 0.45);
+
+  --code-bg:  #07080B;
+  --code-bar: #101318;
+}
+
+// Valeurs lues par les bandes elles-mêmes (non redéfinies dans une bande).
+@mixin light-globals {
+  --band-navy:      #0B1B36;
+  --band-charcoal:  #101318;
+  --header-bg:      rgba(223, 227, 232, 0.88);
+  --menu-bg:        rgba(232, 235, 239, 0.97);
+  --viewer-bg:      rgba(8, 9, 12, 0.92);
+  --hero-veil:      none;
+  --transition-a:   #101318;
+  --transition-b:   #0B1B36;
+  --transition-c:   #1C2129;
+  --transition-d:   #0054DD;
+}
+
+@mixin dark-globals {
+  --band-navy:      #080F1F;
+  --band-charcoal:  #07080B;
+  --header-bg:      rgba(11, 13, 17, 0.86);
+  --menu-bg:        rgba(21, 25, 32, 0.97);
+  --viewer-bg:      rgba(0, 0, 0, 0.94);
+  --hero-veil:      linear-gradient(180deg, rgba(8, 9, 12, 0.80) 0%, rgba(8, 9, 12, 0.90) 100%);
+  --transition-a:   #07080B;
+  --transition-b:   #080F1F;
+  --transition-c:   #151920;
+  --transition-d:   #4D8BF0;
+}
+
+// ── Design Tokens (sombre par défaut) ─────────────────
 :root {
-  // Background
-  --bg-950: #000106;
-  --bg-900: #000A29;
-  --bg-800: #001232;
-  --bg-700: #00184D;
+  @include dark-tokens;
+  @include dark-globals;
 
-  // Primary — Electric Blue
-  --primary-950: #00256F;
-  --primary-900: #00258D;
-  --primary-700: #0054DD;
-  --primary-500: #0380E5;
-  --primary-400: #03AFF9;
-  --primary-300: #14B9FB;
-  --primary-200: #5FE4FD;
-
-  // Text
-  --text-primary:   #F5FAFF;
-  --text-secondary: #A8B8CC;
-  --text-muted:     #65758B;
-  --text-disabled:  #3A485A;
-
-  // Semantic
+  // Sémantique
   --success: #22C55E;
   --warning: #F59E0B;
   --error:   #EF4444;
-  --info:    #03AFF9;
+  --info:    #2F7CF6;
 
-  // Radius
+  // Rayons
   --radius-sm:   8px;
   --radius-md:   12px;
   --radius-lg:   16px;
   --radius-xl:   24px;
   --radius-full: 999px;
 
-  // Effects
-  --glow-primary:     0 0 24px rgba(3,175,249,0.25);
-  --glow-strong:      0 0 48px rgba(3,175,249,0.35);
-  --shadow-card:      0 8px 32px rgba(0,0,0,0.35);
-  --border-default:   rgba(3,175,249,0.15);
-  --border-active:    rgba(0,84,221,0.70);
-  --border-highlight: rgba(3,175,249,0.70);
+  // ── Alias hérités (code existant) ───────────────────
+  --bg-950: var(--band-charcoal);
+  --bg-900: var(--bg);
+  --bg-800: var(--surface);
+  --bg-700: var(--surface-2);
+  --primary-950: #00256F;
+  --primary-900: #00258D;
+  --primary-700: var(--primary);
+  --primary-500: var(--primary);
+  --primary-400: var(--primary);
+  --primary-300: var(--primary-bright);
+  --primary-200: var(--primary-soft);
+  --text-primary:   var(--text-1);
+  --text-secondary: var(--text-2);
+  --text-muted:     var(--text-3);
+  --text-disabled:  #3A485A;
+  --glow-primary:     none;
+  --glow-strong:      none;
+  --glow:             none;
+  --border-default:   var(--border);
+  --border-active:    var(--border-strong);
+  --border-highlight: var(--border-strong);
+}
+
+// Thème clair (bouton dans le header, persisté dans localStorage)
+:root[data-theme="light"] {
+  @include light-tokens;
+  @include light-globals;
+}
+
+// ── Bandes sombres (quel que soit le thème) ───────────
+.band--navy,
+.band--charcoal {
+  @include dark-tokens;
+  position: relative;
+}
+
+.band--navy     { background: var(--band-navy); }
+.band--charcoal { background: var(--band-charcoal); }
+
+// Bord supérieur diagonal, comme la coupe de l'image de référence
+// (sombre plus haut à droite, plus bas à gauche).
+.band--diagonal {
+  --diag: clamp(2rem, 5vw, 4.5rem);
+  margin-top: calc(-1 * var(--diag));
+  padding-top: var(--diag);
+  clip-path: polygon(0 var(--diag), 100% 0, 100% 100%, 0 100%);
 }
 
 // ── Base ──────────────────────────────────────────────
 body {
-  color-scheme: dark;
-  background-color: var(--bg-950);
-  color: var(--text-primary);
+  background-color: var(--bg);
+  color: var(--text-1);
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 1rem;
   line-height: 1.6;
   margin: 0;
   min-height: 100%;
-  max-width: 100vw;
-  overflow-x: hidden;
+  /* Pas d'overflow sur body : il deviendrait un second conteneur defilant
+     (double barre de defilement, molette "bloquee" sur quelques pixels).
+     Le debordement horizontal est deja coupe sur <html>. */
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--on-primary);
 }
 
 button[mat-icon-button],
@@ -116,24 +240,19 @@ a[mat-icon-button],
 
 .section-eyebrow {
   margin: 0 0 0.5rem;
-  color: var(--primary-400);
-  font-weight: 600;
+  color: var(--primary);
+  font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
 }
 
 .section-title {
   margin: 0;
   font-size: clamp(1.75rem, 3vw, 2.25rem);
-  font-weight: 700;
-  color: var(--text-primary);
+  font-weight: 800;
+  color: var(--text-1);
   letter-spacing: -0.02em;
-}
-
-// Fond des sections alternées
-section:nth-child(even) {
-  background-color: var(--bg-900);
 }
 
 // ── Collapsible Sections ──────────────────────────────
@@ -144,10 +263,11 @@ section:nth-child(even) {
   margin-bottom: 2rem;
 
   .section-title { margin-bottom: 0; }
-  
+
   button {
-    color: var(--primary-400);
-    background: rgba(3, 175, 249, 0.1);
+    color: var(--primary);
+    background: var(--primary-tint);
+    border: 1px solid var(--border);
     transition: all 0.3s;
     border-radius: 50%;
     width: 48px;
@@ -155,9 +275,10 @@ section:nth-child(even) {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     &:hover {
-      background: rgba(3, 175, 249, 0.2);
+      background: var(--primary-tint-strong);
+      border-color: var(--border-strong);
     }
   }
 }
@@ -167,7 +288,7 @@ section:nth-child(even) {
   grid-template-rows: 0fr;
   transition: grid-template-rows 0.4s ease-out, opacity 0.4s ease-out;
   opacity: 0;
-  
+
   &.is-open {
     grid-template-rows: 1fr;
     opacity: 1;
@@ -180,29 +301,165 @@ section:nth-child(even) {
 
 // ── Material Menu (Mobile) ────────────────────────────
 .mat-mdc-menu-panel {
-  background: rgba(0, 1, 6, 0.95) !important;
+  background: var(--menu-bg) !important;
   backdrop-filter: blur(16px);
-  border: 1px solid var(--border-default) !important;
+  border: 1px solid var(--border) !important;
   border-radius: var(--radius-md) !important;
   box-shadow: var(--shadow-card) !important;
-  
+
   .mat-mdc-menu-content {
     padding: 0.5rem !important;
   }
-  
+
   .mat-mdc-menu-item {
-    color: var(--text-primary) !important;
+    color: var(--text-1) !important;
     font-weight: 500 !important;
     border-radius: var(--radius-sm);
     margin-bottom: 0.25rem;
-    
+
+    .mat-icon { color: var(--primary); }
+
     &:last-child { margin-bottom: 0; }
-    
+
     &:hover, &:focus {
-      background: rgba(3, 175, 249, 0.15) !important;
-      color: var(--primary-300) !important;
+      background: var(--primary-tint) !important;
+      color: var(--primary) !important;
     }
   }
+}
+
+// ── Chips "stack technique" (projets + détail projet) ─
+// Les chips sont `disabled` (non interactives) : on neutralise le rendu grisé.
+.mat-mdc-standard-chip {
+  --mat-chip-elevated-container-color: var(--primary-tint);
+  --mat-chip-elevated-disabled-container-color: var(--primary-tint);
+  --mat-chip-label-text-color: var(--primary);
+  --mat-chip-disabled-label-text-color: var(--primary);
+  --mat-chip-disabled-container-opacity: 1;
+  --mat-chip-outline-color: var(--border-strong);
+  --mat-chip-disabled-outline-color: var(--border-strong);
+  --mat-chip-label-text-font: 'Roboto Mono', ui-monospace, monospace;
+  --mat-chip-label-text-weight: 600;
+  --mat-chip-label-text-size: 0.75rem;
+}
+
+// ── Transition de page (GSAP) ─────────────────────────
+/* ══════════════════════════════════════════════════════
+   Transition de page (GSAP, voir transition.service.ts)
+
+   Conteneur fixe et invisible ; le service y crée :
+   - 4 volets verticaux (.transition-panel) qui montent en
+     cascade puis s'échappent vers le haut, charbon / marine
+     / graphite / bleu ;
+   - un monogramme central (.transition-brand) : hexagone
+     tracé au trait + "C.E" + barre de progression.
+══════════════════════════════════════════════════════ */
+.page-transition-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  pointer-events: none;
+  overflow: hidden;
+  visibility: hidden;
+
+  &.is-active {
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .transition-panels {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .transition-panel {
+    /* Position initiale gérée par GSAP (yPercent) — pas de transform CSS,
+       sinon GSAP le lit en pixels et l'ajoute au yPercent animé. */
+    will-change: transform;
+
+    &:nth-child(1) { background: var(--transition-a); }
+    &:nth-child(2) { background: var(--transition-b); }
+    &:nth-child(3) { background: var(--transition-c); }
+    &:nth-child(4) { background: var(--transition-d); }
+  }
+
+  .transition-brand {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    opacity: 0;
+    color: #EDF0F4;
+  }
+
+  .transition-brand__hex {
+    width: 112px;
+    height: 112px;
+    overflow: visible;
+
+    path {
+      fill: none;
+      stroke: #A9C6F2;
+      stroke-width: 2;
+      stroke-linejoin: round;
+    }
+
+    text {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-weight: 800;
+      font-size: 30px;
+      letter-spacing: -0.02em;
+      fill: #EDF0F4;
+      text-anchor: middle;
+      dominant-baseline: central;
+    }
+  }
+
+  .transition-brand__label {
+    margin: 0;
+    font-family: 'Roboto Mono', ui-monospace, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #A9C6F2;
+    opacity: 0.85;
+  }
+
+  .transition-brand__bar {
+    width: 160px;
+    height: 2px;
+    background: rgba(237, 240, 244, 0.18);
+    overflow: hidden;
+
+    span {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: #EDF0F4;
+      transform: scaleX(0);
+      transform-origin: left center;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .page-transition-overlay .transition-panels {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .page-transition-overlay .transition-panel:nth-child(4) {
+    display: none;
+  }
+}
+
+// ── Tooltip compétences ───────────────────────────────
+.skill-tooltip {
+  --mdc-plain-tooltip-container-color: var(--code-bg);
+  --mdc-plain-tooltip-supporting-text-color: #EDF0F4;
 }
 
 @media (max-width: 600px) {

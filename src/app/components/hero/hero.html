@@ -21,7 +21,7 @@
       {{ i18n.t('hero.tagline') }}
     </p>
     <div class="hero__actions">
-      <a mat-flat-button color="primary" href="#projets">
+      <a mat-flat-button color="primary" href="/details#projets" (click)="goToDetails($event, 'projets')">
         <mat-icon>code</mat-icon>
         {{ i18n.currentLang() === 'en' ? 'View my work' : 'Voir mes projets' }}
       </a>
@@ -87,8 +87,9 @@
     </div>
   </div>
 
-  <a class="hero__scroll-cue" href="#a-propos" [attr.aria-label]="i18n.t('hero.aria_scroll_next')">
-    <mat-icon>keyboard_arrow_down</mat-icon>
+  <a class="hero__details-cue" href="/details#a-propos" (click)="goToDetails($event, 'a-propos')" [attr.aria-label]="i18n.t('hero.aria_scroll_next')">
+    <span>{{ i18n.t('hero.btn_details') }}</span>
+    <mat-icon>arrow_forward</mat-icon>
   </a>
 
   @if (profileViewerOpen()) {

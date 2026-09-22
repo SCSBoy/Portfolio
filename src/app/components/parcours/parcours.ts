@@ -216,7 +216,8 @@ export class Parcours implements AfterViewInit, OnDestroy {
     }
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    const mat = new THREE.PointsMaterial({ color: 0x03aff9, size: 2, transparent: true, opacity: 0.35 });
+    // Bleu vif de la palette (la section vit dans une bande marine)
+    const mat = new THREE.PointsMaterial({ color: 0x4d8bf0, size: 2, transparent: true, opacity: 0.45 });
     
     this.threeGeo = geo;
     this.threeMat = mat;
@@ -280,12 +281,25 @@ export class Parcours implements AfterViewInit, OnDestroy {
   }
 
   // ── Horizontal scroll via wheel ───────────────────────
+  /**
+   * La molette fait defiler la frise horizontalement UNIQUEMENT tant qu'elle
+   * peut encore avancer dans ce sens. En butee (debut ou fin), l'evenement
+   * n'est plus intercepte et la page defile normalement : sans cela, la
+   * molette restait "bloquee" sur la frise.
+   */
   private initWheel(): void {
     const vp = this.viewport.nativeElement;
     const handler = (e: WheelEvent) => {
       if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return; // real horizontal scroll
+      if (e.ctrlKey) return; // zoom navigateur
+
+      const dir: 1 | -1 = e.deltaY > 0 ? 1 : -1;
+      const maxLeft = vp.scrollWidth - vp.clientWidth;
+      const canPan = dir === 1 ? vp.scrollLeft < maxLeft - 2 : vp.scrollLeft > 2;
+      if (!canPan) return; // en butee : laisser la page defiler
+
       e.preventDefault();
-      this.pan(e.deltaY > 0 ? 1 : -1);
+      this.pan(dir);
     };
     vp.addEventListener('wheel', handler, { passive: false });
     this.wheelCleanup = () => vp.removeEventListener('wheel', handler);
