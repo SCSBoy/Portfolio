@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "postinstall": "patch-package",
-    "deploy": "ng build --base-href=/Portfolio/ && npx angular-cli-ghpages --dir=dist/Portfolio/browser"
+    "deploy": "ng build --base-href=/Portfolio/browser && npx angular-cli-ghpages --dir=dist/Portfolio/browser"
   },
   "private": true,
   "packageManager": "npm@11.14.1",
