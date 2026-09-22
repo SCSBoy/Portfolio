@@ -321,9 +321,18 @@ a[mat-icon-button],
 
     &:last-child { margin-bottom: 0; }
 
-    &:hover, &:focus {
+    &:hover, &:focus-visible {
       background: var(--primary-tint) !important;
       color: var(--primary) !important;
+    }
+
+    /* Section courante (mat-menu donne le focus au 1er item a l'ouverture :
+       on ne surligne donc que la vraie section active) */
+    &.is-active {
+      color: var(--primary) !important;
+      background: var(--primary-tint) !important;
+      font-weight: 700 !important;
+      box-shadow: inset 3px 0 0 var(--primary);
     }
   }
 }

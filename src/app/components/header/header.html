@@ -4,7 +4,7 @@
 
   <nav class="header__nav">
     @for (link of links; track link.key) {
-      <a mat-button [routerLink]="link.path" [fragment]="link.fragment" (click)="handleNavClick($event, link.path, link.fragment)">{{ i18n.t(link.key) }}</a>
+      <a mat-button [routerLink]="link.path" [fragment]="link.fragment" [class.is-active]="activeKey() === link.key" [attr.aria-current]="activeKey() === link.key ? 'page' : null" (click)="handleNavClick($event, link.path, link.fragment)">{{ i18n.t(link.key) }}</a>
     }
     <a mat-flat-button color="primary" routerLink="/details" fragment="contact" (click)="handleNavClick($event, '/details', 'contact')">{{ i18n.t('nav.contact') }}</a>
 
@@ -36,9 +36,9 @@
 
   <mat-menu #mobileMenu="matMenu">
     @for (link of links; track link.key) {
-      <a mat-menu-item [routerLink]="link.path" [fragment]="link.fragment" (click)="handleNavClick($event, link.path, link.fragment)">{{ i18n.t(link.key) }}</a>
+      <a mat-menu-item [routerLink]="link.path" [fragment]="link.fragment" [class.is-active]="activeKey() === link.key" [attr.aria-current]="activeKey() === link.key ? 'page' : null" (click)="handleNavClick($event, link.path, link.fragment)">{{ i18n.t(link.key) }}</a>
     }
-    <a mat-menu-item routerLink="/details" fragment="contact" (click)="handleNavClick($event, '/details', 'contact')">{{ i18n.t('nav.contact') }}</a>
+    <a mat-menu-item routerLink="/details" fragment="contact" [class.is-active]="activeKey() === 'nav.contact'" [attr.aria-current]="activeKey() === 'nav.contact' ? 'page' : null" (click)="handleNavClick($event, '/details', 'contact')">{{ i18n.t('nav.contact') }}</a>
     <button mat-menu-item (click)="i18n.toggleLanguage()">
       <mat-icon>language</mat-icon>
       <span>{{ i18n.t('nav.switch_lang') }}</span>

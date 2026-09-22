@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { map } from 'rxjs';
-import { getProjectBySlug, Bilingual } from '../../data/projects.data';
+import { getProjectBySlug, Bilingual, PROJECTS } from '../../data/projects.data';
 import { RevealDirective } from '../../shared/reveal.directive';
 import { TransitionService } from '../../shared/transition.service';
 import { I18nService } from '../../shared/i18n.service';
@@ -184,6 +184,26 @@ export class ProjectDetail {
   );
 
   protected readonly project = computed(() => getProjectBySlug(this.slug()));
+
+  // ── Navigation projet precedent / suivant (cyclique) ──────────
+  protected readonly projectIndex = computed(() => PROJECTS.findIndex(p => p.slug === this.slug()));
+  protected readonly projectCount = PROJECTS.length;
+  protected readonly prevProject = computed(() => {
+    const i = this.projectIndex();
+    return i < 0 ? undefined : PROJECTS[(i - 1 + PROJECTS.length) % PROJECTS.length];
+  });
+  protected readonly nextProject = computed(() => {
+    const i = this.projectIndex();
+    return i < 0 ? undefined : PROJECTS[(i + 1) % PROJECTS.length];
+  });
+
+  /** Change de projet sans quitter la page (transition GSAP, remontee en haut). */
+  protected goToProject(slug: string | undefined): void {
+    if (!slug || slug === this.slug()) return;
+    this.selectedMediaSrc.set('');
+    this.mediaViewerOpen.set(false);
+    this.transitionService.navigate(`/projets/${slug}`);
+  }
   protected readonly media = computed(() => {
     switch (this.slug()) {
       case 'rapprochements-bancaires':
@@ -241,7 +261,12 @@ export class ProjectDetail {
 
   @HostListener('document:keydown', ['$event'])
   protected handleKeydown(event: KeyboardEvent): void {
-    if (!this.mediaViewerOpen()) return;
+    // Hors visionneuse : Alt + fleches = projet precedent / suivant
+    if (!this.mediaViewerOpen()) {
+      if (event.altKey && event.key === 'ArrowRight') { event.preventDefault(); this.goToProject(this.nextProject()?.slug); }
+      if (event.altKey && event.key === 'ArrowLeft')  { event.preventDefault(); this.goToProject(this.prevProject()?.slug); }
+      return;
+    }
 
     if (event.key === 'Escape') {
       this.closeMediaViewer();

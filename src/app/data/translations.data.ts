@@ -90,6 +90,9 @@ export const TRANSLATIONS = {
 
     // Project Detail
     'project.back': 'Back to projects',
+    'project.prev': 'Previous project',
+    'project.next': 'Next project',
+    'project.pager_label': 'Browse projects',
     'project.eyebrow': 'Case Study',
     'project.btn_demo': 'Live Demo',
     'project.btn_code': 'Source Code',
@@ -195,6 +198,9 @@ export const TRANSLATIONS = {
 
     // Project Detail
     'project.back': 'Retour aux projets',
+    'project.prev': 'Projet précédent',
+    'project.next': 'Projet suivant',
+    'project.pager_label': 'Parcourir les projets',
     'project.eyebrow': 'Étude de cas',
     'project.btn_demo': 'Voir la démo',
     'project.btn_code': 'Voir le code',

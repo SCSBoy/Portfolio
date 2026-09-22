@@ -1,10 +1,22 @@
 @if (project(); as p) {
   <section class="project-hero" [style.background]="p.gradient">
     <div class="project-hero__inner" appReveal="bottom">
-      <a mat-button (click)="transitionService.navigate('/', 'projets')" class="project-hero__back" style="cursor: pointer;">
-        <mat-icon>arrow_back</mat-icon>
-        {{ i18n.t('project.back') }}
-      </a>
+      <div class="project-hero__topbar">
+        <a mat-button (click)="transitionService.navigate('/details', 'projets')" class="project-hero__back" style="cursor: pointer;">
+          <mat-icon>arrow_back</mat-icon>
+          {{ i18n.t('project.back') }}
+        </a>
+
+        <div class="project-hero__nav" role="group" [attr.aria-label]="i18n.t('project.pager_label')">
+          <button mat-icon-button class="project-hero__nav-btn" (click)="goToProject(prevProject()?.slug)" [attr.aria-label]="i18n.t('project.prev')" [attr.title]="prevProject()?.title?.[i18n.currentLang()]">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+          <span class="project-hero__nav-count">{{ projectIndex() + 1 }} / {{ projectCount }}</span>
+          <button mat-icon-button class="project-hero__nav-btn" (click)="goToProject(nextProject()?.slug)" [attr.aria-label]="i18n.t('project.next')" [attr.title]="nextProject()?.title?.[i18n.currentLang()]">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      </div>
       <p class="project-hero__eyebrow">{{ i18n.t('project.eyebrow') }}</p>
       <h1 class="project-hero__title">{{ p.title[i18n.currentLang()] }}</h1>
       <p class="project-hero__summary">{{ p.summary[i18n.currentLang()] }}</p>
@@ -152,6 +164,30 @@
       </aside>
 
     </div>
+
+    <!-- Pagination projet precedent / suivant -->
+    <nav class="project-pager" [attr.aria-label]="i18n.t('project.pager_label')" appReveal="bottom">
+      @if (prevProject(); as prev) {
+        <a class="project-pager__card project-pager__card--prev" [href]="'/projets/' + prev.slug" (click)="$event.preventDefault(); goToProject(prev.slug)">
+          <span class="project-pager__label">
+            <mat-icon>arrow_back</mat-icon>
+            {{ i18n.t('project.prev') }}
+          </span>
+          <span class="project-pager__title">{{ prev.title[i18n.currentLang()] }}</span>
+          <span class="project-pager__swatch" [style.background]="prev.gradient"></span>
+        </a>
+      }
+      @if (nextProject(); as next) {
+        <a class="project-pager__card project-pager__card--next" [href]="'/projets/' + next.slug" (click)="$event.preventDefault(); goToProject(next.slug)">
+          <span class="project-pager__label">
+            {{ i18n.t('project.next') }}
+            <mat-icon>arrow_forward</mat-icon>
+          </span>
+          <span class="project-pager__title">{{ next.title[i18n.currentLang()] }}</span>
+          <span class="project-pager__swatch" [style.background]="next.gradient"></span>
+        </a>
+      }
+    </nav>
   </section>
 
   @if (mediaViewerOpen()) {
@@ -213,6 +249,6 @@
     <mat-icon>search_off</mat-icon>
     <h1>{{ i18n.t('project.not_found_title') }}</h1>
     <p>{{ i18n.t('project.not_found_desc') }}</p>
-    <a mat-flat-button color="primary" (click)="transitionService.navigate('/', 'projets')" style="cursor: pointer;">{{ i18n.t('project.back') }}</a>
+    <a mat-flat-button color="primary" (click)="transitionService.navigate('/details', 'projets')" style="cursor: pointer;">{{ i18n.t('project.back') }}</a>
   </section>
 }

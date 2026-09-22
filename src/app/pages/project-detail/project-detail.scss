@@ -13,9 +13,47 @@
   margin: 0 auto;
 }
 
+.project-hero__topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.project-hero__nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.35rem;
+  border-radius: 999px;
+  background: rgba(8, 9, 12, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(8px);
+}
+
+.project-hero__nav-btn {
+  color: #fff !important;
+  --mdc-icon-button-state-layer-size: 36px;
+  width: 36px !important;
+  height: 36px !important;
+  transition: background 0.2s !important;
+
+  &:hover { background: rgba(255, 255, 255, 0.16) !important; }
+}
+
+.project-hero__nav-count {
+  min-width: 3.2rem;
+  text-align: center;
+  font-family: 'Roboto Mono', ui-monospace, monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
 .project-hero__back {
   color: rgba(255, 255, 255, 0.85);
-  margin-bottom: 1.5rem;
 
   mat-icon {
     margin-right: 0.25rem;
@@ -466,6 +504,84 @@
   right: 1.25rem;
 }
 
+/* ── Pagination precedent / suivant ──────────────────── */
+.project-pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-top: 4rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.project-pager__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1.25rem 1.5rem 1.25rem 1.5rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  color: var(--text-1);
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-3px);
+
+    .project-pager__label mat-icon { transform: translateX(0); }
+  }
+
+  &--next {
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  &--prev:hover .project-pager__label mat-icon { transform: translateX(-3px); }
+  &--next:hover .project-pager__label mat-icon { transform: translateX(3px); }
+}
+
+.project-pager__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+
+  mat-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+    transition: transform 0.2s;
+  }
+}
+
+.project-pager__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* Bande de couleur du projet cible (son degrade), en bas de la carte */
+.project-pager__swatch {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  opacity: 0.85;
+}
+
 .project-detail__sidebar {
   display: flex;
   flex-direction: column;
@@ -548,6 +664,15 @@ mat-chip {
   
   .project-detail__sidebar {
     position: static;
+  }
+
+  .project-pager {
+    grid-template-columns: 1fr;
+    margin-top: 3rem;
+  }
+
+  .project-hero__topbar {
+    justify-content: center;
   }
   
   .project-media__thumbs {
