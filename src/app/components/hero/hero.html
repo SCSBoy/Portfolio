@@ -25,7 +25,7 @@
         <mat-icon>code</mat-icon>
         {{ i18n.currentLang() === 'en' ? 'View my work' : 'Voir mes projets' }}
       </a>
-      <a mat-stroked-button href="documents/CV-EKLU Charly Yayra.pdf" target="_blank" rel="noopener noreferrer">
+      <a mat-stroked-button [href]="resumeUrl()" target="_blank" rel="noopener noreferrer">
         <mat-icon>download</mat-icon>
         {{ i18n.t('hero.btn_resume') }}
       </a>

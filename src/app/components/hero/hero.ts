@@ -1,6 +1,6 @@
 import {
   AfterViewInit, Component, ElementRef, HostListener,
-  OnDestroy, ViewChild, signal, inject, effect
+  OnDestroy, ViewChild, signal, computed, inject, effect
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule }   from '@angular/material/icon';
@@ -30,6 +30,11 @@ export class Hero implements AfterViewInit, OnDestroy {
 
   protected readonly i18n = inject(I18nService);
   private readonly transitionService = inject(TransitionService);
+  protected readonly resumeUrl = computed(() =>
+    this.i18n.currentLang() === 'fr'
+      ? 'documents/CV_EKLU_Charly_Yayra.pdf'
+      : 'documents/ENG-CV_EKLU_Charly_Yayra.pdf'
+  );
   protected readonly imgError   = signal(false);
   protected readonly panelState = signal<PanelState>('open');
   protected readonly isVideoMode = signal(false);

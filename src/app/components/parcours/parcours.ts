@@ -60,14 +60,14 @@ const ACADEMIC: TimelineItem[] = [
     tags: ['IA', 'Big Data'], current: true 
   },
   { 
-    year: { en: '2024 - 2025', fr: '2024 - 2025' },
+    year: { en: '2022 - 2025', fr: '2022 - 2025' },
     title: { en: 'Bachelor\'s Degree in Computer Engineering', fr: 'Licence' }, 
     place: { en: 'IAI-TOGO - Lomé', fr: 'IAI-TOGO - Lomé' },
     description: { en: 'Diploma in computer engineering, BAC+3 level.', fr: 'Diplôme d\'Ingénieur des Travaux Informatiques BAC+3.' }, 
     tags: ['Informatique', 'BAC+3'] 
   },
   { 
-    year: { en: '2022 - 2023', fr: '2022 - 2023' },
+    year: { en: '2018 - 2021', fr: '2018 - 2021' },
     title: { en: 'BAC 2 - Series C', fr: 'BAC 2 - Série C' },
     place: { en: 'Lycée moderne d\'Adidogomé 1', fr: 'Lycée moderne d\'Adidogomé 1' }, 
     description: { en: 'Scientific track, Series C.', fr: 'Série C.' }, 
