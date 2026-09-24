@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════════════════════
-   CONTACT — Hexagon Blue
+   CONTACT - Hexagon Blue
    Vit dans une bande marine (tokens sombres) : formulaire
    sur carte marine claire, bouton bleu vif.
 ══════════════════════════════════════════════════════ */
@@ -18,7 +18,7 @@
   margin-bottom: 2rem;
 }
 
-/* ── Liste de contacts ───────────────────────────────── */
+/* -- Liste de contacts --------------------------------- */
 .contact__list-wrapper {
   display: flex;
   align-items: center;
@@ -80,7 +80,7 @@
   font-weight: 600;
 }
 
-/* ── Map legend ────────────────────────────────────────── */
+/* -- Map legend ------------------------------------------ */
 .contact__map-legend {
   display: flex;
   align-items: center;
@@ -97,7 +97,7 @@
   }
 }
 
-/* ── Formulaire ──────────────────────────────────────── */
+/* -- Formulaire ---------------------------------------- */
 .contact__form {
   display: flex;
   flex-direction: column;

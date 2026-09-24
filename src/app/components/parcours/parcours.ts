@@ -29,23 +29,23 @@ type ParcoursTab = 'pro' | 'academic' | 'certifications';
 
 const PROFESSIONAL: TimelineItem[] = [
   { 
-    year: { en: 'May 2025 – August 2025', fr: 'Mai 2025 – Août 2025' }, 
+    year: { en: 'May 2025 - August 2025', fr: 'Mai 2025 - Août 2025' },
     title: { en: 'Software Developer Intern', fr: 'Développeur logiciel' }, 
-    place: { en: 'ORABANK-TOGO — Lomé', fr: 'ORABANK-TOGO — Lomé' }, 
+    place: { en: 'ORABANK-TOGO - Lomé', fr: 'ORABANK-TOGO - Lomé' },
     description: { en: 'Software development internship at ORABANK-TOGO. Built a web application that automates change request file creation with a configurable approval workflow.', fr: 'Stage en programmation logiciel à ORABANK-TOGO. Développement d\'une application web d\'automatisation de la création de fiche de changement avec un workflow d\'approbation paramétrable.' }, 
     tags: ['Angular', 'Spring Boot', 'Workflow'], current: true 
   },
   { 
-    year: { en: 'July 2024 – August 2024', fr: 'Juillet 2024 – Août 2024' }, 
+    year: { en: 'July 2024 - August 2024', fr: 'Juillet 2024 - Août 2024' },
     title: { en: 'Software Developer Intern', fr: 'Développeur logiciel' }, 
-    place: { en: 'ORABANK-TOGO — Lomé', fr: 'ORABANK-TOGO — Lomé' }, 
+    place: { en: 'ORABANK-TOGO - Lomé', fr: 'ORABANK-TOGO - Lomé' },
     description: { en: 'Software development internship at ORABANK-TOGO. Developed a banking reconciliation web application with Angular and Spring Boot.', fr: 'Stage en programmation logiciel à ORABANK-TOGO. Développement d\'une application web de rapprochements bancaires avec les technologies Angular et Spring Boot.' }, 
     tags: ['Angular', 'Spring Boot', 'Banking'] 
   },
   { 
-    year: { en: 'July 2023 – August 2023', fr: 'Juillet 2023 – Août 2023' }, 
+    year: { en: 'July 2023 - August 2023', fr: 'Juillet 2023 - Août 2023' },
     title: { en: 'IT Technician Intern', fr: 'Technicien Informatique' }, 
-    place: { en: 'Clinique BIASA — Lomé', fr: 'Clinique BIASA — Lomé' }, 
+    place: { en: 'Clinique BIASA - Lomé', fr: 'Clinique BIASA - Lomé' },
     description: { en: 'Software development internship at Clinique BIASA. Provided user support and resolved technical issues.', fr: 'Stage en programmation logiciel à la Clinique BIASA. Support utilisateur et résolution de problèmes techniques.' }, 
     tags: ['Support', 'IT', 'Troubleshooting'] 
   },
@@ -53,22 +53,22 @@ const PROFESSIONAL: TimelineItem[] = [
 
 const ACADEMIC: TimelineItem[] = [
   { 
-    year: { en: '2025 – 2027 (In progress)', fr: '2025 – 2027 (En cours)' }, 
+    year: { en: '2025 - 2027 (In progress)', fr: '2025 - 2027 (En cours)' },
     title: { en: 'Master\'s in AI and Big Data', fr: 'Master en IA et Big Data' }, 
-    place: { en: 'EPL — Lomé', fr: 'EPL — Lomé' }, 
+    place: { en: 'EPL - Lomé', fr: 'EPL - Lomé' },
     description: { en: 'Master\'s program focused on artificial intelligence and Big Data.', fr: 'Master en IA et Big Data.' }, 
     tags: ['IA', 'Big Data'], current: true 
   },
   { 
-    year: { en: '2024 – 2025', fr: '2024 – 2025' }, 
+    year: { en: '2024 - 2025', fr: '2024 - 2025' },
     title: { en: 'Bachelor\'s Degree in Computer Engineering', fr: 'Licence' }, 
-    place: { en: 'IAI-TOGO — Lomé', fr: 'IAI-TOGO — Lomé' }, 
+    place: { en: 'IAI-TOGO - Lomé', fr: 'IAI-TOGO - Lomé' },
     description: { en: 'Diploma in computer engineering, BAC+3 level.', fr: 'Diplôme d\'Ingénieur des Travaux Informatiques BAC+3.' }, 
     tags: ['Informatique', 'BAC+3'] 
   },
   { 
-    year: { en: '2022 – 2023', fr: '2022 – 2023' }, 
-    title: { en: 'BAC 2 — Series C', fr: 'BAC 2 — Série C' }, 
+    year: { en: '2022 - 2023', fr: '2022 - 2023' },
+    title: { en: 'BAC 2 - Series C', fr: 'BAC 2 - Série C' },
     place: { en: 'Lycée moderne d\'Adidogomé 1', fr: 'Lycée moderne d\'Adidogomé 1' }, 
     description: { en: 'Scientific track, Series C.', fr: 'Série C.' }, 
     tags: ['Sciences', 'Mathématiques'] 
@@ -189,7 +189,7 @@ export class Parcours implements AfterViewInit, OnDestroy {
     }, 150);
   }
 
-  // ── Three.js particle background ──────────────────────
+  // -- Three.js particle background ----------------------
   private initThree(): void {
     const canvas = this.bgCanvas.nativeElement;
     const W = canvas.parentElement!.clientWidth;
@@ -240,7 +240,7 @@ export class Parcours implements AfterViewInit, OnDestroy {
     loop();
   }
 
-  // ── GSAP: reveal axis line on scroll ─────────────────
+  // -- GSAP: reveal axis line on scroll -----------------
   private initGsap(): void {
     this.st = ScrollTrigger.create({
       trigger: this.sectionEl.nativeElement,
@@ -259,7 +259,7 @@ export class Parcours implements AfterViewInit, OnDestroy {
     );
   }
 
-  // ── Anime.js: stagger node reveals ───────────────────
+  // -- Anime.js: stagger node reveals -------------------
   private runAnime(): void {
     const nodes = this.nodeRefs?.toArray().map(r => r.nativeElement);
     if (!nodes?.length) return;
@@ -280,7 +280,7 @@ export class Parcours implements AfterViewInit, OnDestroy {
     });
   }
 
-  // ── Horizontal scroll via wheel ───────────────────────
+  // -- Horizontal scroll via wheel -----------------------
   /**
    * La molette fait defiler la frise horizontalement UNIQUEMENT tant qu'elle
    * peut encore avancer dans ce sens. En butee (debut ou fin), l'evenement
@@ -305,7 +305,7 @@ export class Parcours implements AfterViewInit, OnDestroy {
     this.wheelCleanup = () => vp.removeEventListener('wheel', handler);
   }
 
-  // ── Public navigation ─────────────────────────────────
+  // -- Public navigation ---------------------------------
   protected navigate(dir: 1 | -1): void { this.pan(dir); }
 
   private pan(dir: 1 | -1): void {

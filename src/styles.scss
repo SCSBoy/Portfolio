@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════
-//  Hexagon Blue — Design System
+//  Hexagon Blue - Design System
 //  Palette tirée de public/images/image.png, adoucie :
 //    gris cendre (au lieu du blanc pur) · marine #071A3A
 //    charbon / noir · bleu #0054DD · bleu clair #A9C6F2
@@ -31,7 +31,7 @@ html {
   overflow-x: hidden;
 }
 
-// ── Mixins de tokens ──────────────────────────────────
+// -- Mixins de tokens ----------------------------------
 // Thème clair : gris cendre, jamais de blanc pur.
 @mixin light-tokens {
   color-scheme: light;
@@ -121,7 +121,7 @@ html {
   --transition-d:   #4D8BF0;
 }
 
-// ── Design Tokens (sombre par défaut) ─────────────────
+// -- Design Tokens (sombre par défaut) -----------------
 :root {
   @include dark-tokens;
   @include dark-globals;
@@ -139,7 +139,7 @@ html {
   --radius-xl:   24px;
   --radius-full: 999px;
 
-  // ── Alias hérités (code existant) ───────────────────
+  // -- Alias hérités (code existant) -------------------
   --bg-950: var(--band-charcoal);
   --bg-900: var(--bg);
   --bg-800: var(--surface);
@@ -169,7 +169,7 @@ html {
   @include light-globals;
 }
 
-// ── Bandes sombres (quel que soit le thème) ───────────
+// -- Bandes sombres (quel que soit le thème) -----------
 .band--navy,
 .band--charcoal {
   @include dark-tokens;
@@ -188,7 +188,7 @@ html {
   clip-path: polygon(0 var(--diag), 100% 0, 100% 100%, 0 100%);
 }
 
-// ── Base ──────────────────────────────────────────────
+// -- Base ----------------------------------------------
 body {
   background-color: var(--bg);
   color: var(--text-1);
@@ -230,7 +230,7 @@ a[mat-icon-button],
   }
 }
 
-// ── Section layout partagé ────────────────────────────
+// -- Section layout partagé ----------------------------
 .section {
   max-width: 1200px;
   margin: 0 auto;
@@ -255,7 +255,7 @@ a[mat-icon-button],
   letter-spacing: -0.02em;
 }
 
-// ── Collapsible Sections ──────────────────────────────
+// -- Collapsible Sections ------------------------------
 .section-header-row {
   display: flex;
   align-items: center;
@@ -299,7 +299,7 @@ a[mat-icon-button],
   overflow: hidden;
 }
 
-// ── Material Menu (Mobile) ────────────────────────────
+// -- Material Menu (Mobile) ----------------------------
 .mat-mdc-menu-panel {
   background: var(--menu-bg) !important;
   backdrop-filter: blur(16px);
@@ -337,7 +337,7 @@ a[mat-icon-button],
   }
 }
 
-// ── Chips "stack technique" (projets + détail projet) ─
+// -- Chips "stack technique" (projets + détail projet) -
 // Les chips sont `disabled` (non interactives) : on neutralise le rendu grisé.
 .mat-mdc-standard-chip {
   --mat-chip-elevated-container-color: var(--primary-tint);
@@ -352,7 +352,7 @@ a[mat-icon-button],
   --mat-chip-label-text-size: 0.75rem;
 }
 
-// ── Transition de page (GSAP) ─────────────────────────
+// -- Transition de page (GSAP) -------------------------
 /* ══════════════════════════════════════════════════════
    Transition de page (GSAP, voir transition.service.ts)
 
@@ -384,7 +384,7 @@ a[mat-icon-button],
   }
 
   .transition-panel {
-    /* Position initiale gérée par GSAP (yPercent) — pas de transform CSS,
+    /* Position initiale gérée par GSAP (yPercent) - pas de transform CSS,
        sinon GSAP le lit en pixels et l'ajoute au yPercent animé. */
     will-change: transform;
 
@@ -465,7 +465,7 @@ a[mat-icon-button],
   }
 }
 
-// ── Tooltip compétences ───────────────────────────────
+// -- Tooltip compétences -------------------------------
 .skill-tooltip {
   --mdc-plain-tooltip-container-color: var(--code-bg);
   --mdc-plain-tooltip-supporting-text-color: #EDF0F4;

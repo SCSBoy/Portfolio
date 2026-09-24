@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════════════════════
-   ABOUT — Hexagon Blue (fond clair du thème)
+   ABOUT - Hexagon Blue (fond clair du thème)
    Cartes blanches + carte de code marine (comme l'image)
 ══════════════════════════════════════════════════════ */
 
@@ -33,7 +33,7 @@
   align-content: start;
 }
 
-/* ── Title Group (Image next to H2) ─────────────────── */
+/* -- Title Group (Image next to H2) ------------------- */
 .about__title-group {
   display: flex;
   align-items: center;
@@ -45,7 +45,7 @@
   }
 }
 
-/* ── Bouton Next (Inline) ────────────────────────────── */
+/* -- Bouton Next (Inline) ------------------------------ */
 .about__next-btn {
   display: inline-flex;
   align-items: center;
@@ -81,7 +81,7 @@
   display: block;
 }
 
-/* ── Code Card — toujours marine, comme un éditeur ───── */
+/* -- Code Card - toujours marine, comme un éditeur ----- */
 .code-card {
   margin-top: 2rem;
   border-radius: var(--radius-md);
@@ -134,7 +134,7 @@
   .tok-string  { color: #ffcb6b; }
 }
 
-/* ── Highlight cards (statistiques) ─────────────────── */
+/* -- Highlight cards (statistiques) ------------------- */
 .highlight-card {
   display: flex;
   flex-direction: column;
@@ -174,7 +174,7 @@
   color: var(--text-2);
 }
 
-/* ── Testimonials ────────────────────────────────────── */
+/* -- Testimonials -------------------------------------- */
 .about__testimonials {
   margin-top: 1rem;
 }
@@ -270,7 +270,7 @@
   font-style: italic;
 }
 
-/* ── Responsive ──────────────────────────────────────── */
+/* -- Responsive ---------------------------------------- */
 @media (max-width: 900px) {
   .about {
     grid-template-columns: 1fr;

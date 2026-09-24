@@ -106,7 +106,7 @@ export class TransitionService {
     this.running = false;
   }
 
-  // ── DOM de l'overlay (créé une seule fois) ──────────────────────────────
+  // -- DOM de l'overlay (créé une seule fois) ------------------------------
 
   private reset(ui: OverlayUi): void {
     gsap.set(ui.panels, { yPercent: 101 });

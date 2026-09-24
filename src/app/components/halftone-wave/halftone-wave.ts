@@ -25,7 +25,7 @@ interface PointerSample {
 /**
  * Reproduces the BG_1.jpg halftone-wave artwork as a live canvas of vector
  * dots. Dots drift gently on their own (per-dot randomized wander), and the
- * pointer brushes/sweeps nearby dots along its direction of travel — no
+ * pointer brushes/sweeps nearby dots along its direction of travel - no
  * radial "push" from a point source, so it reads as a sweep rather than a
  * ripple/water-drop effect.
  *

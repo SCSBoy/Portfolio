@@ -123,7 +123,7 @@ export class About {
     if (this.currentMode() === 'fullstack') {
       return {
         p1: { en: 'Passionate developer, I build modern web applications using clean and maintainable architectures. I enjoy transforming complex business needs into simple, accessible, and user-friendly interfaces.', fr: 'Développeur passionné, je conçois des applications web modernes en m\'appuyant sur des architectures propres et maintenables. J\'aime transformer des besoins métier complexes en interfaces simples, accessibles et agréables à utiliser.' },
-        p2: { en: 'Curious and meticulous, I am equally invested in code quality as I am in the final user experience — from prototyping to production.', fr: 'Curieux et rigoureux, je m\'investis autant sur la qualité du code que sur l\'expérience finale livrée à l\'utilisateur — du prototypage à la mise en production.' },
+        p2: { en: 'Curious and meticulous, I am equally invested in code quality as I am in the final user experience - from prototyping to production.', fr: 'Curieux et rigoureux, je m\'investis autant sur la qualité du code que sur l\'expérience finale livrée à l\'utilisateur - du prototypage à la mise en production.' },
         next: { en: 'AI Data Engineer Profile', fr: 'Profil Ingénieur IA & Data' }
       };
     } else if (this.currentMode() === 'data') {

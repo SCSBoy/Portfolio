@@ -64,7 +64,7 @@ export class RevealDirective implements AfterViewInit, OnDestroy {
     };
 
     if (isVisible()) {
-      // Already in viewport — reveal immediately, no delay
+      // Already in viewport - reveal immediately, no delay
       this.tween.delay(0).duration(0.4).play();
     } else {
       this.st = ScrollTrigger.create({

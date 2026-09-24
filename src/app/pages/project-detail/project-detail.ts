@@ -185,7 +185,7 @@ export class ProjectDetail {
 
   protected readonly project = computed(() => getProjectBySlug(this.slug()));
 
-  // ── Navigation projet precedent / suivant (cyclique) ──────────
+  // -- Navigation projet precedent / suivant (cyclique) ----------
   protected readonly projectIndex = computed(() => PROJECTS.findIndex(p => p.slug === this.slug()));
   protected readonly projectCount = PROJECTS.length;
   protected readonly prevProject = computed(() => {

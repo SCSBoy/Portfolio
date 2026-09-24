@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════════════════════
-   PARCOURS — Timeline (Horizontal)
+   PARCOURS - Timeline (Horizontal)
    Vit dans une bande marine : les tokens sont ceux du
    thème sombre quel que soit le thème global.
 ══════════════════════════════════════════════════════ */
@@ -24,7 +24,7 @@
   z-index: 1;
 }
 
-/* ── Tabs ───────────────────────────────────────────── */
+/* -- Tabs --------------------------------------------- */
 .parcours__tabs {
   display: flex;
   justify-content: center;
@@ -71,7 +71,7 @@
   }
 }
 
-/* ── Container & Viewport ───────────────────────────── */
+/* -- Container & Viewport ----------------------------- */
 .timeline-container {
   display: flex;
   align-items: center;
@@ -112,7 +112,7 @@
   }
 }
 
-/* ── Axis ───────────────────────────────────────────── */
+/* -- Axis --------------------------------------------- */
 .timeline-axis {
   position: absolute;
   top: 0.9rem; /* Align with dots relative to track */
@@ -138,7 +138,7 @@
   }
 }
 
-/* ── Track & Nodes ──────────────────────────────────── */
+/* -- Track & Nodes ------------------------------------ */
 .timeline-track {
   display: flex;
   position: relative;
@@ -160,7 +160,7 @@
   scroll-snap-align: center;
 }
 
-/* ── Dots ───────────────────────────────────────────── */
+/* -- Dots --------------------------------------------- */
 .timeline-dot-wrapper {
   height: 2rem;
   display: flex;
@@ -210,7 +210,7 @@
   }
 }
 
-/* ── Card ───────────────────────────────────────────── */
+/* -- Card --------------------------------------------- */
 .timeline-card {
   background: var(--surface);
   border: 1px solid var(--border);

@@ -128,7 +128,7 @@ export class Hero implements AfterViewInit, OnDestroy {
     }
   }
 
-  // ── Panel → Badge (Web Animations API — no TS type conflicts) ─────────────
+  // -- Panel → Badge (Web Animations API - no TS type conflicts) -------------
   protected async collapseToBadge(): Promise<void> {
     if (this.busy || this.panelState() === 'badge') return;
     this.busy = true;
@@ -175,7 +175,7 @@ export class Hero implements AfterViewInit, OnDestroy {
     this.busy = false;
   }
 
-  // ── Badge → Panel ─────────────────────────────────────────────────────────
+  // -- Badge → Panel ---------------------------------------------------------
   protected async expandToPanel(): Promise<void> {
     if (this.busy || this.panelState() === 'open') return;
     this.busy = true;
@@ -219,7 +219,7 @@ export class Hero implements AfterViewInit, OnDestroy {
     this.busy = false;
   }
 
-  // ── Tilt hexagone (motion) — amplitude volontairement faible ──────────────
+  // -- Tilt hexagone (motion) - amplitude volontairement faible --------------
   private static readonly TILT_DEG = 4;
 
   private enableTilt(el: HTMLElement): () => void {
@@ -243,7 +243,7 @@ export class Hero implements AfterViewInit, OnDestroy {
     };
   }
 
-  // ── Tagline : apparition mot par mot (GSAP) ───────────────────────────────
+  // -- Tagline : apparition mot par mot (GSAP) -------------------------------
   private animateTagline(): void {
     const el = this.taglineEl?.nativeElement;
     if (!el) return;
@@ -271,7 +271,7 @@ export class Hero implements AfterViewInit, OnDestroy {
     );
   }
 
-  // ── Video Presentation Expand (Popmotion) ───────────────────────────────
+  // -- Video Presentation Expand (Popmotion) -------------------------------
   toggleVideoMode(): void {
     const isVideo = !this.isVideoMode();
     this.isVideoMode.set(isVideo);
